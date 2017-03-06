@@ -1,0 +1,32 @@
+/*
+ * analyseur syntaxique  du langage exemple-expr:
+ * expression arithmetique
+ * (voir supports de cours)
+ *
+ * auteur : azim.roussanaly@univ-lorraine.fr
+ * (c) 2013
+ */ 
+package fr.ul.miage.exemple.generated;
+
+/* la grammaire */
+
+terminal ADD, MUL, PO, PF, NUM;
+
+non terminal  l, x, f, a;
+
+start with l;
+
+l ::= x
+    ;
+      
+x ::= x ADD f
+    | f 
+    ;
+              
+f ::= f MUL a 
+    | a
+    ;
+              
+a ::= NUM
+    | PO x PF
+    ;
