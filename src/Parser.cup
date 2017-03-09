@@ -11,7 +11,7 @@ package fr.ul.miage.exemple.generated;
 
 /* la grammaire */
 
-terminal DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RETOUR, SUP_EGAL, INF_EGAL,VAR;
+terminal DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RETOUR, SUP_EGAL, INF_EGAL,VAR, FIN;
 
 non terminal  file, line, function;
 
@@ -23,4 +23,4 @@ file ::= 	line RETOUR file
 
 line ::= 	function;
 
-function ::= FUNCTION VOID VAR PO PF ACO ACF DOT{: System.out.println("La fonction fonctionne"); :};
+function ::= FUNCTION VOID VAR PO PF ACO ACF {: System.out.println("La fonction fonctionne"); :};

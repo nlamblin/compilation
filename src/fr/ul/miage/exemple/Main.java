@@ -26,7 +26,6 @@ public class Main {
 	public static void main(String[] args) throws Exception {
 		FileInputStream file = new FileInputStream(new File("test-suite/01-minimal.miage"));
 		ParserCup parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-		parser.debug_parse();
 		try {
 			parser.parse();
 		} catch (Exception e) {

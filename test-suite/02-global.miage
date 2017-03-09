@@ -1,13 +1,12 @@
 /*
- * Test génération de code : variables globales
+ * Test gï¿½nï¿½ration de code : variables globales
  */
  
- int i = 0;
- int j, k;
+i = 0;
+j, k;
  
- void main(){
+ function void main() {
 	k = 1;
 	j = k;
 	k = i;
  }
- 
