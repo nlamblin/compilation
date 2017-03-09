@@ -29,7 +29,7 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
     "\000\005\000\002\002\004\000\002\002\005\000\002\002" +
-    "\005\000\002\003\003\000\002\004\012" });
+    "\004\000\002\003\003\000\002\004\011" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -37,14 +37,13 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\020\000\004\006\007\001\002\000\004\026\ufffe\001" +
-    "\002\000\004\026\020\001\002\000\004\002\017\001\002" +
-    "\000\004\007\010\001\002\000\004\031\011\001\002\000" +
-    "\004\012\012\001\002\000\004\013\013\001\002\000\004" +
-    "\010\014\001\002\000\004\011\015\001\002\000\004\005" +
-    "\016\001\002\000\004\026\ufffd\001\002\000\004\002\001" +
-    "\001\002\000\006\004\022\006\007\001\002\000\004\002" +
-    "\000\001\002\000\004\002\uffff\001\002" });
+    "\000\016\000\004\004\007\001\002\000\004\020\ufffe\001" +
+    "\002\000\004\020\017\001\002\000\004\002\016\001\002" +
+    "\000\004\005\010\001\002\000\004\023\011\001\002\000" +
+    "\004\010\012\001\002\000\004\011\013\001\002\000\004" +
+    "\006\014\001\002\000\004\007\015\001\002\000\004\020" +
+    "\ufffd\001\002\000\004\002\001\001\002\000\006\002\uffff" +
+    "\004\007\001\002\000\004\002\000\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -52,13 +51,12 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\020\000\010\002\005\003\004\004\003\001\001\000" +
+    "\000\016\000\010\002\005\003\004\004\003\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\002\001\001\000\010\002\020\003" +
-    "\004\004\003\001\001\000\002\001\001\000\002\001\001" +
-    "" });
+    "\000\002\001\001\000\010\002\017\003\004\004\003\001" +
+    "\001\000\002\001\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -144,12 +142,12 @@ class CUP$ParserCup$actions {
           return CUP$ParserCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 2: // file ::= line RETOUR FIN 
+          case 2: // file ::= line RETOUR 
             {
               Object RESULT =null;
 		//@@CUPDBG0
- System.out.println("ça fonctionne"); 
-              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("file",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-2)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+ System.out.println("La fin de fichier fonctionne"); 
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("file",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-1)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
 
@@ -157,18 +155,22 @@ class CUP$ParserCup$actions {
           case 3: // line ::= function 
             {
               Object RESULT =null;
-
+		int funcleft = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).left;
+		int funcright = ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()).right;
+		Object func = (Object)((java_cup.runtime.Symbol) CUP$ParserCup$stack.peek()).value;
+		//@@CUPDBG1
+ System.out.println(func); 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("line",1, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // function ::= FUNCTION VOID VAR PO PF ACO ACF DOT 
+          case 4: // function ::= FUNCTION VOID VAR PO PF ACO ACF 
             {
               Object RESULT =null;
-		//@@CUPDBG1
- System.out.println("Nico bite"); 
-              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("function",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-7)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+		//@@CUPDBG2
+ System.out.println("La fonction fonctionne"); 
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("function",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-6)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
 

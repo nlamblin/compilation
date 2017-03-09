@@ -8,35 +8,27 @@ package fr.ul.miage.exemple.generated;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int ACO = 6;
-  public static final int AFFECT = 19;
-  public static final int SUP = 17;
-  public static final int COMP = 15;
-  public static final int SOUS = 12;
-  public static final int ACF = 7;
-  public static final int FUNCTION = 4;
-  public static final int INF = 16;
-  public static final int NUM = 10;
-  public static final int INF_EGAL = 22;
-  public static final int PO = 8;
+  public static final int ACO = 4;
+  public static final int AFFECT = 13;
+  public static final int SUP = 11;
+  public static final int COMP = 9;
+  public static final int ACF = 5;
+  public static final int FUNCTION = 2;
+  public static final int INF = 10;
+  public static final int NUM = 8;
+  public static final int INF_EGAL = 16;
+  public static final int PO = 6;
   public static final int EOF = 0;
-  public static final int DIV = 14;
-  public static final int ADD = 11;
   public static final int error = 1;
-  public static final int DOT = 3;
-  public static final int PF = 9;
-  public static final int SUP_EGAL = 21;
-  public static final int DIFF = 18;
-  public static final int RETOUR = 20;
-  public static final int MUL = 13;
-  public static final int FIN = 2;
-  public static final int VOID = 5;
-  public static final int VAR = 23;
+  public static final int PF = 7;
+  public static final int SUP_EGAL = 15;
+  public static final int DIFF = 12;
+  public static final int RETOUR = 14;
+  public static final int VOID = 3;
+  public static final int VAR = 17;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
-  "FIN",
-  "DOT",
   "FUNCTION",
   "VOID",
   "ACO",
@@ -44,10 +36,6 @@ public interface sym {
   "PO",
   "PF",
   "NUM",
-  "ADD",
-  "SOUS",
-  "MUL",
-  "DIV",
   "COMP",
   "INF",
   "SUP",
