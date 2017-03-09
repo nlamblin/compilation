@@ -1,0 +1,21 @@
+/*
+ * Test plus complet pour savoir si l'analyseur
+ * syntaxique fonctionne
+ */
+ 
+ int i = 0 ;
+ int j;
+ 
+ int f(int a, int b){
+	int x;
+	
+	x=(a*2)+b-5/3;
+	
+	return x+2;
+ }
+ 
+ void main(){
+	 j = read();
+	 write(f(i+1,j));
+ }
+ 

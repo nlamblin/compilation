@@ -1,0 +1,15 @@
+/*
+ * Test de controle semantique 
+ */
+ 
+ int i;
+ 
+ void f(){
+	int x;
+	x=0;
+ }
+ 
+ void main(){
+	i = i + f(); /* erreur : compatibilite de type */
+ }
+ 

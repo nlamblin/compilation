@@ -8,25 +8,19 @@
  */ 
 package fr.ul.miage.exemple.generated;
 
+
 /* la grammaire */
 
-terminal ADD, MUL, PO, PF, NUM;
+terminal DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RETOUR, SUP_EGAL, INF_EGAL,VAR;
 
-non terminal  l, x, f, a;
+non terminal  file, line, function;
 
-start with l;
+start with file;
 
-l ::= x
-    ;
-      
-x ::= x ADD f
-    | f 
-    ;
-              
-f ::= f MUL a 
-    | a
-    ;
-              
-a ::= NUM
-    | PO x PF
-    ;
+file ::= 	line RETOUR file
+			| line RETOUR
+			{: System.out.println("La fin de fichier fonctionne"); :};
+
+line ::= 	function;
+
+function ::= FUNCTION VOID VAR PO PF ACO ACF DOT{: System.out.println("La fonction fonctionne"); :};

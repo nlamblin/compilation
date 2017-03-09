@@ -1,0 +1,15 @@
+/*
+ * Test de controle semantique
+ */
+ 
+ int i;
+ 
+ void f(int a, int b){
+	int x;
+	x=0;
+ }
+ 
+ void main(){
+	f(i); /* erreur : nombre de parametres */
+ }
+ 
