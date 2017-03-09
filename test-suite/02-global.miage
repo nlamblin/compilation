@@ -1,7 +1,3 @@
-/*
- * Test g�n�ration de code : variables globales
- */
- 
 i = 0;
 j, k;
  

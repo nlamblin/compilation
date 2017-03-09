@@ -28,8 +28,10 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   /** Production table. */
   protected static final short _production_table[][] = 
     unpackFromStrings(new String[] {
-    "\000\005\000\002\002\004\000\002\002\005\000\002\002" +
-    "\004\000\002\003\003\000\002\004\011" });
+    "\000\012\000\002\002\004\000\002\002\005\000\002\002" +
+    "\004\000\002\003\003\000\002\003\003\000\002\004\011" +
+    "\000\002\006\003\000\002\006\003\000\002\007\006\000" +
+    "\002\007\006" });
 
   /** Access to production table. */
   public short[][] production_table() {return _production_table;}
@@ -37,13 +39,18 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   /** Parse-action table. */
   protected static final short[][] _action_table = 
     unpackFromStrings(new String[] {
-    "\000\016\000\004\005\007\001\002\000\004\025\ufffe\001" +
-    "\002\000\004\025\017\001\002\000\004\002\016\001\002" +
-    "\000\004\006\010\001\002\000\004\030\011\001\002\000" +
-    "\004\011\012\001\002\000\004\012\013\001\002\000\004" +
-    "\007\014\001\002\000\004\010\015\001\002\000\004\025" +
-    "\ufffd\001\002\000\004\002\001\001\002\000\006\002\uffff" +
-    "\005\007\001\002\000\004\002\000\001\002" });
+    "\000\027\000\006\005\013\030\006\001\002\000\004\025" +
+    "\ufffe\001\002\000\004\025\ufffa\001\002\000\004\024\025" +
+    "\001\002\000\004\025\023\001\002\000\004\002\022\001" +
+    "\002\000\004\025\ufffb\001\002\000\004\025\ufffd\001\002" +
+    "\000\004\006\014\001\002\000\004\030\015\001\002\000" +
+    "\004\011\016\001\002\000\004\012\017\001\002\000\004" +
+    "\007\020\001\002\000\004\010\021\001\002\000\004\025" +
+    "\ufffc\001\002\000\004\002\001\001\002\000\010\002\uffff" +
+    "\005\013\030\006\001\002\000\004\002\000\001\002\000" +
+    "\006\013\027\030\026\001\002\000\004\004\031\001\002" +
+    "\000\004\004\030\001\002\000\004\025\ufff8\001\002\000" +
+    "\004\025\ufff9\001\002" });
 
   /** Access to parse-action table. */
   public short[][] action_table() {return _action_table;}
@@ -51,12 +58,16 @@ public class ParserCup extends java_cup.runtime.lr_parser {
   /** <code>reduce_goto</code> table. */
   protected static final short[][] _reduce_table = 
     unpackFromStrings(new String[] {
-    "\000\016\000\010\002\005\003\004\004\003\001\001\000" +
+    "\000\027\000\016\002\007\003\006\004\003\006\011\007" +
+    "\010\010\004\001\001\000\002\001\001\000\002\001\001" +
+    "\000\002\001\001\000\002\001\001\000\002\001\001\000" +
     "\002\001\001\000\002\001\001\000\002\001\001\000\002" +
     "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
     "\001\000\002\001\001\000\002\001\001\000\002\001\001" +
-    "\000\002\001\001\000\010\002\017\003\004\004\003\001" +
-    "\001\000\002\001\001" });
+    "\000\016\002\023\003\006\004\003\006\011\007\010\010" +
+    "\004\001\001\000\002\001\001\000\002\001\001\000\002" +
+    "\001\001\000\002\001\001\000\002\001\001\000\002\001" +
+    "\001" });
 
   /** Access to <code>reduce_goto</code> table. */
   public short[][] reduce_table() {return _reduce_table;}
@@ -161,12 +172,57 @@ class CUP$ParserCup$actions {
           return CUP$ParserCup$result;
 
           /*. . . . . . . . . . . . . . . . . . . .*/
-          case 4: // function ::= FUNCTION VOID VAR PO PF ACO ACF 
+          case 4: // line ::= expression 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("line",1, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+            }
+          return CUP$ParserCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 5: // function ::= FUNCTION VOID VAR PO PF ACO ACF 
             {
               Object RESULT =null;
 		//@@CUPDBG1
  System.out.println("La fonction fonctionne"); 
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("function",2, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-6)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+            }
+          return CUP$ParserCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 6: // expression ::= affectation 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("expression",4, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+            }
+          return CUP$ParserCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 7: // expression ::= calcul 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("expression",4, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+            }
+          return CUP$ParserCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 8: // affectation ::= VAR AFFECT VAR DOT 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("affectation",5, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
+            }
+          return CUP$ParserCup$result;
+
+          /*. . . . . . . . . . . . . . . . . . . .*/
+          case 9: // affectation ::= VAR AFFECT NUM DOT 
+            {
+              Object RESULT =null;
+
+              CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("affectation",5, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.elementAt(CUP$ParserCup$top-3)), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
           return CUP$ParserCup$result;
 

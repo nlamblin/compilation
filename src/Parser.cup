@@ -13,13 +13,20 @@ package fr.ul.miage.exemple.generated;
 
 terminal DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RETOUR, SUP_EGAL, INF_EGAL,VAR, FIN;
 
-non terminal  file, line, function, parametre;
+non terminal  file, line, function, parametre, expression, affectation, calcul;
 
 start with file;
 
 file ::= 	line RETOUR file
 			| line RETOUR	{: System.out.println("La fin de fichier fonctionne"); :};
 
-line ::= 	function;
+line ::= 	function
+			| expression;
 
 function ::= FUNCTION VOID VAR PO PF ACO ACF	{: System.out.println("La fonction fonctionne"); :};
+
+expression ::= affectation
+				| calcul;
+
+affectation ::= VAR AFFECT VAR DOT
+				| VAR AFFECT NUM DOT;
