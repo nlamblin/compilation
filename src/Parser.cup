@@ -24,7 +24,7 @@ file ::= 	line file
 line ::= 	function
 			| expression;
 
-function ::= FUNCTION type_retour VAR PO parametre PF ACO ACF {: System.out.println("La fonction fonctionne"); :};
+function ::= FUNCTION type_retour VAR PO parametre PF ACO {: System.out.println("La fonction fonctionne"); :};
 			
 			
 type_retour ::= VOID
@@ -36,7 +36,9 @@ parametre ::=	INT VAR
 
 expression ::= 	def_var
 				| affectation
-				| calcul;
+				| calcul
+				|
+				;
 				
 def_var ::= DEFVAR VAR DOT
 			| DEFVAR VAR EGAL VAR DOT

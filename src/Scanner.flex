@@ -38,11 +38,11 @@ FIN     	=   \r|\n|\r\n
 "}"			{ return new Symbol(sym.ACF, yytext());}
 ";"			{ return new Symbol(sym.DOT);}
 "FUNCTION"	{ return new Symbol(sym.FUNCTION, yytext());}
+"AFFECT"	{ return new Symbol(sym.AFFECT);}
 "VOID"		{ return new Symbol(sym.VOID, yytext());}
 "INT"		{ return new Symbol(sym.INT, yytext());}
 {VAR}		{ return new Symbol(sym.VAR, yytext());}
-"VAR"		{ return new Symbol(sym.DEFVAR);}
-"AFFECT"	{ return new Symbol(sym.AFFECT);}
+"VAR"		{ return new Symbol(sym.DEFVAR, yytext());}
 "="			{ return new Symbol(sym.EGAL);}
 ">"			{ return new Symbol(sym.SUP);}
 "<"			{ return new Symbol(sym.INF);}

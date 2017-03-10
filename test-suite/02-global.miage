@@ -2,6 +2,6 @@ VAR i = 0;
 VAR j;
 VAR k;
 
- FUNCTION VOID main() {
- 	AFFECT
- }
+FUNCTION VOID main() {
+	
+}
