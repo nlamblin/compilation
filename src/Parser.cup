@@ -11,14 +11,15 @@ package fr.ul.miage.exemple.generated;
 
 /* la grammaire */
 
-terminal DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RETOUR, SUP_EGAL, INF_EGAL,VAR, INT;
+terminal DOT,FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
 
 non terminal  file, line, function, parametre, expression, affectation, calcul, type_retour, instruction;
 
 start with file;
 
-file ::= 	line RETOUR
-			| line{: System.out.println("La fin de fichier fonctionne"); :};
+file ::= 	line file
+			|line
+			{: System.out.println("La fin de fichier fonctionne"); :};
 
 line ::= 	function
 			| expression;
