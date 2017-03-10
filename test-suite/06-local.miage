@@ -34,7 +34,7 @@ FUNCTION INT f(){
 	VAR i;
 
 	AFFECT i = 1;
-	AFEFCT j = i + g();
+	AFFECT j = i + g();
 	RETURN j;
 }
 
