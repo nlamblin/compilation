@@ -46,7 +46,8 @@ affectation ::= action_affect VAR DOT
 				| action_affect VAR EGAL entite calcul DOT;
 				
 entite ::= NUM
-			|VAR;
+			|VAR
+			|PO entite calcul PF;
 				
 action_affect ::= DEFVAR
 				|AFFECT;				

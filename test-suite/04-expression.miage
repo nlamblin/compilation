@@ -13,7 +13,7 @@ Traduction
 
 VAR i;
 VAR j;
-FUNCTION(){
+FUNCTION VOID main(){
 	VAR i = 0;
 	AFFECT j = (2+i) - (3+i);
 }
