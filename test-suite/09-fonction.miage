@@ -1,6 +1,5 @@
-/*
- * adressage de variable locale
- */
+/* adressage de variable locale
+
 
 int i = 0;
 int j;
@@ -13,4 +12,18 @@ int f(int a){
 
 void main(){
 	j = f(i);
+}
+*/
+
+VAR i = 0;
+VAR j;
+
+FUNCTION INT f(a) {
+	VAR x;
+	AFFECT x = a+1;
+	RETURN x;
+ }
+
+FUNCTION VOID main(){
+	AFFECT j = f(i);
 }

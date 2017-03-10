@@ -1,6 +1,5 @@
-/*
- * Une expression avec un appel
- */
+/* Une expression avec un appel
+
 
 int i = 1;
 int j = 2;
@@ -10,5 +9,17 @@ int f(int a){
  }
 
 void main(){
-	i = j-(3+f(i+j));/*tester ceci*/
+	i = j-(3+f(i+j));\*tester ceci*\
+}
+*/
+
+VAR i = 1;
+VAR j = 2;
+
+FUNCTION INT f(a){
+	RETURN 3;
+}
+
+FUNCTION VOID main(){
+	AFFECT i = j-(3+f(i+j));/*tester ceci*/
 }

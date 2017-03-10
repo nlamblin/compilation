@@ -1,6 +1,4 @@
-/*
- * Variables locales
- */
+/* Variables locales
 
 int i, j,k;
 
@@ -26,4 +24,36 @@ main(){
 	j=1;
 	k=f();	
 }
+*/
 
+VAR i;
+VAR j;
+VAR k;
+
+FUNCTION INT f(){
+	VAR i;
+
+	AFFECT i = 1;
+	AFEFCT j = i + g();
+	RETURN j;
+}
+
+FUNCTION INT g(){
+	VAR j;
+	VAR l2;
+	VAR l3;
+	VAR l4;
+
+	AFFECT l2 = 2;
+	AFFECT l3 = 3;
+	AFFECT l4 = 4;
+	AFFECT j = 10 + l2 + l3 + l4;
+
+	RETURN i+j;
+}
+
+FUNCTION VOID main(){
+	VAR i = 0;
+	VAR j = 1;
+	AFFECT k = f();
+}
