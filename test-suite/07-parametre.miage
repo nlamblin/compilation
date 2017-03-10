@@ -1,6 +1,4 @@
-/*
- * une fonction (appel)
- */
+/* une fonction (appel)
 
 int i =0;
 int j = 0;
@@ -11,5 +9,20 @@ int f(int a, int b){
  }
 
 void main(){
-	i = f(i,j); /*tester ceci*/
+	i = f(i,j); \*tester ceci*\
+}
+*/
+
+VAR i = 0;
+VAR j = 0;
+
+FUNCTION INT(a,b){
+	VAR x;
+	VAR y;
+	VAR z;
+	RETURN 0;
+}
+
+FUNCTION VOID main(){
+	AFFECT i = f(i,j); /* tester ceci*/
 }

@@ -1,6 +1,4 @@
-/*
- * boucle
- */
+/* boucle
 
 int i , j;
 void main(){
@@ -9,4 +7,14 @@ void main(){
 		j = j + i;
 	}
  }
+*/
 
+VAR i;
+VAR j;
+FUNCTION VOID main(){
+	AFFECT i = 0;
+	AFFECT j = 0;
+	WHILE (i < 3){
+		AFFECT j = j + i;
+	}
+}
