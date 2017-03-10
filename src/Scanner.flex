@@ -30,16 +30,15 @@ FIN 	    =  	\r|\n|\r\n
 
 {NUM}       { return new Symbol(sym.NUM, yytext());}
 {SEP}       { ; }
-{RETOUR}	{ return new Symbol(sym.RETOUR, yytext()); 
-{VAR}		{ return new Symbol(sym.VAR, yytext());}}
+{RETOUR}	{ return new Symbol(sym.RETOUR, yytext());}
 "("			{ return new Symbol(sym.PO, yytext());}
 ")"			{ return new Symbol(sym.PF, yytext());}
 "{"			{ return new Symbol(sym.ACO, yytext());}
 "}"			{ return new Symbol(sym.ACF, yytext());}
-","			{ return new Symbol(sym.VIR);}
 "function"	{ return new Symbol(sym.FUNCTION, yytext());}
 "void"		{ return new Symbol(sym.VOID, yytext());}
 "int"		{ return new Symbol(sym.INT, yytext());}
+{VAR}		{ return new Symbol(sym.VAR, yytext());}
 "="			{ return new Symbol(sym.AFFECT);}
 ">"			{ return new Symbol(sym.SUP);}
 "<"			{ return new Symbol(sym.INF);}
