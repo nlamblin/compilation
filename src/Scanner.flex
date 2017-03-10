@@ -20,9 +20,10 @@ import java_cup.runtime.Symbol;
 /* macros */
 SEP  	   	=   [ \t]
 NUM		    =   [0-9]+
-RETOUR		=	\n
 VAR			=	[a-zA-Z]+
-FIN 	    =  	\r|\n|\r\n
+RETOUR		=	[\\n]*
+COMM		=	(\/*){1}.*(\*\/){1}
+FIN     	=   \r|\n|\r\n
 
 %%
 
@@ -30,7 +31,7 @@ FIN 	    =  	\r|\n|\r\n
 
 {NUM}       { return new Symbol(sym.NUM, yytext());}
 {SEP}       { ; }
-{RETOUR}	{ return new Symbol(sym.RETOUR, yytext());}
+{COMM}		{ return new Symbol(sym.COMM, yytext());}
 "("			{ return new Symbol(sym.PO, yytext());}
 ")"			{ return new Symbol(sym.PF, yytext());}
 "{"			{ return new Symbol(sym.ACO, yytext());}
@@ -46,4 +47,7 @@ FIN 	    =  	\r|\n|\r\n
 ">="		{ return new Symbol(sym.SUP_EGAL);}
 "<="		{ return new Symbol(sym.INF_EGAL);}
 "!="		{ return new Symbol(sym.DIFF);}
+{RETOUR}	{ return new Symbol(sym.RET);}
+{FIN}		{ return new Symbol(sym.EOF);}
 .			{ return null;}
+
