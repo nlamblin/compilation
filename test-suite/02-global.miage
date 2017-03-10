@@ -1,8 +1,9 @@
-i = 0;
-j, k;
+VAR i = 0;
+VAR j;
+VAR k;
  
- function void main() {
-	k = 1;
-	j = k;
-	k = i;
+ FUNCTION VOID main() {
+	AFFECT k = 1;
+	AFFECT j = k;
+	AFFECT k = i;
  }

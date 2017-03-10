@@ -1,6 +1,6 @@
 /*
- * Test d'une expression arithmétique
- */
+Test d'une expression arithmétique
+
  
 int i, j;
 main(){
@@ -8,4 +8,12 @@ main(){
 	j = (2+i) - (3+i);
 }
 
- 
+Traduction
+*/
+
+VAR i;
+VAR j;
+FUNCTION(){
+	VAR i = 0;
+	AFFECT j = (2+i) - (3+i);
+}

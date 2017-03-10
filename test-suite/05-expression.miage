@@ -1,6 +1,5 @@
 /*
- * Une expression arithméthique
- */
+ Une expression arithméthique
  
  int x;
  int a = 1;
@@ -10,3 +9,14 @@
 	x=(a*2)+b-5/3;
  }
  
+ Traduction
+
+*/
+
+ VAR x;
+ VAR a = 1;
+ VAR b = 2;
+
+ FUNCTION VOID main(){
+	AFFECT x=(a*2)+b-5/3;
+ }
