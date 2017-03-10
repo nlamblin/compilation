@@ -1,6 +1,5 @@
 /*
- * Test d'erreur syntaxique
- */
+Test d'erreur syntaxique
  
  int i, j = 0;
  
@@ -17,3 +16,21 @@
 	 write(f(i+1,j));
  }
  
+Traduction
+*/
+
+ VAR i;
+ VAR j = 0;
+ 
+ FUNTCION INT f(a, b){
+	VAR x;
+	
+	AFFECT x=(a*2)+b-5/3 /*erreur ; attendu */
+	
+	RETURN x+2;
+ }
+ 
+ FUNCTION VOID main(){
+	 AFFECT j = read();
+	 CALL write(f(i+1,j));
+ }

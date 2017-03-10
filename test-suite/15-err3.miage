@@ -1,8 +1,13 @@
 /*
- * Test de controle semantique
- */
+Test de controle semantique
  
  void main(){
 	i = 0; /* erreur : variable non definie */
  }
  
+Traduire
+*/
+
+ FUNCTION VOID main(){
+	AFFECT i = 0; /* erreur : variable non definie */
+ }

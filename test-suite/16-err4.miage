@@ -1,6 +1,5 @@
 /*
- * Test de controle semantique 
- */
+Test de controle semantique 
  
  int i;
  
@@ -13,3 +12,16 @@
 	i = i + f(); /* erreur : compatibilite de type */
  }
  
+ Traduction
+ */
+
+ VAR i;
+ 
+ FUNCTION VOID f(){
+	VAR x;
+	AFFECT x=0;
+ }
+ 
+ FUNCTION VOID main(){
+	AFFECT i = i + f(); /* erreur : compatibilite de type */
+ }

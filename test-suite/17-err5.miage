@@ -1,6 +1,5 @@
 /*
- * Test de controle semantique
- */
+Test de controle semantique
  
  int i;
  
@@ -13,3 +12,16 @@
 	f(i); /* erreur : nombre de parametres */
  }
  
+Traduction
+*/
+
+ VAR i;
+ 
+ FUNCTION VOID f(a, b){
+	VAR x;
+	AFFECT x=0;
+ }
+ 
+ FUNCTION VOID main(){
+	CALL f(i); /* erreur : nombre de parametres */
+ }

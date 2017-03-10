@@ -1,6 +1,5 @@
 /*
- * Test de controle semantique
- */
+Test de controle semantique
  
  int i;
  int i; /* erreur : double definition */
@@ -9,3 +8,12 @@
 	i = 0;
  }
  
+ Traduction
+ */
+
+ VAR i;
+ VAR i; /* erreur : double definition */
+ 
+ FUNCTION VOID main(){
+	AFFECT i = 0;
+ }

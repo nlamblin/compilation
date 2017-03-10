@@ -1,6 +1,6 @@
 /*
- * recursivité
- */
+recursivitï¿½
+
 int x ;
 
 int f(int n){
@@ -12,4 +12,20 @@ int f(int n){
 
 void main(){
 	x = f(5);
+}
+
+Traduction
+*/
+
+VAR x ;
+
+FUNCTION INT f(n){
+	IF (n>0){
+		RETURN 0;
+	}
+	RETURN (n+f(n-1));
+}
+
+FUNCTION VOID main(){
+	AFFECT x = f(5);
 }
