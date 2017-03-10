@@ -21,6 +21,7 @@ import java_cup.runtime.Symbol;
 SEP  	   	=   [ \t]
 NUM		    =   [0-9]+
 RETOUR		=	\n
+VAR			=	[a-zA-Z]+
 FIN 	    =  	\r|\n|\r\n
 
 %%
@@ -29,14 +30,16 @@ FIN 	    =  	\r|\n|\r\n
 
 {NUM}       { return new Symbol(sym.NUM, yytext());}
 {SEP}       { ; }
-{RETOUR}	{ return new Symbol(sym.RETOUR, yytext()); }
+{RETOUR}	{ return new Symbol(sym.RETOUR, yytext()); 
+{VAR}		{ return new Symbol(sym.VAR, yytext());}}
 "("			{ return new Symbol(sym.PO, yytext());}
 ")"			{ return new Symbol(sym.PF, yytext());}
 "{"			{ return new Symbol(sym.ACO, yytext());}
 "}"			{ return new Symbol(sym.ACF, yytext());}
+","			{ return new Symbol(sym.VIR);}
 "function"	{ return new Symbol(sym.FUNCTION, yytext());}
 "void"		{ return new Symbol(sym.VOID, yytext());}
-"main"		{ return new Symbol(sym.VAR, yytext());}
+"int"		{ return new Symbol(sym.INT, yytext());}
 "="			{ return new Symbol(sym.AFFECT);}
 ">"			{ return new Symbol(sym.SUP);}
 "<"			{ return new Symbol(sym.INF);}
@@ -44,5 +47,4 @@ FIN 	    =  	\r|\n|\r\n
 ">="		{ return new Symbol(sym.SUP_EGAL);}
 "<="		{ return new Symbol(sym.INF_EGAL);}
 "!="		{ return new Symbol(sym.DIFF);}
-{FIN}		{ return new Symbol(sym.EOF);}
 .			{ return null;}

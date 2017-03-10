@@ -24,7 +24,7 @@ public class Main {
 	 * @throws Exception 
 	 */
 	public static void main(String[] args) throws Exception {
-		FileInputStream file = new FileInputStream(new File("test-suite/02-global.miage"));
+		FileInputStream file = new FileInputStream(new File("test-suite/01-minimal.miage"));
 		ParserCup parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
 		try {
 			parser.parse();
