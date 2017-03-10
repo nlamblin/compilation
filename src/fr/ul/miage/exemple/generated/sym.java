@@ -8,33 +8,37 @@ package fr.ul.miage.exemple.generated;
 /** CUP generated interface containing symbol constants. */
 public interface sym {
   /* terminals */
-  public static final int ACO = 5;
-  public static final int AFFECT = 18;
-  public static final int SUP = 16;
-  public static final int COMP = 14;
-  public static final int SOUS = 11;
-  public static final int ACF = 6;
-  public static final int FUNCTION = 3;
-  public static final int INF = 15;
-  public static final int NUM = 9;
-  public static final int INF_EGAL = 21;
-  public static final int PO = 7;
+  public static final int RET = 21;
+  public static final int EGAL = 2;
+  public static final int ACO = 7;
+  public static final int AFFECT = 20;
+  public static final int INT = 25;
+  public static final int SUP = 18;
+  public static final int COMP = 16;
+  public static final int SOUS = 13;
+  public static final int ACF = 8;
+  public static final int FUNCTION = 5;
+  public static final int INF = 17;
+  public static final int NUM = 11;
+  public static final int INF_EGAL = 23;
+  public static final int PO = 9;
   public static final int EOF = 0;
-  public static final int DIV = 13;
-  public static final int ADD = 10;
+  public static final int DEFVAR = 3;
+  public static final int DIV = 15;
+  public static final int ADD = 12;
   public static final int error = 1;
-  public static final int DOT = 2;
-  public static final int PF = 8;
-  public static final int SUP_EGAL = 20;
-  public static final int DIFF = 17;
-  public static final int RETOUR = 19;
-  public static final int FIN = 23;
-  public static final int MUL = 12;
-  public static final int VOID = 4;
-  public static final int VAR = 22;
+  public static final int DOT = 4;
+  public static final int PF = 10;
+  public static final int SUP_EGAL = 22;
+  public static final int DIFF = 19;
+  public static final int MUL = 14;
+  public static final int VOID = 6;
+  public static final int VAR = 24;
   public static final String[] terminalNames = new String[] {
   "EOF",
   "error",
+  "EGAL",
+  "DEFVAR",
   "DOT",
   "FUNCTION",
   "VOID",
@@ -52,11 +56,11 @@ public interface sym {
   "SUP",
   "DIFF",
   "AFFECT",
-  "RETOUR",
+  "RET",
   "SUP_EGAL",
   "INF_EGAL",
   "VAR",
-  "FIN"
+  "INT"
   };
 }
 

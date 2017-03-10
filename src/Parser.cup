@@ -11,9 +11,9 @@ package fr.ul.miage.exemple.generated;
 
 /* la grammaire */
 
-terminal DOT,FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
+terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
 
-non terminal  file, line, function, parametre, expression, affectation, calcul, type_retour, instruction;
+non terminal  file, line, function, parametre, expression, affectation, calcul, type_retour, instruction, def_var;
 
 start with file;
 
@@ -24,7 +24,7 @@ file ::= 	line file
 line ::= 	function
 			| expression;
 
-function ::= FUNCTION type_retour VAR PO parametre PF ACO   ACF{: System.out.println("La fonction fonctionne"); :};
+function ::= FUNCTION type_retour VAR PO parametre PF ACO ACF {: System.out.println("La fonction fonctionne"); :};
 			
 			
 type_retour ::= VOID
@@ -34,8 +34,13 @@ parametre ::=	INT VAR
 				|
 				;
 
-expression ::= affectation
+expression ::= 	def_var
+				| affectation
 				| calcul;
-
-affectation ::= VAR AFFECT VAR DOT
-				| VAR AFFECT NUM DOT;
+				
+def_var ::= DEFVAR VAR DOT
+			| DEFVAR VAR EGAL VAR DOT
+			| DEFVAR VAR EGAL NUM DOT;
+			
+affectation ::= AFFECT;
+//				| AFFECT VAR EGAL VAR DOT;

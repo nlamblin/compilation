@@ -1,9 +1,7 @@
 VAR i = 0;
 VAR j;
 VAR k;
- 
+
  FUNCTION VOID main() {
-	AFFECT k = 1;
-	AFFECT j = k;
-	AFFECT k = i;
+ 	AFFECT
  }
