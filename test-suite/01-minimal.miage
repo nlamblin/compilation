@@ -1,3 +1,7 @@
-/* FUNCTION VOID main () {} */
+/*
+ * Le plus petit programme
+ */
 
-FUNCTION VOID main () {}
+ 
+ FUNCTION VOID main(){
+ }

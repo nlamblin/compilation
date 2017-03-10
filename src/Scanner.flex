@@ -22,7 +22,7 @@ SEP  	   	=   [ \t]
 NUM		    =   [0-9]+
 VAR			=	[a-z]+
 RETOUR		=	[\\n]+
-COMM		=	((\/*){1}.*(\*\/){1})+
+COMM		=	"/*"([^*]|(\*+[^*/]))*\*+\/
 FIN     	=   \r|\n|\r\n
 
 %%
@@ -37,9 +37,9 @@ FIN     	=   \r|\n|\r\n
 "{"			{ return new Symbol(sym.ACO, yytext());}
 "}"			{ return new Symbol(sym.ACF, yytext());}
 ";"			{ return new Symbol(sym.DOT);}
+"VOID"		{ return new Symbol(sym.VOID, yytext());}
 "FUNCTION"	{ return new Symbol(sym.FUNCTION, yytext());}
 "AFFECT"	{ return new Symbol(sym.AFFECT);}
-"VOID"		{ return new Symbol(sym.VOID, yytext());}
 "INT"		{ return new Symbol(sym.INT, yytext());}
 {VAR}		{ return new Symbol(sym.VAR, yytext());}
 "VAR"		{ return new Symbol(sym.DEFVAR, yytext());}
@@ -50,6 +50,10 @@ FIN     	=   \r|\n|\r\n
 ">="		{ return new Symbol(sym.SUP_EGAL);}
 "<="		{ return new Symbol(sym.INF_EGAL);}
 "!="		{ return new Symbol(sym.DIFF);}
+"+"			{ return new Symbol(sym.PLUS);}
+"-"			{ return new Symbol(sym.MOINS);}
+"/"			{ return new Symbol(sym.DIV);}
+"*"			{ return new Symbol(sym.MULT);}
 {RETOUR}	{}
 {FIN}		{}
 .			{ return null;}

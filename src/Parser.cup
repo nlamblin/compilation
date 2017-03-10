@@ -11,18 +11,23 @@ package fr.ul.miage.exemple.generated;
 
 /* la grammaire */
 
-terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM, ADD, SOUS, MUL, DIV, COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
+terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
+terminal COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
+terminal PLUS, MOINS, DIV, MULT;
 
-non terminal  file, line, function, parametre, expression, affectation, calcul, type_retour, instruction, def_var;
+non terminal  file, line, function, parametre, expression, affectation;
+non terminal  calcul, type_retour, instruction, def_var, action_affect;
+non terminal  entite, operation;
 
 start with file;
 
-file ::= 	line file
-			|line
+file ::= line file
+		|line
 			{: System.out.println("La fin de fichier fonctionne"); :};
 
-line ::= 	function
-			| expression;
+line ::= function
+		|expression
+		|ACF;
 
 function ::= FUNCTION type_retour VAR PO parametre PF ACO {: System.out.println("La fonction fonctionne"); :};
 			
@@ -33,16 +38,26 @@ type_retour ::= VOID
 parametre ::=	INT VAR
 				|
 				;
-
-expression ::= 	def_var
-				| affectation
-				| calcul
-				|
-				;
 				
-def_var ::= DEFVAR VAR DOT
-			| DEFVAR VAR EGAL VAR DOT
-			| DEFVAR VAR EGAL NUM DOT;
-			
-affectation ::= AFFECT;
-//				| AFFECT VAR EGAL VAR DOT;
+expression ::= affectation;
+
+affectation ::= action_affect VAR DOT
+				| action_affect VAR EGAL entite DOT
+				| action_affect VAR EGAL entite calcul DOT;
+				
+entite ::= NUM
+			|VAR;
+				
+action_affect ::= DEFVAR
+				|AFFECT;				
+
+operation ::= PLUS
+				|MOINS
+				|DIV
+				|MULT;
+							
+calcul ::= operation entite
+			| operation entite calcul;
+				
+
+
