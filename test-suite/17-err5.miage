@@ -9,7 +9,7 @@ Test de controle semantique
  }
  
  void main(){
-	f(i); /* erreur : nombre de parametres */
+	f(i); \* erreur : nombre de parametres *\
  }
  
 Traduction

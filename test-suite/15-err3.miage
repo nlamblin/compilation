@@ -2,7 +2,7 @@
 Test de controle semantique
  
  void main(){
-	i = 0; /* erreur : variable non definie */
+	i = 0; \* erreur : variable non definie \*
  }
  
 Traduire

@@ -6,7 +6,7 @@ Test d'erreur syntaxique
  int f(int a, int b){
 	int x;
 	
-	x=(a*2)+b-5/3 /*erreur ; attendu */
+	x=(a*2)+b-5/3 \*erreur ; attendu \*
 	
 	return x+2;
  }

@@ -9,7 +9,7 @@ Test de controle semantique
  }
  
  void main(){
-	i = i + f(); /* erreur : compatibilite de type */
+	i = i + f(); \* erreur : compatibilite de type *\
  }
  
  Traduction
