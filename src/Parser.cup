@@ -13,11 +13,11 @@ package fr.ul.miage.exemple.generated;
 
 terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
 terminal COMP, INF, SUP, DIFF, AFFECT, RET, SUP_EGAL, INF_EGAL,VAR, INT;
-terminal PLUS, MOINS, DIV, MULT;
+terminal PLUS, MOINS, DIV, MULT, IF, ELSE;
 
 non terminal  file, line, function, parametre, expression, affectation;
 non terminal  calcul, type_retour, instruction, def_var, action_affect;
-non terminal  entite, operation;
+non terminal  entite, operation, conditionnelle, condition;
 
 start with file;
 
@@ -39,11 +39,16 @@ parametre ::=	INT VAR
 				|
 				;
 				
-expression ::= affectation;
+expression ::= affectation
+				| conditionnelle;
 
 affectation ::= action_affect VAR DOT
 				| action_affect VAR EGAL entite DOT
 				| action_affect VAR EGAL entite calcul DOT;
+				
+conditionnelle ::= IF PO condition PF ACO expression ACF;
+
+condition ::= VAR COMP NUM;
 				
 entite ::= NUM
 			|VAR

@@ -42,6 +42,8 @@ FIN     	=   \r|\n|\r\n
 "FUNCTION"	{ return new Symbol(sym.FUNCTION, yytext());}
 "AFFECT"	{ return new Symbol(sym.AFFECT);}
 "INT"		{ return new Symbol(sym.INT, yytext());}
+"IF"		{ return new Symbol(sym.IF, yytext());}
+"ELSE"		{ return new Symbol(sym.ELSE, yytext());}
 {VAR}		{ return new Symbol(sym.VAR, yytext());}
 "VAR"		{ return new Symbol(sym.DEFVAR, yytext());}
 "="			{ return new Symbol(sym.EGAL);}
