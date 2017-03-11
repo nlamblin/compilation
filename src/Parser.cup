@@ -26,8 +26,8 @@ file ::= line file
 			{: System.out.println("La fin de fichier fonctionne"); :};
 
 line ::= function
-		|expression
-		|ACF;
+		|ACF
+		|expression;
 
 function ::= FUNCTION type_retour VAR PO parametre PF ACO {: System.out.println("La fonction fonctionne"); :};
 			
