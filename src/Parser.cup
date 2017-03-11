@@ -17,7 +17,7 @@ terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE;
 
 non terminal  file, line, function, parametre, expression, affectation;
 non terminal  calcul, type_retour, instruction, def_var, action_affect;
-non terminal  entite, operation, conditionnelle, condition, operateur, iteration;
+non terminal  entite, operation, conditionnelle, condition, operateur, iteration, definition;
 
 start with file;
 
@@ -41,11 +41,13 @@ parametre ::=	INT VAR
 				
 expression ::= affectation
 				| conditionnelle	
-				| iteration;
+				| iteration
+				| definition;
+				
+definition ::= DEFVAR VAR DOT;
 
-affectation ::= action_affect VAR DOT
-				| action_affect VAR EGAL entite DOT
-				| action_affect VAR EGAL calcul DOT;
+affectation ::= AFFECT VAR EGAL entite DOT
+				| AFFECT VAR EGAL calcul DOT;
 				
 conditionnelle ::= IF condition ACO expression ACF
 					| IF condition ACO expression ACF ELSE ACO expression ACF;
