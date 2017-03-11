@@ -44,6 +44,7 @@ FIN     	=   \r|\n|\r\n
 "INT"		{ return new Symbol(sym.INT, yytext());}
 "IF"		{ return new Symbol(sym.IF, yytext());}
 "ELSE"		{ return new Symbol(sym.ELSE, yytext());}
+"WHILE"		{ return new Symbol(sym.WHILE, yytext());}
 {VAR}		{ return new Symbol(sym.VAR, yytext());}
 "VAR"		{ return new Symbol(sym.DEFVAR, yytext());}
 "="			{ return new Symbol(sym.EGAL);}
