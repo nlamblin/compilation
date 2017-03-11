@@ -14,7 +14,7 @@ VAR i;
 AFFECT i = 3;
 VAR j;
 FUNCTION VOID main(){
-	IF (i == 2){
+	IF (i != 2){
 		AFFECT j = 0;
 	}
 }
