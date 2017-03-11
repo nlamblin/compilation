@@ -25,7 +25,6 @@ RETOUR		=	[\\n]+
 COMM		=	"/*"([^*]|(\*+[^*/]))*\*+\/
 FIN     	=   \r|\n|\r\n
 
-
 %%
 
 /* regles */
@@ -61,4 +60,3 @@ FIN     	=   \r|\n|\r\n
 {RETOUR}	{}
 {FIN}		{}
 .			{ return null;}
-

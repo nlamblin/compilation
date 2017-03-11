@@ -45,14 +45,14 @@ expression ::= affectation
 
 affectation ::= action_affect VAR DOT
 				| action_affect VAR EGAL entite DOT
-				| action_affect VAR EGAL entite calcul DOT;
+				| action_affect VAR EGAL calcul DOT;
 				
-conditionnelle ::= IF PO condition PF ACO expression ACF
-					| IF PO condition PF ACO expression ACF ELSE ACO expression ACF;
+conditionnelle ::= IF condition ACO expression ACF
+					| IF condition ACO expression ACF ELSE ACO expression ACF;
 
-condition ::= entite operateur entite;
+condition ::= PO entite operateur entite PF;
 
-iteration ::= WHILE PO condition PF ACO expression ACF;
+iteration ::= WHILE condition ACO expression ACF;
 				
 operateur ::= COMP
 				| INF
@@ -63,7 +63,7 @@ operateur ::= COMP
 				
 entite ::= NUM
 			|VAR
-			|PO entite calcul PF;
+			|PO calcul PF;
 				
 action_affect ::= DEFVAR
 				|AFFECT;				
@@ -73,8 +73,8 @@ operation ::= PLUS
 				|DIV
 				|MULT;
 							
-calcul ::= operation entite
-			| operation entite calcul;
+calcul ::= entite operation entite
+			| entite operation calcul;
 				
 
 
