@@ -15,7 +15,8 @@ void main(){
 }
 */
 
-VAR i = 0;
+VAR i;
+AFFECT i = 0;
 VAR j;
 
 FUNCTION INT f(a) {

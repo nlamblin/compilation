@@ -24,6 +24,8 @@ main(){
 	j=1;
 	k=f();	
 }
+
+Traduction
 */
 
 VAR i;
@@ -53,7 +55,9 @@ FUNCTION INT g(){
 }
 
 FUNCTION VOID main(){
-	VAR i = 0;
-	VAR j = 1;
+	VAR i;
+	AFFECT i = 0;
+	VAR j;
+	AFFECT j = 1;
 	AFFECT k = f();
 }
