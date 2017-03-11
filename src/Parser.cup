@@ -46,7 +46,8 @@ affectation ::= action_affect VAR DOT
 				| action_affect VAR EGAL entite DOT
 				| action_affect VAR EGAL entite calcul DOT;
 				
-conditionnelle ::= IF PO condition PF ACO expression ACF;
+conditionnelle ::= IF PO condition PF ACO expression ACF
+					| IF PO condition PF ACO expression ACF ELSE ACO expression ACF;
 
 condition ::= entite operateur entite;
 				
