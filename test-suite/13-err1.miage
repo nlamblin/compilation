@@ -20,7 +20,8 @@ Traduction
 */
 
  VAR i;
- VAR j = 0;
+ VAR j;
+ AFFECT j = 0;
  
  FUNTCION INT f(a, b){
 	VAR x;

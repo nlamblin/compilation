@@ -17,7 +17,7 @@ void main(){
 Traduction
 */
 
-VAR x ;
+VAR x;
 
 FUNCTION INT f(n){
 	IF (n>0){
