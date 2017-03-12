@@ -17,76 +17,96 @@ terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
 
 non terminal  file, line, function, parametre, expression, affectation;
 non terminal  calcul, type_retour, instruction, def_var, action_affect, appel;
-non terminal  entite, operation, conditionnelle, condition, operateur, iteration, declaration,appel_function,entite_return;
-non terminal  entite_param, return;
+non terminal  entite, operation, conditionnelle, condition, operateur, iteration, declaration;
+non terminal  appel_function,entite_return, entite_param, return;
 
 start with file;
 
-file ::= line file
-		|line {: System.out.println("La fin de fichier fonctionne"); :};
+file 	::= line file
+		| 	line
+		;
 
-line ::= function
-		|expression
-		|ACF;
+line 	::= function
+		|	expression
+		|	ACF
+		;
 
-function ::= FUNCTION type_retour VAR PO parametre PF ACO {: System.out.println("La fonction fonctionne"); :};
+function 	::= FUNCTION type_retour VAR PO parametre PF ACO
+			;
 
 type_retour ::= VOID
-				|INT;
+			|	INT
+			;
 
-parametre ::= entite_param
-				| entite_param VIRGUL parametre;
+parametre 	::= entite_param
+			| 	entite_param VIRGUL parametre
+			;
 
-entite_return ::= entite calcul
-					|entite;
+entite_return 	::= entite calcul
+				|	entite
+				;
 
 
 entite_param ::= INT VAR
 				| entite
 				| entite calcul
-				|;				
+				|
+				;				
 
-expression ::= declaration
-				|affectation
-				|conditionnelle	
-				|appel
-				|return
-				|iteration;
+expression	::= declaration
+			|	affectation
+			|	conditionnelle	
+			|	appel
+			|	return
+			|	iteration
+			;
 				
-appel_function ::= entite PO parametre PF;
+appel_function 	::= entite PO parametre 
+				;
 
-declaration ::= DEFVAR VAR DOT;
+declaration ::= DEFVAR VAR DOT
+			;
 
 affectation ::= AFFECT VAR EGAL entite DOT
-				|AFFECT VAR EGAL entite calcul DOT;
+			|	AFFECT VAR EGAL entite calcul DOT
+			;
 
-entite ::= NUM
-			|VAR
-			|appel_function
-			|PO entite calcul PF;
+entite 	::= NUM
+		|	VAR
+		|	appel_function
+		|	PO entite calcul PF
+		;
 
-calcul ::= operation entite
-			|operation entite calcul;			
+calcul 	::= operation entite
+		|	operation entite calcul
+		;			
 
-operation ::= PLUS
-				|MOINS
-				|DIV
-				|MULT;
+operation 	::= PLUS
+			|	MOINS
+			|	DIV
+			|	MULT
+			;
 
-conditionnelle ::= IF condition ACO expression ACF
-					|IF condition ACO expression ACF ELSE ACO expression ACF;
+conditionnelle 	::= IF condition ACO expression ACF
+				|	IF condition ACO expression ACF ELSE ACO expression ACF
+				;
 
-condition ::= PO entite operateur entite PF;
+condition 	::= PO entite operateur entite PF
+			;
 
-return ::= RETURN entite_return DOT;
+return 	::= RETURN entite_return DOT
+		;
 
-operateur ::= COMP
-				|INF
-				|SUP
-				|DIFF
-				|SUP_EGAL
-				|INF_EGAL;
+operateur 	::= COMP
+			|	INF
+			|	SUP
+			|	DIFF
+			|	SUP_EGAL
+			|	INF_EGAL
+			;
 
-iteration ::= WHILE condition ACO expression ACF;
+iteration 	::= WHILE condition ACO expression ACF
+			;
 
-appel ::= CALL VAR PO parametre PF DOT;
+appel 	::= CALL VAR PO parametre PF DOT
+		;
