@@ -13,11 +13,12 @@ package fr.ul.miage.exemple.generated;
 
 terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
 terminal COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL,VAR, INT;
-terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE;
+terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
 
 non terminal  file, line, function, parametre, expression, affectation;
-non terminal  calcul, type_retour, instruction, def_var, action_affect;
-non terminal  entite, operation, conditionnelle, condition, operateur, iteration, declaration;
+non terminal  calcul, type_retour, instruction, def_var, action_affect, appel;
+non terminal  entite, operation, conditionnelle, condition, operateur, iteration, declaration,appel_function,entite_return;
+non terminal  entite_param, return;
 
 start with file;
 
@@ -25,33 +26,47 @@ file ::= line file
 		|line {: System.out.println("La fin de fichier fonctionne"); :};
 
 line ::= function
-		|ACF
-		|expression;
+		|expression
+		|ACF;
 
 function ::= FUNCTION type_retour VAR PO parametre PF ACO {: System.out.println("La fonction fonctionne"); :};
 
 type_retour ::= VOID
 				|INT;
 
-parametre ::= INT VAR
-				|;
+parametre ::= entite_param
+				| entite_param VIRGUL parametre;
+
+entite_return ::= entite calcul
+					|entite;
+
+
+entite_param ::= INT VAR
+				| entite
+				| entite calcul
+				|;				
 
 expression ::= declaration
 				|affectation
 				|conditionnelle	
+				|appel
+				|return
 				|iteration;
+				
+appel_function ::= entite PO parametre PF;
 
 declaration ::= DEFVAR VAR DOT;
 
 affectation ::= AFFECT VAR EGAL entite DOT
-				|AFFECT VAR EGAL calcul DOT;
+				|AFFECT VAR EGAL entite calcul DOT;
 
 entite ::= NUM
 			|VAR
-			|PO calcul PF;
+			|appel_function
+			|PO entite calcul PF;
 
-calcul ::= entite operation entite
-			|entite operation calcul;			
+calcul ::= operation entite
+			|operation entite calcul;			
 
 operation ::= PLUS
 				|MOINS
@@ -63,6 +78,8 @@ conditionnelle ::= IF condition ACO expression ACF
 
 condition ::= PO entite operateur entite PF;
 
+return ::= RETURN entite_return DOT;
+
 operateur ::= COMP
 				|INF
 				|SUP
@@ -71,3 +88,5 @@ operateur ::= COMP
 				|INF_EGAL;
 
 iteration ::= WHILE condition ACO expression ACF;
+
+appel ::= CALL VAR PO parametre PF DOT;

@@ -20,7 +20,8 @@ import java_cup.runtime.Symbol;
 /* macros */
 SEP  	   	=   [ \t]
 NUM		    =   [0-9]+
-VAR			=	[a-z]+
+VAR			=	([a-z]|[0-9])+
+FUNCIN		=	[a-zA-Z\-\_]
 RETOUR		=	[\\n]+
 COMM		=	"/*"([^*]|(\*+[^*/]))*\*+\/
 FIN     	=   \r|\n|\r\n
@@ -40,6 +41,8 @@ FIN     	=   \r|\n|\r\n
 "VOID"		{ return new Symbol(sym.VOID, yytext());}
 "FUNCTION"	{ return new Symbol(sym.FUNCTION, yytext());}
 "AFFECT"	{ return new Symbol(sym.AFFECT);}
+"CALL"		{ return new Symbol(sym.CALL);}
+"RETURN"	{ return new Symbol(sym.RETURN);}
 "INT"		{ return new Symbol(sym.INT, yytext());}
 "IF"		{ return new Symbol(sym.IF, yytext());}
 "ELSE"		{ return new Symbol(sym.ELSE, yytext());}
@@ -57,6 +60,7 @@ FIN     	=   \r|\n|\r\n
 "-"			{ return new Symbol(sym.MOINS);}
 "/"			{ return new Symbol(sym.DIV);}
 "*"			{ return new Symbol(sym.MULT);}
+","			{ return new Symbol(sym.VIRGUL);}
 {RETOUR}	{}
 {FIN}		{}
 .			{ return null;}

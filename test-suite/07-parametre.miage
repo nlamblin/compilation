@@ -20,7 +20,7 @@ AFFECT i = 0;
 VAR j;
 AFFECT j = 0;
 
-FUNCTION INT(a,b){
+FUNCTION INT f (a,b){
 	VAR x;
 	VAR y;
 	VAR z;

@@ -32,9 +32,11 @@ Traduction
 	AFFECT x=(a*2)+b-5/3;
 	
 	RETURN x+2;
- }
+}
+ 
 
  FUNCTION VOID main() {
 	AFFECT j = read();
-	CALL write(f(i+1),j));
- }
+	CALL write(f(i+1,j));
+}
+ 
