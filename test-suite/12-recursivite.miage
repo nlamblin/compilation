@@ -20,10 +20,14 @@ Traduction
 VAR x;
 
 FUNCTION INT f(n){
+	VAR res;
+	AFFECT res = (n+f(n-1));
+	
 	IF (n>0){
-		RETURN 0;
+		AFFECT res = 0;
 	}
-	RETURN (n+f(n-1));
+	
+	RETURN res;
 }
 
 FUNCTION VOID main(){

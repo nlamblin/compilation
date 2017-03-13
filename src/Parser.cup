@@ -18,7 +18,7 @@ terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
 non terminal  fichier, ligne, function, parametre, expression, affectation;
 non terminal  calcul, type_retour, appel, operateur, iteration, declaration;
 non terminal  entite, operation, conditionnelle, condition, appel_function,entite_return;
-non terminal  entite_param, return;
+non terminal  entite_param, return,boucle_expression,expression_hors_func;
 
 start with fichier;
 
@@ -28,8 +28,7 @@ fichier	::= ligne fichier
 		;
 
 ligne	::= function
-		|	expression
-		|	ACF
+		|	expression_hors_func
 		;
 
 // DECLARATION ET AFFECTATION
@@ -41,28 +40,36 @@ affectation ::= AFFECT VAR EGAL entite DOT
 			;
 
 // FONCTION
-function 	::= FUNCTION type_retour VAR PO parametre PF ACO
-			;
-
-type_retour	::= VOID
-			|	INT
+function 	::= FUNCTION VOID VAR PO parametre PF ACO boucle_expression ACF
+			| 	FUNCTION INT VAR PO parametre PF ACO boucle_expression return ACF
+			| 	FUNCTION VOID VAR PO PF ACO boucle_expression ACF
+			| 	FUNCTION INT VAR PO PF ACO boucle_expression return ACF
 			;
 			
 appel_function 	::= entite PO parametre PF
+				|	entite PO PF
 				;
 				
 return 	::=	RETURN entite_return DOT
 		;
 		
 // EXPRESSION
+boucle_expression 	::= expression boucle_expression
+					|
+					;
+					
+expression_hors_func	::= declaration
+						|	affectation 
+						;
+
+
 expression 	::= declaration
-			|	affectation
+			|	affectation 
 			|	conditionnelle	
 			|	appel
-			|	return
 			|	iteration
 			;
-
+			
 calcul 	::= operation entite
 		|	operation entite calcul
 		;			
@@ -73,11 +80,11 @@ operation	::= PLUS
 			|	MULT
 			;
 
-conditionnelle 	::=	IF condition ACO expression ACF
-				|	IF condition ACO expression ACF ELSE ACO expression ACF
+conditionnelle 	::=	IF condition ACO boucle_expression ACF
+				|	IF condition ACO boucle_expression ACF ELSE ACO boucle_expression ACF
 				;
 				
-iteration	::= WHILE condition ACO expression ACF
+iteration	::= WHILE condition ACO boucle_expression ACF
 			;
 			
 
@@ -95,12 +102,12 @@ entite_return 	::= entite calcul
 entite_param 	::= INT VAR
 				| 	entite
 				| 	entite calcul
-				|
 				;
 
 parametre 	::= entite_param
 			| 	entite_param VIRGUL parametre
 			;				
+		
 
 operateur	::= COMP
 			|	INF
@@ -114,4 +121,5 @@ condition 	::= PO entite operateur entite PF
 			;
 
 appel 	::= CALL VAR PO parametre PF DOT
+		|	CALL VAR PO PF DOT
 		;
