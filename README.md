@@ -28,3 +28,4 @@ Incrémentation : AFFECT x = x + 1;
 
 RETURN obligatoire dans fonction ayant un type de retour.
 RETURN non accepté dans une fonction void.
+Si fonction avec type de retour, le RETURN doit être sur la dernière ligne de la fonction
