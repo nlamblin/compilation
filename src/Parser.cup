@@ -1,6 +1,6 @@
 /*
  * analyseur syntaxique  du langage exemple-expr:
- * expression arithmetique
+ * instruction arithmetique
  * (voir supports de cours)
  *
  * auteur : azim.roussanaly@univ-lorraine.fr
@@ -15,10 +15,10 @@ terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
 terminal COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL,VAR, INT;
 terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
 
-non terminal  fichier, ligne, function, parametre, expression, affectation;
+non terminal  fichier, ligne, function, parametre, instruction, affectation;
 non terminal  calcul, type_retour, appel, operateur, iteration, declaration;
-non terminal  entite, operation, conditionnelle, condition, appel_function,entite_return;
-non terminal  entite_param, return,boucle_expression,expression_hors_func;
+non terminal  atome, operation, conditionnelle, condition, appel_function;
+non terminal  atome_param, return,boucle_instruction,instruction_hors_func;
 
 start with fichier;
 
@@ -28,50 +28,49 @@ fichier	::= ligne fichier
 		;
 
 ligne	::= function
-		|	expression_hors_func
+		|	instruction_hors_func
 		;
 
 // DECLARATION ET AFFECTATION
 declaration	::= DEFVAR VAR DOT
 			;
 
-affectation ::= AFFECT VAR EGAL entite DOT
-			|	AFFECT VAR EGAL entite calcul DOT
+affectation ::= AFFECT VAR EGAL calcul DOT
 			;
 
 // FONCTION
-function 	::= FUNCTION VOID VAR PO parametre PF ACO boucle_expression ACF
-			| 	FUNCTION INT VAR PO parametre PF ACO boucle_expression return ACF
-			| 	FUNCTION VOID VAR PO PF ACO boucle_expression ACF
-			| 	FUNCTION INT VAR PO PF ACO boucle_expression return ACF
+function 	::= FUNCTION VOID VAR PO parametre PF ACO boucle_instruction ACF
+			| 	FUNCTION INT VAR PO parametre PF ACO boucle_instruction return ACF
+			| 	FUNCTION VOID VAR PO PF ACO boucle_instruction ACF
+			| 	FUNCTION INT VAR PO PF ACO boucle_instruction return ACF
 			;
 			
-appel_function 	::= entite PO parametre PF
-				|	entite PO PF
+appel_function 	::= atome PO parametre PF
+				|	atome PO PF
 				;
 				
-return 	::=	RETURN entite_return DOT
+return 	::=	RETURN calcul DOT
 		;
 		
-// EXPRESSION
-boucle_expression 	::= expression boucle_expression
+// instruction
+boucle_instruction 	::= instruction boucle_instruction
 					|
 					;
 					
-expression_hors_func	::= declaration
+instruction_hors_func	::= declaration
 						|	affectation 
 						;
 
 
-expression 	::= declaration
+instruction ::= declaration
 			|	affectation 
 			|	conditionnelle	
 			|	appel
 			|	iteration
 			;
 			
-calcul 	::= operation entite
-		|	operation entite calcul
+calcul 	::= atome operation calcul
+		|	atome
 		;			
 
 operation	::= PLUS
@@ -80,32 +79,27 @@ operation	::= PLUS
 			|	MULT
 			;
 
-conditionnelle 	::=	IF condition ACO boucle_expression ACF
-				|	IF condition ACO boucle_expression ACF ELSE ACO boucle_expression ACF
+conditionnelle 	::=	IF condition ACO boucle_instruction ACF
+				|	IF condition ACO boucle_instruction ACF ELSE ACO boucle_instruction ACF
 				;
 				
-iteration	::= WHILE condition ACO boucle_expression ACF
+iteration	::= WHILE condition ACO boucle_instruction ACF
 			;
 			
 
 // AUTRE
-entite 	::= NUM
+atome 	::= NUM
 		|	VAR
 		|	appel_function
-		|	PO entite calcul PF
+		|	PO calcul PF
 		;
-		
-entite_return 	::= entite calcul
-				|	entite
+
+atome_param 	::= INT VAR
+				| 	calcul
 				;
 
-entite_param 	::= INT VAR
-				| 	entite
-				| 	entite calcul
-				;
-
-parametre 	::= entite_param
-			| 	entite_param VIRGUL parametre
+parametre 	::= atome_param
+			| 	atome_param VIRGUL parametre
 			;				
 		
 
@@ -117,7 +111,7 @@ operateur	::= COMP
 			|	INF_EGAL
 			;
 
-condition 	::= PO entite operateur entite PF
+condition 	::= PO atome operateur atome PF
 			;
 
 appel 	::= CALL VAR PO parametre PF DOT
