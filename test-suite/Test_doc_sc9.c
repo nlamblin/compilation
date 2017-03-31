@@ -30,7 +30,8 @@ int Fibonacci(int n)
 */
 
 FUNCTION VOID main(INT n){
-	CALL fibonacci(n)
+	CALL fibonacci(n);
+	CALL fibonacci_iter(n);
 }
 
 FUNCTION INT fibonacci(INT n){
