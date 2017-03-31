@@ -223,8 +223,22 @@ public class Main {
 			e.printStackTrace();
 		}
 		System.out.println("----------17-err5----------");
+		Thread.sleep(1000);
 		
+		System.out.println("----------fibonacci----------");
+		file = new FileInputStream(new File("test-suite/fibonacci"));
+		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+		try {
+			parser.parse();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("----------fibonacci----------");
+		Thread.sleep(1000);
 		
+	
 	}
 
 }
+
+		
