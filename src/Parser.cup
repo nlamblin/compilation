@@ -7,72 +7,85 @@
  * (c) 2013
  */ 
 package fr.ul.miage.exemple.generated;
+import fr.ul.miage.exemple.TableDesSymboles;
 
 
 /* la grammaire */
 
-terminal EGAL, DEFVAR, DOT, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
+action code {: TableDesSymboles tds = new TableDesSymboles() ;:};
+
+terminal EGAL, DEFVAR, PV, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
 terminal COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL,VAR, INT;
 terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
 
-non terminal  fichier, programme, function, parametre, expression, affectation;
-non terminal  calcul, type_retour, appel, operateur, iteration, declaration;
-non terminal  entite, operation, conditionnelle, condition, appel_function,entite_return;
-non terminal  entite_param, return,boucle_expression,expression_hors_func;
+non terminal  programme, function, parametre, expression, affectation, instruction;
+non terminal  type_retour, call, operateur, iteration, declaration;
+non terminal  entite, operation, conditionnelle, condition, appel_function,entite_pour_return;
+non terminal  entite_pour_parametre, return,suite_instruction, definition;
 
-start with fichier;
+start with programme;
 
 // LECTURE
-fichier	::= programme fichier
-		|	programme
-		;
-
-programme	::= function
-			|	expression_hors_func
+programme	::= function programme
+			| definition programme
+			| function
+			{: System.out.println(tds.toString()); :}
+			| definition
+			{: System.out.println(tds.toString()); :}
 			;
+			
 
 // DECLARATION ET AFFECTATION
-declaration	::= DEFVAR VAR DOT
+declaration	::= DEFVAR VAR PV
 			;
 
-affectation ::= AFFECT VAR EGAL entite DOT
-			|	AFFECT VAR EGAL entite calcul DOT
+affectation ::= AFFECT VAR:nom EGAL entite:value PV
+				{: tds.ajouterValeur((String)nom,(String)value); :}
+			|	AFFECT VAR:nom EGAL entite expression PV
 			;
 
 // FONCTION
-function 	::= FUNCTION VOID VAR PO parametre PF ACO boucle_expression ACF
-			| 	FUNCTION INT VAR PO parametre PF ACO boucle_expression return ACF
-			| 	FUNCTION VOID VAR PO PF ACO boucle_expression ACF
-			| 	FUNCTION INT VAR PO PF ACO boucle_expression return ACF
+function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction ACF
+				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+			| 	FUNCTION INT:type VAR:nom PO parametre PF ACO suite_instruction return ACF
+				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+			| 	FUNCTION VOID:type VAR:nom PO PF ACO suite_instruction ACF
+				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+			| 	FUNCTION INT:type VAR:nom PO PF ACO suite_instruction return ACF
+				{: tds.inserer((String)nom,(String)type,"fonction"); :}
 			;
 			
 appel_function 	::= entite PO parametre PF
 				|	entite PO PF
 				;
 				
-return 	::=	RETURN entite_return DOT
+return 	::=	RETURN entite_pour_return PV
 		;
 		
-// EXPRESSION
-boucle_expression 	::= expression boucle_expression
+// Instruction
+suite_instruction 	::= instruction suite_instruction
 					|
 					;
 					
-expression_hors_func	::= declaration
-						|	affectation 
-						;
-
-
-expression 	::= declaration
-			|	affectation 
-			|	conditionnelle	
-			|	appel
-			|	iteration
+definition ::= DEFVAR:type VAR:nom PV
+			{: tds.inserer((String)nom,(String)type,"globale"); :}
+			| INT:type VAR:nom PV				
+			{: tds.inserer((String)nom,(String)type,"globale"); :}
+			| AFFECT VAR:nom EGAL NUM:value PV	
+			{: tds.ajouterValeur((String)nom,(String)value); :}
 			;
+
+
+instruction 	::= declaration
+				|	affectation 
+				|	conditionnelle	
+				|	call
+				|	iteration
+				;
 			
-calcul 	::= operation entite
-		|	operation entite calcul
-		;			
+expression 	::= operation entite
+			|	operation entite expression
+			;			
 
 operation	::= PLUS
 			|	MOINS
@@ -80,32 +93,32 @@ operation	::= PLUS
 			|	MULT
 			;
 
-conditionnelle 	::=	IF condition ACO boucle_expression ACF
-				|	IF condition ACO boucle_expression ACF ELSE ACO boucle_expression ACF
+conditionnelle 	::=	IF condition ACO suite_instruction ACF
+				|	IF condition ACO suite_instruction ACF ELSE ACO suite_instruction ACF
 				;
 				
-iteration	::= WHILE condition ACO boucle_expression ACF
+iteration	::= WHILE condition ACO suite_instruction ACF
 			;
 			
 
 // AUTRE
-entite 	::= NUM
-		|	VAR
+entite 	::= NUM: num {: RESULT = num; :}
+		|	VAR:var {: RESULT = tds.getValeur(var.toString()); :}
 		|	appel_function
-		|	PO entite calcul PF
+		|	PO entite expression PF
 		;
 		
-entite_return 	::= entite calcul
-				|	entite
-				;
+entite_pour_return 	::= entite expression
+					|	entite
+					;
 
-entite_param 	::= INT VAR
-				| 	entite
-				| 	entite calcul
-				;
+entite_pour_parametre 	::= INT VAR
+						| 	entite
+						| 	entite expression
+						;
 
-parametre 	::= entite_param
-			| 	entite_param VIRGUL parametre
+parametre 	::= entite_pour_parametre
+			| 	entite_pour_parametre VIRGUL parametre
 			;				
 		
 
@@ -120,6 +133,6 @@ operateur	::= COMP
 condition 	::= PO entite operateur entite PF
 			;
 
-appel 	::= CALL VAR PO parametre PF DOT
-		|	CALL VAR PO PF DOT
-		;
+call 	::= CALL VAR PO parametre PF PV
+						|	CALL VAR PO PF PV
+						;

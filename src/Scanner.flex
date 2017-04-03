@@ -15,12 +15,11 @@ import java_cup.runtime.Symbol;
 %line
 %public
 %cup
-%debug
 
 /* macros */
 SEP  	   	=   [ \t]
 NUM		    =   [0-9]+
-VAR			=	([a-z]|[0-9])+
+VAR			=	([a-z]|[0-9]|_)+
 FUNCIN		=	[a-zA-Z\-\_]
 RETOUR		=	[\\n]+
 COMM		=	"/*"([^*]|(\*+[^*/]))*\*+\/
@@ -37,7 +36,7 @@ FIN     	=   \r|\n|\r\n
 ")"			{ return new Symbol(sym.PF, yytext());}
 "{"			{ return new Symbol(sym.ACO, yytext());}
 "}"			{ return new Symbol(sym.ACF, yytext());}
-";"			{ return new Symbol(sym.DOT);}
+";"			{ return new Symbol(sym.PV);}
 "VOID"		{ return new Symbol(sym.VOID, yytext());}
 "FUNCTION"	{ return new Symbol(sym.FUNCTION, yytext());}
 "AFFECT"	{ return new Symbol(sym.AFFECT);}
