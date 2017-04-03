@@ -7,21 +7,39 @@
  * (c) 2013
  */ 
 package fr.ul.miage.exemple.generated;
+import javax.script.ScriptEngine;
+import javax.script.ScriptEngineManager;
+import javax.script.ScriptException;
 import fr.ul.miage.exemple.TableDesSymboles;
+import fr.ul.miage.exemple.Arbre;
+import fr.ul.miage.exemple.Noeud;
+import java.util.ArrayList;
+import java.util.Collections;
 
 
 /* la grammaire */
 
-action code {: TableDesSymboles tds = new TableDesSymboles() ;:};
+action code {: 
+				Arbre arbre = new Arbre();
+				TableDesSymboles tds = new TableDesSymboles();
+				ArrayList<Noeud> fusion_noeud_instruction = new ArrayList<>();
+				public int nombre_de_parametre;
+				public String variable_temporelle;
+			:};
 
-terminal EGAL, DEFVAR, PV, FUNCTION, VOID, ACO, ACF, PO, PF, NUM;
-terminal COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL,VAR, INT;
-terminal PLUS, MOINS, DIV, MULT, IF, ELSE, WHILE, CALL,VIRGUL, RETURN;
+terminal PV, FUNCTION, ACO, ACF, PO, PF;
+terminal PLUS, MOINS, DIV, MULT,COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL;
+terminal IF, ELSE, WHILE,VIRGUL, RETURN;
+terminal String VOID, INT,DEFVAR,VAR, NUM;
+terminal Noeud EGAL,CALL;
 
-non terminal  programme, function, parametre, expression, affectation, instruction;
-non terminal  type_retour, call, operateur, iteration, declaration;
-non terminal  entite, operation, conditionnelle, condition, appel_function,entite_pour_return;
-non terminal  entite_pour_parametre, return,suite_instruction, definition;
+non terminal  programme, function;
+non terminal  operateur, iteration;
+non terminal  conditionnelle, condition;
+non terminal  definition,declaration;
+non terminal String operation;
+non terminal Noeud suite_instruction, instruction,affectation,entite_pour_parametre;
+non terminal Noeud entite,expression,return,entite_pour_return,call,appel_function,parametre;
 
 start with programme;
 
@@ -29,68 +47,125 @@ start with programme;
 programme	::= function programme
 			| definition programme
 			| function
-			{: System.out.println(tds.toString()); :}
+			{: 
+				System.out.println(arbre.afficher());
+				System.out.println(tds.toString());
+			:}
 			| definition
-			{: System.out.println(tds.toString()); :}
+			{: 
+				System.out.println(arbre.afficher());
+				System.out.println(tds.toString());
+			:}
 			;
 			
 
 // DECLARATION ET AFFECTATION
-declaration	::= DEFVAR VAR PV
+declaration	::= DEFVAR:type VAR:nom PV
+				{:
+					tds.inserer(nom,type,"interne");
+				:}
 			;
 
 affectation ::= AFFECT VAR:nom EGAL entite:value PV
-				{: tds.ajouterValeur((String)nom,(String)value); :}
-			|	AFFECT VAR:nom EGAL entite expression PV
+				{: 
+					Noeud eg = new Noeud("AFFECT", null);
+					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom));
+					eg.fils.add(noeud_nom);
+					eg.fils.add(value);
+					RESULT = eg;
+				:}
+			|	AFFECT VAR:nom EGAL:egal entite:enti expression:expre PV
+				{: 				
+					expre.fils.add(enti);
+					Collections.reverse(expre.fils);
+					Noeud eg = new Noeud("AFFECT", null);
+					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom));
+					eg.fils.add(noeud_nom);
+					eg.fils.add(expre);
+					RESULT = eg;
+				:}
 			;
 
 // FONCTION
 function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction ACF
-				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+				{: 
+					tds.inserer(nom,type,"fonction"); 
+				:}
 			| 	FUNCTION INT:type VAR:nom PO parametre PF ACO suite_instruction return ACF
-				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+				{: 
+					tds.inserer(nom,type,"fonction"); 
+					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom));				
+					n.fils = (ArrayList) fusion_noeud_instruction.clone();
+					arbre.ajouterNoeud(n);
+					fusion_noeud_instruction.clear();
+					this.nombre_de_parametre = 0;					
+				:}
 			| 	FUNCTION VOID:type VAR:nom PO PF ACO suite_instruction ACF
-				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+				{: 
+					tds.inserer(nom,type,"fonction");
+					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom));
+					n.fils = (ArrayList) fusion_noeud_instruction.clone();
+					Collections.reverse(n.fils);
+					fusion_noeud_instruction.clear();
+					arbre.ajouterNoeud(n);
+				:}
 			| 	FUNCTION INT:type VAR:nom PO PF ACO suite_instruction return ACF
-				{: tds.inserer((String)nom,(String)type,"fonction"); :}
+				{: tds.inserer(nom,type,"fonction"); :}
 			;
-			
-appel_function 	::= entite PO parametre PF
-				|	entite PO PF
-				;
+	
 				
-return 	::=	RETURN entite_pour_return PV
+return 	::=	RETURN entite_pour_return:entit PV
+			{:
+				Noeud n = new Noeud("RETURN", null);
+				n.fils.add(entit);
+				fusion_noeud_instruction.add(n);
+			:}
 		;
 		
 // Instruction
-suite_instruction 	::= instruction suite_instruction
+suite_instruction 	::= instruction:noeud_instruction suite_instruction
+						{:
+							fusion_noeud_instruction.add(noeud_instruction);
+						:}
+					| declaration suite_instruction
 					|
 					;
 					
 definition ::= DEFVAR:type VAR:nom PV
-			{: tds.inserer((String)nom,(String)type,"globale"); :}
+				{: 
+					tds.inserer(nom,type,"globale"); 
+				:}
 			| INT:type VAR:nom PV				
-			{: tds.inserer((String)nom,(String)type,"globale"); :}
+				{: 
+					tds.inserer(nom,type,"globale"); 
+				:}
 			| AFFECT VAR:nom EGAL NUM:value PV	
-			{: tds.ajouterValeur((String)nom,(String)value); :}
+				{: tds.ajouterValeur(nom,value); :}
 			;
 
 
-instruction 	::= declaration
-				|	affectation 
+instruction 	::= affectation:noeud_affectation
+					{:
+						RESULT = noeud_affectation;
+					:} 
 				|	conditionnelle	
-				|	call
+				|	call:noeud_call
+					{:
+						RESULT = noeud_call;
+					:}
 				|	iteration
-				;
-			
-expression 	::= operation entite
-			|	operation entite expression
-			;			
+				;	
 
 operation	::= PLUS
+				{: RESULT = "+"; :}
 			|	MOINS
+				{: RESULT = "-"; :}
 			|	DIV
+				{: RESULT = "/"; :}
 			|	MULT
+				{: RESULT = "*"; :}
 			;
 
 conditionnelle 	::=	IF condition ACO suite_instruction ACF
@@ -100,28 +175,98 @@ conditionnelle 	::=	IF condition ACO suite_instruction ACF
 iteration	::= WHILE condition ACO suite_instruction ACF
 			;
 			
+expression 	::= operation:ope entite:entit expression:expre	
+				{: 
+					expre.fils.add(entit);
+					Collections.reverse(expre.fils);
+					Noeud n = new Noeud(ope,null);
+					n.fils.add(expre);
+					RESULT = n;
+				:}
+			|	operation:ope entite:entit
+				{: 
+					Noeud n = new Noeud(ope,null);
+					n.fils.add(entit);
+					RESULT = n;
+				:}
+			;					
 
 // AUTRE
-entite 	::= NUM: num {: RESULT = num; :}
-		|	VAR:var {: RESULT = tds.getValeur(var.toString()); :}
-		|	appel_function
-		|	PO entite expression PF
+entite 	::= NUM:num 
+			{: 
+				this.variable_temporelle = num;
+				RESULT = new Noeud("CONSTANTE",num); 
+			:}
+		|	VAR:var 
+			{: 	
+				this.variable_temporelle = var;
+				RESULT = new Noeud("VAR",""+tds.getId(var)); 
+			:}
+		|	CALL appel_function:noeud_call
+			{:
+				RESULT = noeud_call;		
+			:}
+		|	PO entite:entit expression:expre PF
+			{:
+				expre.fils.add(entit);
+				Collections.reverse(expre.fils);
+				RESULT = expre;
+			:}
 		;
 		
-entite_pour_return 	::= entite expression
-					|	entite
+entite_pour_return 	::= entite:entit expression:expre
+						{:
+							expre.fils.add(entit);
+							Collections.reverse(expre.fils);
+							RESULT = expre;
+						:}
+					|	entite:entit
+						{:
+							RESULT = entit;
+						:}
 					;
 
-entite_pour_parametre 	::= INT VAR
-						| 	entite
-						| 	entite expression
-						;
+parametre 	::= entite_pour_parametre:entit_pour_parametre
+				{:
+					RESULT = entit_pour_parametre;
+				:}
+			| 	entite_pour_parametre:entit_pour_parametre VIRGUL parametre:param
+				{:
+					entit_pour_parametre.fils.add(param);
+					RESULT = entit_pour_parametre;
+				:}
+			;		
+					
+entite_pour_parametre 	::=	entite:entit
+							{:
+								this.nombre_de_parametre++;
 
-parametre 	::= entite_pour_parametre
-			| 	entite_pour_parametre VIRGUL parametre
-			;				
-		
-
+								if(this.variable_temporelle != null){						
+									tds.inserer(this.variable_temporelle,entit.cle,"parametre");
+								}
+								
+								RESULT = entit;
+							:}
+						| 	entite:entit expression:expre
+							{:
+								this.nombre_de_parametre++;
+								expre.fils.add(entit);
+								Collections.reverse(expre.fils);
+								RESULT = expre;
+							:}
+						;		
+			
+appel_function 	::= entite:enti PO parametre:param PF
+					{:
+						enti.fils.add(param);
+						RESULT = enti;
+					:}
+				|	entite:entit PO PF
+					{:	
+						RESULT = entit;
+					:}
+				;	
+				
 operateur	::= COMP
 			|	INF
 			|	SUP
@@ -133,6 +278,11 @@ operateur	::= COMP
 condition 	::= PO entite operateur entite PF
 			;
 
-call 	::= CALL VAR PO parametre PF PV
-						|	CALL VAR PO PF PV
-						;
+
+call 	::= CALL appel_function:noeud_appel_function PV
+			{:
+				Noeud n = new Noeud("CALL", null);
+				n.fils.add(noeud_appel_function);
+				RESULT = n;
+			:}
+		;

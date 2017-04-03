@@ -4,10 +4,12 @@ import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseExceptio
 
 public class TableDesSymboles{
 	
-	//Table[i][0] = nom
-	//Table[i][1] = categorie
-	//Table[i][2] = type
-	//Table[i][3] = value
+//	this.table[i][0] = ID
+//	this.table[i][1] = nom;
+//	this.table[i][2] = type;
+//	this.table[i][3] = categorie  (globale/interne/fonction);
+//	this.table[i][4] = valeur
+//	this.table[i][5] = nbparametre
 	private String table[][];
 	
 	//Definit la place de la variable dans le tableau
@@ -15,7 +17,21 @@ public class TableDesSymboles{
 	
 	
 	public TableDesSymboles(){
-		this.table = new String [10][4];
+		this.table = new String [30][7];
+		
+		this.table[this.table.length-1][0] = ""+(int)(this.table.length-1);
+		this.table[this.table.length-1][1] = "read";
+		this.table[this.table.length-1][2] = "String";
+		this.table[this.table.length-1][3] = "fonction";
+		this.table[this.table.length-1][4] = null;
+		this.table[this.table.length-1][5] = "0";
+		
+		this.table[this.table.length-2][0] = ""+(int)(this.table.length-2);
+		this.table[this.table.length-2][1] = "write";
+		this.table[this.table.length-2][2] = "void";
+		this.table[this.table.length-2][3] = "fonction";
+		this.table[this.table.length-2][4] = null;
+		this.table[this.table.length-2][5] = "0";
 	}
 	
 	/**
@@ -27,8 +43,8 @@ public class TableDesSymboles{
 		boolean res = false;
 		
 		for(int i = 0; i < this.table.length; i++){
-			if(this.table[i][0] != null){
-				if(this.table[i][0].equals(nom)){
+			if(this.table[i][1] != null){
+				if(this.table[i][1].equals(nom)){
 					res = true;
 					this.indice = i;
 				}
@@ -50,46 +66,73 @@ public class TableDesSymboles{
 	 */
 	public void inserer(String nom, String type, String categorie) throws ParseException{
 		if(this.estPresent(nom)){
+			
 			//Variable globale et locale ne peuvent pas avoir le même nom
-			if(this.table[this.indice][2].equals("variable")){
-				throw new ParseException("Une variable porte déjà ce nom : " + nom);
-			}else if(this.table[this.indice][2].equals("fonction")){
-				throw new ParseException("Une fonction porte déjà ce nom : " + nom);
+			if((this.table[this.indice][3].equals("globale") || this.table[this.indice][3].equals("interne")
+					|| this.table[this.indice][3].equals("fonction")) && this.table[this.indice][3].equals(categorie)){
+				throw new ParseException("Double déclaration : " + nom);
 			}
-		}else{
+		}else if(!this.estPresent(nom)){
 			for(int i = 0; i < this.table.length; i++){
-				if(this.table[i][0] == null){
-					this.table[i][0] = nom;
-					this.table[i][1] = type;
-					this.table[i][2] = categorie;
+				if(this.table[i][1] == null){
+					this.table[i][0] = ""+i;
+					this.table[i][1] = nom;
+					this.table[i][2] = type;
+					this.table[i][3] = categorie;
+					if(type.equals("VAR")){
+						this.table[i][4] = "0";
+						this.table[i][5] = "/";
+					}
+					
+					
 					break;
 				}
 			}
 		}
 	}
 	
+	public void ajouterParametre(String nom, String value){
+		if(this.estPresent(nom)){
+			this.table[this.indice][5] = value;
+		}
+	}
+	
 	public void ajouterValeur(String nom, String value){
 		if(this.estPresent(nom)){
-			this.table[this.indice][3] = value;
+			this.table[this.indice][4] = value;
 		}
 	}
 	
 	public String getValeur(String nom){
 		String res = null;
 		if(this.estPresent(nom)){
-			res = this.table[this.indice][3];
+			res = this.table[this.indice][4];
 		}
 		return res;
 	}
 	
+	public int getId(String nom){
+		int i = 0;
+		if(estPresent(nom)){
+			i = this.indice;
+		}
+		
+		return i;
+	}
+	
 	
 	public String toString(){
-		String res ="nom varibale" + " | " + "type" + " | " + "categorie" + " | " + " valeur " + "\n";
+		String res = "Table des symboles : \n";
+		res +="id" +" | " + "nom" + " | " + "type" + " | " + "categorie" + " | " + " valeur " + " | " + "parametre" +"\n";
 		for(int i = 0; i < this.table.length; i++){
 			if(this.table[i][0] !=null){
-				res += this.table[i][0] + " | " +this.table[i][1]  + " | " + this.table[i][2] +" | "  + this.table[i][3] + " " +"\n";
+				res += this.table[i][0] + " | " +this.table[i][1]  + " | " + this.table[i][2] +" | "  +
+			this.table[i][3] +" | "  + this.table[i][4] + " | " + this.table[i][5]+"\n";
 			}
 		}
+		
+		res += "\n" + "Compilation du code : ok.";
+		
 		return res;
 	}
 }

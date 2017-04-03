@@ -16,6 +16,7 @@ import java_cup.runtime.Symbol;
 %public
 %cup
 
+
 /* macros */
 SEP  	   	=   [ \t]
 NUM		    =   [0-9]+

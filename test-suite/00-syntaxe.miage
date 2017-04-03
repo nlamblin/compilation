@@ -36,7 +36,7 @@ Traduction
  
 
  FUNCTION VOID main() {
-	AFFECT j = read();
-	CALL write(f(i+1,j));
+	AFFECT j = CALL read();
+	CALL write(CALL f(i+1,j));
 }
  
