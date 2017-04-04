@@ -36,11 +36,18 @@ public class Noeud {
 		if(this.fils.size() > 0){
 			res += "\n";
 			for(Noeud n : this.fils){
+				int nb_esp = 1;
+				for(int j = 0; j<nb_esp;j++){					
+					res += "\n";
+					res += " ";
+				}
 				res += "  " + n.toString();
+				nb_esp++;
 			}
+
+			res += "\n";
 			
 		}
-		
 		return res ;
 	}
 }

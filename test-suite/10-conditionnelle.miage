@@ -16,8 +16,8 @@ VAR j;
 FUNCTION VOID main(){
 	IF (i < 2){
 		AFFECT j = 0;
-	}
-	ELSE {
+	}ELSE {
 		AFFECT j = 1;
 	}
+	
 }

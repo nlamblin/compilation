@@ -124,7 +124,7 @@ public class TableDesSymboles{
 			i = this.indice;
 		}else{
 			if(type != null)
-				throw new ParseException(type + " non définie : " + nom);
+				throw new ParseException(nom + " n'a pas été initialisé.");
 		}
 		
 		return i;
@@ -138,7 +138,7 @@ public class TableDesSymboles{
 			res = this.table[i][3];
 		}else{
 			if(type != null)
-				throw new ParseException(type + " introuvable : " + nom);
+				throw new ParseException(nom + " n'a pas été initialisé.");
 		}
 		
 		return res;

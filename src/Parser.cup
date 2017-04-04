@@ -15,10 +15,7 @@ import fr.ul.miage.exemple.Arbre;
 import fr.ul.miage.exemple.Noeud;
 import java.util.ArrayList;
 import java.util.Collections;
-
-
 /* la grammaire */
-
 action code {: 
 				//Creation de l'arbre
 				Arbre arbre = new Arbre();
@@ -38,24 +35,24 @@ action code {:
 				//Attribut permettant de définir quel entite nous recherchons dans la TDS
 				//Prend comme valeur fonction, var ou null si on dois chercher un parametre non existant
 				public String type_de_recherche_tds;
-			:};
 
+				//Atribut permettant de savoir quand on entre dans une iteration ou une condition
+				public boolean token_condition;
+
+			:};
 terminal PV, FUNCTION, ACO, ACF, PO, PF;
 terminal PLUS, MOINS, DIV, MULT,COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL;
 terminal IF, ELSE, WHILE,VIRGUL, RETURN;
 terminal String VOID, INT,DEFVAR,VAR, NUM;
 terminal Noeud EGAL,CALL;
-
 non terminal  programme, function;
-non terminal  operateur, iteration;
-non terminal  conditionnelle, condition;
+non terminal  iteration;
+non terminal  condition;
 non terminal  definition,declaration;
 non terminal String operation;
-non terminal Noeud suite_instruction, instruction,affectation,entite_pour_parametre;
+non terminal Noeud conditionnelle,operateur,suite_instruction, instruction,affectation,entite_pour_parametre;
 non terminal Noeud entite,expression,return,entite_pour_return,call,appel_function,parametre;
-
 start with programme;
-
 // LECTURE
 programme	::= function programme
 				{:
@@ -79,14 +76,12 @@ programme	::= function programme
 			:}
 			;
 			
-
 // DECLARATION ET AFFECTATION
 declaration	::= DEFVAR:type VAR:nom PV
 				{:
 					tds.inserer(nom,type,"interne");
 				:}
 			;
-
 affectation ::= AFFECT VAR:nom EGAL entite:value PV
 				{: 
 					Noeud eg = new Noeud("AFFECT", null);
@@ -108,7 +103,6 @@ affectation ::= AFFECT VAR:nom EGAL entite:value PV
 					RESULT = eg;
 				:}
 			;
-
 // FONCTION
 function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction ACF
 				{: 
@@ -153,7 +147,6 @@ function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction A
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
 					arbre.ajouterNoeud(n);
-
 				:}
 			;
 	
@@ -169,7 +162,15 @@ return 	::=	RETURN entite_pour_return:entit PV
 // Instruction
 suite_instruction 	::= instruction:noeud_instruction suite_instruction
 						{:
-							fusion_noeud_instruction.add(noeud_instruction);
+							if(this.token_condition){
+								Noeud n = new Noeud("BLOC_INSTRUCTION",null);
+								n.fils.add(noeud_instruction);
+								this.fusion_noeud_instruction.add(n);
+								
+							}else{
+								this.fusion_noeud_instruction.add(noeud_instruction);								
+							}
+							
 						:}
 					| declaration suite_instruction
 					|
@@ -186,20 +187,20 @@ definition ::= DEFVAR:type VAR:nom PV
 			| AFFECT VAR:nom EGAL NUM:value PV	
 				{: tds.ajouterValeur(nom,value); :}
 			;
-
-
 instruction 	::= affectation:noeud_affectation
 					{:
 						RESULT = noeud_affectation;
 					:} 
-				|	conditionnelle	
+				| conditionnelle:noeud_conditionnel
+					{:
+						RESULT = noeud_conditionnel;
+					:}		
 				|	call:noeud_call
 					{:
 						RESULT = noeud_call;
 					:}
 				|	iteration
 				;	
-
 operation	::= PLUS
 				{: RESULT = "+"; :}
 			|	MOINS
@@ -209,9 +210,22 @@ operation	::= PLUS
 			|	MULT
 				{: RESULT = "*"; :}
 			;
-
 conditionnelle 	::=	IF condition ACO suite_instruction ACF
+					{:
+						Noeud n = new Noeud("IF", null);
+						n.fils = (ArrayList) this.fusion_noeud_instruction.clone();
+						this.fusion_noeud_instruction.clear();	
+						this.token_condition = false;					
+						RESULT = n;
+					:}
 				|	IF condition ACO suite_instruction ACF ELSE ACO suite_instruction ACF
+					{:
+						Noeud n = new Noeud("IF", null);
+						n.fils = (ArrayList) this.fusion_noeud_instruction.clone();
+						this.fusion_noeud_instruction.clear();
+						this.token_condition = false;
+						RESULT = n;
+					:}
 				;
 				
 iteration	::= WHILE condition ACO suite_instruction ACF
@@ -232,7 +246,6 @@ expression 	::= operation:ope entite:entit expression:expre
 					RESULT = n;
 				:}
 			;					
-
 // AUTRE
 entite 	::= NUM:num 
 			{: 
@@ -280,7 +293,6 @@ entite_pour_return 	::= entite:entit expression:expre
 							RESULT = entit;
 						:}
 					;
-
 parametre 	::= entite_pour_parametre:entit_pour_parametre
 				{:
 					RESULT = entit_pour_parametre;
@@ -295,7 +307,6 @@ parametre 	::= entite_pour_parametre:entit_pour_parametre
 entite_pour_parametre 	::=	entite:entit
 							{:
 								this.nombre_de_parametre++;
-
 								if(this.variable_temporelle != null){						
 									tds.inserer(this.variable_temporelle,entit.cle,"parametre");
 								}
@@ -323,17 +334,43 @@ appel_function 	::= entite:enti PO parametre:param PF
 				;	
 				
 operateur	::= COMP
+				{:
+					RESULT = new Noeud("==",null);
+				:}
 			|	INF
+				{:
+					RESULT = new Noeud("<",null);
+				:}
 			|	SUP
+				{:
+					RESULT = new Noeud(">",null);
+				:}
 			|	DIFF
+				{:
+					RESULT = new Noeud("!=",null);
+				:}
 			|	SUP_EGAL
+				{:
+					RESULT = new Noeud(">=",null);
+				:}
 			|	INF_EGAL
+				{:
+					RESULT = new Noeud("<=",null);
+				:}
 			;
+			
+condition 	::= PO entite:enti operateur:ope entite:enti2 PF
+				{:
+					Noeud n = new Noeud("CONDITION",null);
+					n.fils.add(enti);
+					n.fils.add(ope);
+					n.fils.add(enti2);
 
-condition 	::= PO entite operateur entite PF
+					this.fusion_noeud_instruction.add(n);
+					this.token_condition = true;
+				:}
 			;
-
-
+			
 call 	::= CALL appel_function:noeud_appel_function PV
 			{:
 				this.type_de_recherche_tds = "PARAMETRE D'APPEL";
