@@ -23,5 +23,5 @@ FUNCTION INT f(a){
 }
 
 FUNCTION VOID main(){
-	AFFECT i = j-(3+f(i+j));/*tester ceci*/
+	AFFECT i = j-(3+ CALL f(i+j));/*tester ceci*/
 }

@@ -32,6 +32,13 @@ public class TableDesSymboles{
 		this.table[this.table.length-2][3] = "fonction";
 		this.table[this.table.length-2][4] = null;
 		this.table[this.table.length-2][5] = "0";
+		
+		this.table[this.table.length-3][0] = ""+(int)(this.table.length-2);
+		this.table[this.table.length-3][1] = "print";
+		this.table[this.table.length-3][2] = "void";
+		this.table[this.table.length-3][3] = "fonction";
+		this.table[this.table.length-3][4] = null;
+		this.table[this.table.length-3][5] = "0";
 	}
 	
 	/**
@@ -70,7 +77,7 @@ public class TableDesSymboles{
 			//Variable globale et locale ne peuvent pas avoir le même nom
 			if((this.table[this.indice][3].equals("globale") || this.table[this.indice][3].equals("interne")
 					|| this.table[this.indice][3].equals("fonction")) && this.table[this.indice][3].equals(categorie)){
-				throw new ParseException("Double déclaration : " + nom);
+				throw new ParseException("Double déclaration " + type + " : " + nom);
 			}
 		}else if(!this.estPresent(nom)){
 			for(int i = 0; i < this.table.length; i++){
@@ -111,15 +118,45 @@ public class TableDesSymboles{
 		return res;
 	}
 	
-	public int getId(String nom){
+	public int getId(String nom, String type) throws ParseException{
 		int i = 0;
 		if(estPresent(nom)){
 			i = this.indice;
+		}else{
+			if(type != null)
+				throw new ParseException(type + " non définie : " + nom);
 		}
 		
 		return i;
 	}
 	
+	public String getCategorie(String nom, String type) throws ParseException{
+		int i = 0;
+		String res = null;
+		if(estPresent(nom)){
+			i = this.indice;
+			res = this.table[i][3];
+		}else{
+			if(type != null)
+				throw new ParseException(type + " introuvable : " + nom);
+		}
+		
+		return res;
+	}
+	
+	public String getNom(String nom, String type) throws ParseException{
+		int i = 0;
+		String res = null;
+		if(estPresent(nom)){
+			i = this.indice;
+			res += this.table[i][1];
+		}else{
+			if(type != null)
+				throw new ParseException(type + " introuvable : " + nom);
+		}
+		
+		return res;
+	}
 	
 	public String toString(){
 		String res = "Table des symboles : \n";

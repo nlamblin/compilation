@@ -9,7 +9,7 @@ Test de controle semantique
  }
  
  void main(){
-	i = i + f(); \* erreur : compatibilite de type *\
+	i = i + CALL f(); \* erreur : compatibilite de type *\
  }
  
  Traduction
@@ -23,5 +23,5 @@ Test de controle semantique
  }
  
  FUNCTION VOID main(){
-	AFFECT i = i + f(); /* erreur : compatibilite de type */
+	AFFECT i = i + CALL f(); /* erreur : compatibilite de type */
  }

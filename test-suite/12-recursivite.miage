@@ -21,7 +21,7 @@ VAR x;
 
 FUNCTION INT f(n){
 	VAR res;
-	AFFECT res = (n+f(n-1));
+	AFFECT res = (n+ CALL f(n-1));
 	
 	IF (n>0){
 		AFFECT res = 0;
@@ -31,5 +31,5 @@ FUNCTION INT f(n){
 }
 
 FUNCTION VOID main(){
-	AFFECT x = f(5);
+	AFFECT x = CALL f(5);
 }

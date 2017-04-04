@@ -29,11 +29,8 @@ int Fibonacci(int n)
 } 
 */
 
-FUNCTION VOID main(INT n){
-	CALL fibonacci(n);
-	CALL fibonacci_iter(n);
-}
-FUNCTION INT fibonacci_iter(INT n){
+
+FUNCTION INT fibonacci_iter(n){
 	VAR i;
 	AFFECT i = 0;
 	VAR prec;
@@ -51,13 +48,18 @@ FUNCTION INT fibonacci_iter(INT n){
 	RETURN i;
 }
 
-FUNCTION INT fibonacci(INT n){
+FUNCTION INT fibonacci(n){
 	VAR res;
 	IF ( n < 2 ){
 		AFFECT res = n;
 	} ELSE {
-		AFFECT res = (fibonacci(n-1) + fibonacci(n-2));
+		AFFECT res = (CALL fibonacci(n-1) + CALL fibonacci(n-2));
 	}
 	RETURN res;
+}
+
+FUNCTION VOID main(n){
+	CALL fibonacci(n);
+	CALL fibonacci_iter(n);
 }
 

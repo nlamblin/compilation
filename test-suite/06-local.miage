@@ -32,14 +32,6 @@ VAR i;
 VAR j;
 VAR k;
 
-FUNCTION INT f(){
-	VAR i;
-
-	AFFECT i = 1;
-	AFFECT j = i + g();
-	RETURN j;
-}
-
 FUNCTION INT g(){
 	VAR j;
 	VAR l2;
@@ -54,10 +46,19 @@ FUNCTION INT g(){
 	RETURN i+j;
 }
 
+FUNCTION INT f(){
+	VAR i;
+
+	AFFECT i = 1;
+	AFFECT j = i + CALL g();
+	RETURN j;
+}
+
+
 FUNCTION VOID main(){
 	VAR i;
 	AFFECT i = 0;
 	VAR j;
 	AFFECT j = 1;
-	AFFECT k = f();
+	AFFECT k = CALL f();
 }

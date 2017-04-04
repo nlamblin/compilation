@@ -26,5 +26,5 @@ FUNCTION INT f(a) {
  }
 
 FUNCTION VOID main(){
-	AFFECT j = f(i);
+	AFFECT j = CALL f(i);
 }

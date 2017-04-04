@@ -28,5 +28,5 @@ FUNCTION INT f (a,b){
 }
 
 FUNCTION VOID main(){
-	AFFECT i = f(i,j); /* tester ceci*/
+	AFFECT i = CALL f(i,j); /* tester ceci*/
 }

@@ -20,11 +20,24 @@ import java.util.Collections;
 /* la grammaire */
 
 action code {: 
+				//Creation de l'arbre
 				Arbre arbre = new Arbre();
+
+				//Creation de la table des symboles
 				TableDesSymboles tds = new TableDesSymboles();
+
+				//Liste ou l'on va ranger les noeuds correspondant aux instructions dans des fonctions
 				ArrayList<Noeud> fusion_noeud_instruction = new ArrayList<>();
+
+				//Attribut permettant de compter le nombre de paramètre d'une fonction lors de sa création
 				public int nombre_de_parametre;
+
+				//Attribut de type temporel permettant de stocker momentannément le nom de l'entité à ajouter dans la TDS
 				public String variable_temporelle;
+
+				//Attribut permettant de définir quel entite nous recherchons dans la TDS
+				//Prend comme valeur fonction, var ou null si on dois chercher un parametre non existant
+				public String type_de_recherche_tds;
 			:};
 
 terminal PV, FUNCTION, ACO, ACF, PO, PF;
@@ -45,14 +58,22 @@ start with programme;
 
 // LECTURE
 programme	::= function programme
+				{:
+					this.type_de_recherche_tds = null;
+				:}
 			| definition programme
+				{:
+					this.type_de_recherche_tds = null;
+				:}
 			| function
 			{: 
+				this.type_de_recherche_tds = null;
 				System.out.println(arbre.afficher());
 				System.out.println(tds.toString());
 			:}
 			| definition
 			{: 
+				this.type_de_recherche_tds = null;
 				System.out.println(arbre.afficher());
 				System.out.println(tds.toString());
 			:}
@@ -69,7 +90,8 @@ declaration	::= DEFVAR:type VAR:nom PV
 affectation ::= AFFECT VAR:nom EGAL entite:value PV
 				{: 
 					Noeud eg = new Noeud("AFFECT", null);
-					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom));
+					this.type_de_recherche_tds = "VAR";
+					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom,this.type_de_recherche_tds));
 					eg.fils.add(noeud_nom);
 					eg.fils.add(value);
 					RESULT = eg;
@@ -79,7 +101,8 @@ affectation ::= AFFECT VAR:nom EGAL entite:value PV
 					expre.fils.add(enti);
 					Collections.reverse(expre.fils);
 					Noeud eg = new Noeud("AFFECT", null);
-					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom));
+					this.type_de_recherche_tds = "VAR";
+					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom,this.type_de_recherche_tds));
 					eg.fils.add(noeud_nom);
 					eg.fils.add(expre);
 					RESULT = eg;
@@ -90,12 +113,20 @@ affectation ::= AFFECT VAR:nom EGAL entite:value PV
 function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction ACF
 				{: 
 					tds.inserer(nom,type,"fonction"); 
+					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					this.type_de_recherche_tds = "FUNCTION";
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));				
+					n.fils = (ArrayList) fusion_noeud_instruction.clone();
+					arbre.ajouterNoeud(n);
+					fusion_noeud_instruction.clear();
+					this.nombre_de_parametre = 0;	 
 				:}
 			| 	FUNCTION INT:type VAR:nom PO parametre PF ACO suite_instruction return ACF
 				{: 
 					tds.inserer(nom,type,"fonction"); 
 					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
-					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom));				
+					this.type_de_recherche_tds = "FUNCTION";
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));				
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					arbre.ajouterNoeud(n);
 					fusion_noeud_instruction.clear();
@@ -105,14 +136,25 @@ function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction A
 				{: 
 					tds.inserer(nom,type,"fonction");
 					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
-					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom));
+					this.type_de_recherche_tds = "FUNCTION";
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));	
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
 					arbre.ajouterNoeud(n);
 				:}
 			| 	FUNCTION INT:type VAR:nom PO PF ACO suite_instruction return ACF
-				{: tds.inserer(nom,type,"fonction"); :}
+				{: 
+					tds.inserer(nom,type,"fonction");
+					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					this.type_de_recherche_tds = "FUNCTION";
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));	
+					n.fils = (ArrayList) fusion_noeud_instruction.clone();
+					Collections.reverse(n.fils);
+					fusion_noeud_instruction.clear();
+					arbre.ajouterNoeud(n);
+
+				:}
 			;
 	
 				
@@ -200,11 +242,24 @@ entite 	::= NUM:num
 		|	VAR:var 
 			{: 	
 				this.variable_temporelle = var;
-				RESULT = new Noeud("VAR",""+tds.getId(var)); 
+				String categorie = "";
+				if(this.type_de_recherche_tds == null){
+					categorie = ("parametre de creation de fonction");
+				}else{
+					categorie = tds.getCategorie(var,null);
+				}
+				if(categorie.equals("fonction")){
+					RESULT = new Noeud("FUNC",""+tds.getId(var, this.type_de_recherche_tds));
+				}else{
+					RESULT = new Noeud("VAR",""+tds.getId(var, this.type_de_recherche_tds));
+				}
 			:}
 		|	CALL appel_function:noeud_call
 			{:
-				RESULT = noeud_call;		
+				this.type_de_recherche_tds = "PARAMETRE D'APPEL";
+				Noeud n = new Noeud("CALL", null);
+				n.fils.add(noeud_call);
+				RESULT = n;		
 			:}
 		|	PO entite:entit expression:expre PF
 			{:
@@ -261,9 +316,9 @@ appel_function 	::= entite:enti PO parametre:param PF
 						enti.fils.add(param);
 						RESULT = enti;
 					:}
-				|	entite:entit PO PF
-					{:	
-						RESULT = entit;
+				|	entite:enti PO PF
+					{:							
+						RESULT = enti;
 					:}
 				;	
 				
@@ -281,6 +336,7 @@ condition 	::= PO entite operateur entite PF
 
 call 	::= CALL appel_function:noeud_appel_function PV
 			{:
+				this.type_de_recherche_tds = "PARAMETRE D'APPEL";
 				Noeud n = new Noeud("CALL", null);
 				n.fils.add(noeud_appel_function);
 				RESULT = n;

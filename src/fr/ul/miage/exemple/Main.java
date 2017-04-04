@@ -93,16 +93,16 @@ public class Main {
 //		System.out.println("----------05-expression----------");
 //		Thread.sleep(1000);
 //
-		System.out.println("----------06-local----------");
-		file = new FileInputStream(new File("test-suite/06-local.miage"));
-		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-		try {
-			parser.parse();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("----------06-local----------");
-		Thread.sleep(1000);
+//		System.out.println("----------06-local----------");
+//		file = new FileInputStream(new File("test-suite/06-local.miage"));
+//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+//		try {
+//			parser.parse();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("----------06-local----------");
+//		Thread.sleep(1000);
 //		
 //		System.out.println("----------07-parametre----------");
 //		file = new FileInputStream(new File("test-suite/07-parametre.miage"));
