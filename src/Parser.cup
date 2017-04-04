@@ -269,7 +269,6 @@ entite 	::= NUM:num
 			:}
 		|	CALL appel_function:noeud_call
 			{:
-				this.type_de_recherche_tds = "PARAMETRE D'APPEL";
 				Noeud n = new Noeud("CALL", null);
 				n.fils.add(noeud_call);
 				RESULT = n;		
@@ -373,7 +372,6 @@ condition 	::= PO entite:enti operateur:ope entite:enti2 PF
 			
 call 	::= CALL appel_function:noeud_appel_function PV
 			{:
-				this.type_de_recherche_tds = "PARAMETRE D'APPEL";
 				Noeud n = new Noeud("CALL", null);
 				n.fils.add(noeud_appel_function);
 				RESULT = n;
