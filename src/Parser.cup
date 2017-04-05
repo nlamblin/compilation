@@ -54,7 +54,7 @@ non terminal condition;
 non terminal definition,declaration;
 non terminal String operation,nom_de_fonction_creation, nom_de_variable, nom_de_fonction_existante;
 non terminal Noeud conditionnelle,operateur,suite_instruction, instruction;
-non terminal Noeud iteration,affectation,entite_pour_parametre;
+non terminal Noeud iteration,affectation,entite_pour_parametre, pas_de_parametre;
 non terminal Noeud entite,expression,return,entite_pour_return,call,appel_function,parametre;
 start with programme;
 // LECTURE
@@ -127,7 +127,7 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 					arbre.ajouterNoeud(n);
 					fusion_noeud_instruction.clear();			
 				:}
-			| 	FUNCTION VOID:type nom_de_fonction_creation:nom PO PF ACO suite_instruction ACF
+			| 	FUNCTION VOID:type nom_de_fonction_creation:nom PO pas_de_parametre PF ACO suite_instruction ACF
 				{: 
 					tds.ajouterType(nom,type);
 					tds.ajouterParametre(nom, "0");
@@ -139,7 +139,7 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 					fusion_noeud_instruction.clear();
 					arbre.ajouterNoeud(n);
 				:}
-			| 	FUNCTION INT:type nom_de_fonction_creation:nom PO PF ACO suite_instruction return ACF
+			| 	FUNCTION INT:type nom_de_fonction_creation:nom PO pas_de_parametre PF ACO suite_instruction return ACF
 				{: 
 					tds.ajouterType(nom,type);					
 					tds.ajouterValeur(nom, "RETURN " + type);
@@ -160,7 +160,7 @@ nom_de_fonction_creation ::= VAR:nom
 						tds.inserer(nom,null,"fonction"); 
 						RESULT = nom;
 					:}
-				;	
+				;				
 				
 nom_de_variable ::= VAR:nom
 					{:
@@ -175,6 +175,10 @@ nom_de_fonction_existante ::= VAR:nom
 								RESULT = nom;
 							:}
 							;				
+				
+pas_de_parametre ::=  
+					{: this.type_de_recherche_tds = "pas de parametre"; :}
+					; 
 				
 return 	::=	RETURN entite_pour_return:entit PV
 			{:
@@ -286,6 +290,7 @@ expression 	::= operation:ope entite:entit expression:expre
 entite 	::= NUM:num 
 			{:
 				this.variable_temporelle = num;
+				System.out.println(num + "   " + this.type_de_recherche_tds);
 				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
 					throw new ParseException(this.variable_temporelle + " est un paramètre incorrect de type NUM");
 				}	
@@ -361,6 +366,8 @@ entite_pour_parametre 	::=	entite:entit
 								if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
 									this.liste_parametre.add(entit.cle);
 								}
+								
+								this.type_de_recherche_tds = ("fin creation parametre");
 								RESULT = entit;
 							:}
 						| 	entite:entit expression:expre
@@ -368,6 +375,7 @@ entite_pour_parametre 	::=	entite:entit
 								if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
 									this.liste_parametre.add(entit.cle);
 								}
+								this.type_de_recherche_tds = ("fin creation parametre");
 								expre.fils.add(entit);
 								Collections.reverse(expre.fils);
 								RESULT = expre;

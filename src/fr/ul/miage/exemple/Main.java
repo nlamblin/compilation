@@ -48,7 +48,7 @@ public class Main {
 //		}
 //		System.out.println("----------01-minimal----------");
 //		Thread.sleep(1000);
-
+//
 //		System.out.println("----------02-global----------");
 //		file = new FileInputStream(new File("test-suite/02-global.miage"));
 //		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
@@ -59,7 +59,7 @@ public class Main {
 //		}
 //		System.out.println("----------02-global----------");
 //		Thread.sleep(1000);
-
+//
 //		System.out.println("----------03-expression----------");
 //		file = new FileInputStream(new File("test-suite/03-expression.miage"));
 //		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
@@ -137,17 +137,17 @@ public class Main {
 //		System.out.println("----------09-fonction----------");
 //		Thread.sleep(1000);
 //		
-//		System.out.println("----------10-conditionnelle----------");
-//		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
-//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-//		try {
-//			parser.parse();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("----------10-conditionnelle----------");
-//		Thread.sleep(1000);
-		
+		System.out.println("----------10-conditionnelle----------");
+		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
+		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+		try {
+			parser.parse();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("----------10-conditionnelle----------");
+		Thread.sleep(1000);
+//		
 //		System.out.println("----------11-iteration----------");
 //		file = new FileInputStream(new File("test-suite/11-iteration.miage"));
 //		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
@@ -225,16 +225,16 @@ public class Main {
 //		System.out.println("----------17-err5----------");
 //		Thread.sleep(1000);
 //		
-		System.out.println("----------fibonacci----------");
-		file = new FileInputStream(new File("test-suite/fibonacci"));
-		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-		try {
-			parser.parse();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("----------fibonacci----------");
-		Thread.sleep(1000);
+//		System.out.println("----------fibonacci----------");
+//		file = new FileInputStream(new File("test-suite/fibonacci"));
+//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+//		try {
+//			parser.parse();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("----------fibonacci----------");
+//		Thread.sleep(1000);
 //		
 //	
 	}
