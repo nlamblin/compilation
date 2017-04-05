@@ -424,6 +424,7 @@ condition 	::= PO entite:enti operateur:ope entite:enti2 PF
 				{:
 					
 					Noeud n = new Noeud("CONDITION",null);
+
 					n.fils.add(enti);
 					n.fils.add(ope);
 					n.fils.add(enti2);
