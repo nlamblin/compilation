@@ -29,7 +29,6 @@ int Fibonacci(int n)
 } 
 */
 
-
 FUNCTION INT fibonacci_iter(n){
 	VAR i;
 	AFFECT i = 0;

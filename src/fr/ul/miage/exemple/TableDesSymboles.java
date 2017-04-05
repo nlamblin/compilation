@@ -77,7 +77,7 @@ public class TableDesSymboles{
 			//Variable globale et locale ne peuvent pas avoir le même nom
 			if((this.table[this.indice][3].equals("globale") || this.table[this.indice][3].equals("interne")
 					|| this.table[this.indice][3].equals("fonction")) && this.table[this.indice][3].equals(categorie)){
-				throw new ParseException("Double déclaration " + type + " : " + nom);
+				throw new ParseException("Double définition " + type + " : " + nom);
 			}
 		}else if(!this.estPresent(nom)){
 			for(int i = 0; i < this.table.length; i++){
@@ -136,7 +136,7 @@ public class TableDesSymboles{
 			i = this.indice;
 		}else{
 			if(type != null)
-				throw new ParseException(nom + " n'a pas été initialisé.");
+				throw new ParseException(nom + " n'a pas été défini.");
 		}
 		
 		return i;
@@ -150,7 +150,7 @@ public class TableDesSymboles{
 			res = this.table[i][3];
 		}else{
 			if(type != null)
-				throw new ParseException(nom + " n'a pas été initialisé.");
+				throw new ParseException(nom + " n'a pas été défini.");
 		}
 		
 		return res;

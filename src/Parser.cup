@@ -108,9 +108,9 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 				{: 				
 					tds.ajouterType(nom,type);					
 					tds.ajouterParametre(nom, ""+this.liste_parametre.size());
-					this.type_de_recherche_tds = "FUNCTION";
+					this.liste_parametre.clear();
 					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));		
-					this.type_de_recherche_tds = null;					
+					
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					arbre.ajouterNoeud(n);
 					fusion_noeud_instruction.clear();
@@ -120,9 +120,9 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 					tds.ajouterType(nom,type);
 					tds.ajouterValeur(nom, "RETURN " + type);
 					tds.ajouterParametre(nom, ""+this.liste_parametre.size());
-					this.type_de_recherche_tds = "FUNCTION";
+					this.liste_parametre.clear();
 					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));
-					this.type_de_recherche_tds = null;				
+							
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					arbre.ajouterNoeud(n);
 					fusion_noeud_instruction.clear();			
@@ -131,9 +131,9 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 				{: 
 					tds.ajouterType(nom,type);
 					tds.ajouterParametre(nom, "0");
-					this.type_de_recherche_tds = "FUNCTION";
+					this.liste_parametre.clear();
 					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));
-					this.type_de_recherche_tds = null;				
+								
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
@@ -144,9 +144,9 @@ function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF AC
 					tds.ajouterType(nom,type);					
 					tds.ajouterValeur(nom, "RETURN " + type);
 					tds.ajouterParametre(nom, "0");
-					this.type_de_recherche_tds = "FUNCTION";
+					this.liste_parametre.clear();
 					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));	
-					this.type_de_recherche_tds = null;			
+						
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
@@ -294,10 +294,7 @@ entite 	::= NUM:num
 		|	VAR:var 
 			{: 	
 				this.variable_temporelle = var;
-				String categorie = "";
-				if(var.equals("n")){
-					System.out.println(var+ "  "+ this.type_de_recherche_tds);
-				}
+				String categorie = "";				
 				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){		
 					categorie = "parametre pour nouvelle fonction";
 				}else{
@@ -379,17 +376,17 @@ entite_pour_parametre 	::=	entite:entit
 			
 appel_function 	::= nom_de_fonction_existante:nom_fonction PO parametre:param PF
 					{:						
-						this.type_de_recherche_tds = "FUNCTION";
+					
 						Noeud n = new Noeud("FUNC",""+tds.getId(nom_fonction, this.type_de_recherche_tds));
-						this.type_de_recherche_tds = null;	
+					
 						n.fils.add(param);
 						RESULT = n;
 					:}
 				|	nom_de_fonction_existante:nom_fonction PO PF
 					{:				
-						this.type_de_recherche_tds = "FUNCTION";
+				
 						Noeud n = new Noeud("FUNC",""+tds.getId(nom_fonction, this.type_de_recherche_tds));
-						this.type_de_recherche_tds = null;						
+										
 						RESULT = n;
 					:}
 				;	
