@@ -137,16 +137,16 @@ public class Main {
 //		System.out.println("----------09-fonction----------");
 //		Thread.sleep(1000);
 //		
-		System.out.println("----------10-conditionnelle----------");
-		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
-		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-		try {
-			parser.parse();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		System.out.println("----------10-conditionnelle----------");
-		Thread.sleep(1000);
+//		System.out.println("----------10-conditionnelle----------");
+//		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
+//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+//		try {
+//			parser.parse();
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//		}
+//		System.out.println("----------10-conditionnelle----------");
+//		Thread.sleep(1000);
 		
 //		System.out.println("----------11-iteration----------");
 //		file = new FileInputStream(new File("test-suite/11-iteration.miage"));
@@ -159,16 +159,16 @@ public class Main {
 //		System.out.println("----------11-iteration----------");
 //		Thread.sleep(1000);
 //		
-//		System.out.println("----------12-recursivite----------");
-//		file = new FileInputStream(new File("test-suite/12-recursivite.miage"));
-//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-//		try {
-//			parser.parse();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("----------12-recursivite----------");
-//		Thread.sleep(1000);
+		System.out.println("----------12-recursivite----------");
+		file = new FileInputStream(new File("test-suite/12-recursivite.miage"));
+		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+		try {
+			parser.parse();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("----------12-recursivite----------");
+		Thread.sleep(1000);
 //		
 //		System.out.println("----------13-err1----------");
 //		file = new FileInputStream(new File("test-suite/13-err1.miage"));

@@ -84,12 +84,17 @@ public class TableDesSymboles{
 				if(this.table[i][1] == null){
 					this.table[i][0] = ""+i;
 					this.table[i][1] = nom;
-					this.table[i][2] = type;
 					this.table[i][3] = categorie;
-					if(type.equals("VAR")){
-						this.table[i][4] = "0";
-						this.table[i][5] = "/";
+					if(type != null){
+						this.table[i][2] = type;
+						if(type.equals("VAR")){
+							this.table[i][4] = "0";
+							this.table[i][5] = "/";
+						}
+					}else{
+						this.table[i][2] = null;
 					}
+					
 					
 					
 					break;
@@ -103,6 +108,13 @@ public class TableDesSymboles{
 			this.table[this.indice][5] = value;
 		}
 	}
+	
+	public void ajouterType(String nom, String value){
+		if(this.estPresent(nom)){
+			this.table[this.indice][2] = value;
+		}
+	}
+	
 	
 	public void ajouterValeur(String nom, String value){
 		if(this.estPresent(nom)){
@@ -144,18 +156,11 @@ public class TableDesSymboles{
 		return res;
 	}
 	
-	public String getNom(String nom, String type) throws ParseException{
-		int i = 0;
-		String res = null;
-		if(estPresent(nom)){
-			i = this.indice;
-			res += this.table[i][1];
-		}else{
-			if(type != null)
-				throw new ParseException(type + " introuvable : " + nom);
-		}
+	public String getNom(String id) throws ParseException{
 		
-		return res;
+		int i =  Integer.parseInt(id);
+		
+		return this.table[i][1];
 	}
 	
 	public String toString(){

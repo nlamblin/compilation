@@ -15,6 +15,7 @@ import fr.ul.miage.exemple.Arbre;
 import fr.ul.miage.exemple.Noeud;
 import java.util.ArrayList;
 import java.util.Collections;
+import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseException;
 /* la grammaire */
 action code {: 
 				//Creation de l'arbre
@@ -39,50 +40,49 @@ action code {:
 				//Atribut permettant de savoir quand on entre dans une iteration ou une condition
 				public boolean token_condition;
 
+				//Liste qui stocke les parametres d'une fonction cree
+				public ArrayList<String> liste_parametre = new ArrayList<>();
+
 			:};
 terminal PV, FUNCTION, ACO, ACF, PO, PF;
 terminal PLUS, MOINS, DIV, MULT,COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL;
 terminal IF, ELSE, WHILE,VIRGUL, RETURN;
 terminal String VOID, INT,DEFVAR,VAR, NUM;
 terminal Noeud EGAL,CALL;
-non terminal  programme, function;
-non terminal  iteration;
-non terminal  condition;
-non terminal  definition,declaration;
-non terminal String operation;
-non terminal Noeud conditionnelle,operateur,suite_instruction, instruction,affectation,entite_pour_parametre;
+non terminal programme, function;
+non terminal condition;
+non terminal definition,declaration;
+non terminal String operation,nom_de_fonction_creation, nom_de_variable, nom_de_fonction_existante;
+non terminal Noeud conditionnelle,operateur,suite_instruction, instruction;
+non terminal Noeud iteration,affectation,entite_pour_parametre;
 non terminal Noeud entite,expression,return,entite_pour_return,call,appel_function,parametre;
 start with programme;
 // LECTURE
 programme	::= function programme
 				{:
-					this.type_de_recherche_tds = null;
 				:}
 			| definition programme
 				{:
-					this.type_de_recherche_tds = null;
 				:}
 			| function
 			{: 
-				this.type_de_recherche_tds = null;
 				System.out.println(arbre.afficher());
 				System.out.println(tds.toString());
 			:}
 			| definition
 			{: 
-				this.type_de_recherche_tds = null;
 				System.out.println(arbre.afficher());
 				System.out.println(tds.toString());
 			:}
 			;
 			
 // DECLARATION ET AFFECTATION
-declaration	::= DEFVAR:type VAR:nom PV
+declaration	::= DEFVAR:type nom_de_variable:nom PV
 				{:
 					tds.inserer(nom,type,"interne");
 				:}
 			;
-affectation ::= AFFECT VAR:nom EGAL entite:value PV
+affectation ::= AFFECT nom_de_variable:nom EGAL entite:value PV
 				{: 
 					Noeud eg = new Noeud("AFFECT", null);
 					this.type_de_recherche_tds = "VAR";
@@ -91,7 +91,7 @@ affectation ::= AFFECT VAR:nom EGAL entite:value PV
 					eg.fils.add(value);
 					RESULT = eg;
 				:}
-			|	AFFECT VAR:nom EGAL:egal entite:enti expression:expre PV
+			|	AFFECT nom_de_variable:nom EGAL entite:enti expression:expre PV
 				{: 				
 					expre.fils.add(enti);
 					Collections.reverse(expre.fils);
@@ -104,52 +104,77 @@ affectation ::= AFFECT VAR:nom EGAL entite:value PV
 				:}
 			;
 // FONCTION
-function 	::= FUNCTION VOID:type VAR:nom PO parametre PF ACO suite_instruction ACF
-				{: 
-					tds.inserer(nom,type,"fonction"); 
-					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+function 	::= FUNCTION VOID:type nom_de_fonction_creation:nom PO parametre PF ACO suite_instruction ACF
+				{: 				
+					tds.ajouterType(nom,type);					
+					tds.ajouterParametre(nom, ""+this.liste_parametre.size());
 					this.type_de_recherche_tds = "FUNCTION";
-					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));				
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));		
+					this.type_de_recherche_tds = null;					
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					arbre.ajouterNoeud(n);
 					fusion_noeud_instruction.clear();
-					this.nombre_de_parametre = 0;	 
 				:}
-			| 	FUNCTION INT:type VAR:nom PO parametre PF ACO suite_instruction return ACF
+			| 	FUNCTION INT:type nom_de_fonction_creation:nom PO parametre PF ACO suite_instruction return ACF
 				{: 
-					tds.inserer(nom,type,"fonction"); 
-					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					tds.ajouterType(nom,type);
+					tds.ajouterValeur(nom, "RETURN " + type);
+					tds.ajouterParametre(nom, ""+this.liste_parametre.size());
 					this.type_de_recherche_tds = "FUNCTION";
-					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));				
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));
+					this.type_de_recherche_tds = null;				
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					arbre.ajouterNoeud(n);
-					fusion_noeud_instruction.clear();
-					this.nombre_de_parametre = 0;					
+					fusion_noeud_instruction.clear();			
 				:}
-			| 	FUNCTION VOID:type VAR:nom PO PF ACO suite_instruction ACF
+			| 	FUNCTION VOID:type nom_de_fonction_creation:nom PO PF ACO suite_instruction ACF
 				{: 
-					tds.inserer(nom,type,"fonction");
-					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					tds.ajouterType(nom,type);
+					tds.ajouterParametre(nom, "0");
 					this.type_de_recherche_tds = "FUNCTION";
-					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));	
+					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));
+					this.type_de_recherche_tds = null;				
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
 					arbre.ajouterNoeud(n);
 				:}
-			| 	FUNCTION INT:type VAR:nom PO PF ACO suite_instruction return ACF
+			| 	FUNCTION INT:type nom_de_fonction_creation:nom PO PF ACO suite_instruction return ACF
 				{: 
-					tds.inserer(nom,type,"fonction");
-					tds.ajouterParametre(nom, ""+this.nombre_de_parametre);
+					tds.ajouterType(nom,type);					
+					tds.ajouterValeur(nom, "RETURN " + type);
+					tds.ajouterParametre(nom, "0");
 					this.type_de_recherche_tds = "FUNCTION";
 					Noeud n = new Noeud("FUNCTION",""+tds.getId(nom, this.type_de_recherche_tds));	
+					this.type_de_recherche_tds = null;			
 					n.fils = (ArrayList) fusion_noeud_instruction.clone();
 					Collections.reverse(n.fils);
 					fusion_noeud_instruction.clear();
 					arbre.ajouterNoeud(n);
 				:}
 			;
-	
+
+nom_de_fonction_creation ::= VAR:nom
+					{:
+						this.type_de_recherche_tds = "parametre de nouvelle fonction";
+						tds.inserer(nom,null,"fonction"); 
+						RESULT = nom;
+					:}
+				;	
+				
+nom_de_variable ::= VAR:nom
+					{:
+						this.type_de_recherche_tds = "VAR";
+						RESULT = nom;
+					:}
+				;
+				
+nom_de_fonction_existante ::= VAR:nom
+							{:
+								this.type_de_recherche_tds = "Fonction existante";
+								RESULT = nom;
+							:}
+							;				
 				
 return 	::=	RETURN entite_pour_return:entit PV
 			{:
@@ -176,15 +201,15 @@ suite_instruction 	::= instruction:noeud_instruction suite_instruction
 					|
 					;
 					
-definition ::= DEFVAR:type VAR:nom PV
+definition ::= DEFVAR:type nom_de_variable:nom PV
 				{: 
 					tds.inserer(nom,type,"globale"); 
 				:}
-			| INT:type VAR:nom PV				
+			| INT:type nom_de_variable:nom PV				
 				{: 
 					tds.inserer(nom,type,"globale"); 
 				:}
-			| AFFECT VAR:nom EGAL NUM:value PV	
+			| AFFECT nom_de_variable:nom EGAL NUM:value PV	
 				{: tds.ajouterValeur(nom,value); :}
 			;
 instruction 	::= affectation:noeud_affectation
@@ -199,7 +224,10 @@ instruction 	::= affectation:noeud_affectation
 					{:
 						RESULT = noeud_call;
 					:}
-				|	iteration
+				|	iteration:noeud_iteration
+					{:
+						RESULT = noeud_iteration;
+					:}
 				;	
 operation	::= PLUS
 				{: RESULT = "+"; :}
@@ -210,6 +238,7 @@ operation	::= PLUS
 			|	MULT
 				{: RESULT = "*"; :}
 			;
+			
 conditionnelle 	::=	IF condition ACO suite_instruction ACF
 					{:
 						Noeud n = new Noeud("IF", null);
@@ -229,6 +258,13 @@ conditionnelle 	::=	IF condition ACO suite_instruction ACF
 				;
 				
 iteration	::= WHILE condition ACO suite_instruction ACF
+				{:
+					Noeud n = new Noeud("WHILE", null);
+					n.fils = (ArrayList) this.fusion_noeud_instruction.clone();
+					this.fusion_noeud_instruction.clear();	
+					this.token_condition = false;					
+					RESULT = n;
+				:}
 			;
 			
 expression 	::= operation:ope entite:entit expression:expre	
@@ -248,23 +284,43 @@ expression 	::= operation:ope entite:entit expression:expre
 			;					
 // AUTRE
 entite 	::= NUM:num 
-			{: 
+			{:
 				this.variable_temporelle = num;
+				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
+					throw new ParseException(this.variable_temporelle + " est un paramètre incorrect de type NUM");
+				}	
 				RESULT = new Noeud("CONSTANTE",num); 
 			:}
 		|	VAR:var 
 			{: 	
 				this.variable_temporelle = var;
 				String categorie = "";
-				if(this.type_de_recherche_tds == null){
-					categorie = ("parametre de creation de fonction");
-				}else{
-					categorie = tds.getCategorie(var,null);
+				if(var.equals("n")){
+					System.out.println(var+ "  "+ this.type_de_recherche_tds);
 				}
-				if(categorie.equals("fonction")){
-					RESULT = new Noeud("FUNC",""+tds.getId(var, this.type_de_recherche_tds));
+				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){		
+					categorie = "parametre pour nouvelle fonction";
 				}else{
-					RESULT = new Noeud("VAR",""+tds.getId(var, this.type_de_recherche_tds));
+					categorie = tds.getCategorie(var,this.type_de_recherche_tds);
+				}
+
+				if(categorie != null){
+					if(categorie.equals("fonction")){
+						RESULT = new Noeud("FUNC",""+tds.getId(var, this.type_de_recherche_tds));
+
+					}else if(categorie.equals("parametre pour nouvelle fonction")){
+						tds.inserer(this.variable_temporelle,"VAR","parametre");
+						Noeud n = new Noeud("VAR",""+tds.getId(var, this.type_de_recherche_tds));
+						RESULT = n;
+
+					}else{
+
+						this.type_de_recherche_tds = "VAR";
+						RESULT = new Noeud("VAR",""+tds.getId(var, this.type_de_recherche_tds));
+
+					}
+				}else{
+					throw new ParseException(var + " n'a pas été initialisé.");
 				}
 			:}
 		|	CALL appel_function:noeud_call
@@ -305,30 +361,36 @@ parametre 	::= entite_pour_parametre:entit_pour_parametre
 					
 entite_pour_parametre 	::=	entite:entit
 							{:
-								this.nombre_de_parametre++;
-								if(this.variable_temporelle != null){						
-									tds.inserer(this.variable_temporelle,entit.cle,"parametre");
+								if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
+									this.liste_parametre.add(entit.cle);
 								}
-								
 								RESULT = entit;
 							:}
 						| 	entite:entit expression:expre
 							{:
-								this.nombre_de_parametre++;
+								if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
+									this.liste_parametre.add(entit.cle);
+								}
 								expre.fils.add(entit);
 								Collections.reverse(expre.fils);
 								RESULT = expre;
 							:}
 						;		
 			
-appel_function 	::= entite:enti PO parametre:param PF
-					{:
-						enti.fils.add(param);
-						RESULT = enti;
+appel_function 	::= nom_de_fonction_existante:nom_fonction PO parametre:param PF
+					{:						
+						this.type_de_recherche_tds = "FUNCTION";
+						Noeud n = new Noeud("FUNC",""+tds.getId(nom_fonction, this.type_de_recherche_tds));
+						this.type_de_recherche_tds = null;	
+						n.fils.add(param);
+						RESULT = n;
 					:}
-				|	entite:enti PO PF
-					{:							
-						RESULT = enti;
+				|	nom_de_fonction_existante:nom_fonction PO PF
+					{:				
+						this.type_de_recherche_tds = "FUNCTION";
+						Noeud n = new Noeud("FUNC",""+tds.getId(nom_fonction, this.type_de_recherche_tds));
+						this.type_de_recherche_tds = null;						
+						RESULT = n;
 					:}
 				;	
 				
@@ -360,6 +422,7 @@ operateur	::= COMP
 			
 condition 	::= PO entite:enti operateur:ope entite:enti2 PF
 				{:
+					
 					Noeud n = new Noeud("CONDITION",null);
 					n.fils.add(enti);
 					n.fils.add(ope);
