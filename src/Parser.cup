@@ -290,7 +290,6 @@ expression 	::= operation:ope entite:entit expression:expre
 entite 	::= NUM:num 
 			{:
 				this.variable_temporelle = num;
-				System.out.println(num + "   " + this.type_de_recherche_tds);
 				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
 					throw new ParseException(this.variable_temporelle + " est un paramètre incorrect de type NUM");
 				}	

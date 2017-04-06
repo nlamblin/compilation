@@ -45,8 +45,9 @@ public class TableDesSymboles{
 	 * Fonction qui test si l'element est présent ou non
 	 * @param nom
 	 * @return
+	 * @throws ParseException 
 	 */
-	public boolean estPresent(String nom){
+	public boolean estPresent(String nom) throws ParseException{
 		boolean res = false;
 		
 		for(int i = 0; i < this.table.length; i++){
@@ -103,29 +104,37 @@ public class TableDesSymboles{
 		}
 	}
 	
-	public void ajouterParametre(String nom, String value){
+	public void ajouterParametre(String nom, String value) throws ParseException{
 		if(this.estPresent(nom)){
 			this.table[this.indice][5] = value;
+		}else{
+			throw new ParseException(nom +" n'as pas été défini");
 		}
 	}
 	
-	public void ajouterType(String nom, String value){
+	public void ajouterType(String nom, String value) throws ParseException{
 		if(this.estPresent(nom)){
 			this.table[this.indice][2] = value;
+		}else{
+			throw new ParseException(nom +" n'as pas été défini");
 		}
 	}
 	
 	
-	public void ajouterValeur(String nom, String value){
+	public void ajouterValeur(String nom, String value) throws ParseException{
 		if(this.estPresent(nom)){
 			this.table[this.indice][4] = value;
+		}else{
+			throw new ParseException(nom +" n'as pas été défini");
 		}
 	}
 	
-	public String getValeur(String nom){
+	public String getValeur(String nom) throws ParseException{
 		String res = null;
 		if(this.estPresent(nom)){
 			res = this.table[this.indice][4];
+		}else{
+			throw new ParseException(nom +" n'as pas été défini");
 		}
 		return res;
 	}
