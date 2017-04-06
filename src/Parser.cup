@@ -352,10 +352,13 @@ entite_pour_return 	::= entite:entit expression:expre
 					;
 parametre 	::= entite_pour_parametre:entit_pour_parametre
 				{:
+
+					this.type_de_recherche_tds = ("fin creation parametre");
 					RESULT = entit_pour_parametre;
 				:}
 			| 	entite_pour_parametre:entit_pour_parametre VIRGUL parametre:param
 				{:
+					this.type_de_recherche_tds = ("fin creation parametre");
 					entit_pour_parametre.fils.add(param);
 					RESULT = entit_pour_parametre;
 				:}
@@ -367,7 +370,6 @@ entite_pour_parametre 	::=	entite:entit
 									this.liste_parametre.add(entit.cle);
 								}
 								
-								this.type_de_recherche_tds = ("fin creation parametre");
 								RESULT = entit;
 							:}
 						| 	entite:entit expression:expre
@@ -375,7 +377,6 @@ entite_pour_parametre 	::=	entite:entit
 								if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
 									this.liste_parametre.add(entit.cle);
 								}
-								this.type_de_recherche_tds = ("fin creation parametre");
 								expre.fils.add(entit);
 								Collections.reverse(expre.fils);
 								RESULT = expre;
