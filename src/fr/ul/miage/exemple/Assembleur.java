@@ -1,7 +1,7 @@
 package fr.ul.miage.exemple;
 
-import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Stack;
 
 public class Assembleur {
 
@@ -14,9 +14,9 @@ public class Assembleur {
 	 */
 	public HashMap<String, String> mapGestionRegistre;
 	/**
-	 * tableau stockant l'ensemble des intitulés des registres qui ne sont pas encore utilisés
+	 * pile stockant l'ensemble des intitulés des registres qui ne sont pas encore utilisés
 	 */
-	public ArrayList<String> listeValeurRegistre;
+	public Stack<String> pileValeurRegistre;
 	
 	/**
 	 * Constructeur
@@ -25,15 +25,15 @@ public class Assembleur {
 		this.chaineAssembleur = "";
 		this.mapGestionRegistre = new HashMap<>();
 		
-		// remplissage du tableau avec les intitulés des registres
+		// remplissage de la pile avec les intitulés des registres
 		for(int i = 0; i <= 26; i++) {
-			this.listeValeurRegistre.add("R"+i);
+			this.pileValeurRegistre.add("R"+i);
 		}
-		this.listeValeurRegistre.add("R31");
-		this.listeValeurRegistre.add("BP");
-		this.listeValeurRegistre.add("LP");
-		this.listeValeurRegistre.add("SP");
-		this.listeValeurRegistre.add("XP");
+		this.pileValeurRegistre.add("R31");
+		this.pileValeurRegistre.add("BP");
+		this.pileValeurRegistre.add("LP");
+		this.pileValeurRegistre.add("SP");
+		this.pileValeurRegistre.add("XP");
 	}
 	
 	/**
@@ -44,11 +44,11 @@ public class Assembleur {
 	public String chercherPlaceVide() throws PlusDePlaceEnRegistre {
 		// si la liste n'est pas vide alors on prend le registre libre
 		// qui est le premier dans la liste
-		if(this.listeValeurRegistre.size() == 0) {
+		if(this.pileValeurRegistre.size() == 0) {
 			throw new PlusDePlaceEnRegistre();
 		}
 		else {
-			return this.listeValeurRegistre.get(0);
+			return this.pileValeurRegistre.get(0);
 		}
 	}
 	
@@ -59,8 +59,8 @@ public class Assembleur {
 	 */
 	public void ajouterUnRegistre(String valeur) throws PlusDePlaceEnRegistre {
 		String numeroRegistre = chercherPlaceVide();
-		// on supprime la premiere valeur de la liste puisque le registre ne va plus etre libre
-		this.listeValeurRegistre.remove(numeroRegistre);
+		// on supprime la premiere valeur de la pile puisque le registre ne va plus etre libre
+		this.pileValeurRegistre.remove(numeroRegistre);
 		this.mapGestionRegistre.put(valeur, numeroRegistre);
 		
 		/*
@@ -75,7 +75,7 @@ public class Assembleur {
 	 */
 	public void supprimerUnRegistre(String cle) {
 		// puisqu'on supprime le registre des registres utilisés on le rajoute dans la liste des registres libres
-		this.listeValeurRegistre.add(this.mapGestionRegistre.get(cle));
+		this.pileValeurRegistre.add(this.mapGestionRegistre.get(cle));
 		this.mapGestionRegistre.remove(cle);
 
 	}
