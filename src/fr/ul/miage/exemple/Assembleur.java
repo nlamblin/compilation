@@ -1,52 +1,92 @@
 package fr.ul.miage.exemple;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Assembleur {
 
+	/**
+	 * chaine permettant de stocker le code assembleur générer
+	 */
 	public static String chaineAssembleur;
+	/**
+	 * Hashhap permettant de stocker les variables et le registre leur correspondant
+	 */
 	public HashMap<String, String> mapGestionRegistre;
+	/**
+	 * tableau stockant l'ensemble des intitulés des registres qui ne sont pas encore utilisés
+	 */
+	public ArrayList<String> listeValeurRegistre;
 	
+	/**
+	 * Constructeur
+	 */
 	public Assembleur() {
 		this.chaineAssembleur = "";
+		this.mapGestionRegistre = new HashMap<>();
 		
+		// remplissage du tableau avec les intitulés des registres
 		for(int i = 0; i <= 26; i++) {
-			this.mapGestionRegistre.put("R"+i, null);
+			this.listeValeurRegistre.add("R"+i);
 		}
-		this.mapGestionRegistre.put("R31", null);
-		this.mapGestionRegistre.put("BP", null);
-		this.mapGestionRegistre.put("LP", null);
-		this.mapGestionRegistre.put("SP", null);
-		this.mapGestionRegistre.put("XP", null);
+		this.listeValeurRegistre.add("R31");
+		this.listeValeurRegistre.add("BP");
+		this.listeValeurRegistre.add("LP");
+		this.listeValeurRegistre.add("SP");
+		this.listeValeurRegistre.add("XP");
 	}
 	
+	/**
+	 * recherche la première place vide dans les registres
+	 * @return la première place vide
+	 * @throws PlusDePlaceEnRegistre, indique qu'il n'y a plus de place de libre
+	 */
 	public String chercherPlaceVide() throws PlusDePlaceEnRegistre {
-		for(int i = 0; i < this.mapGestionRegistre.size(); i++) {
-			if (this.mapGestionRegistre.get(i) == null) {
-				return mapGestionRegistre.get(i);
-			}
+		// si la liste n'est pas vide alors on prend le registre libre
+		// qui est le premier dans la liste
+		if(this.listeValeurRegistre.size() == 0) {
+			throw new PlusDePlaceEnRegistre();
 		}
-		throw new PlusDePlaceEnRegistre();
+		else {
+			return this.listeValeurRegistre.get(0);
+		}
 	}
 	
-	public void ajouterEnRegistre(String valeur) throws PlusDePlaceEnRegistre {
-		String placeRegistre = chercherPlaceVide();
-		this.mapGestionRegistre.put(placeRegistre, valeur);
+	/**
+	 * ajoute en registre (à la premiere libre) la valeur 
+	 * @param valeur, valeur à ajouter au registre
+	 * @throws PlusDePlaceEnRegistre
+	 */
+	public void ajouterUnRegistre(String valeur) throws PlusDePlaceEnRegistre {
+		String numeroRegistre = chercherPlaceVide();
+		// on supprime la premiere valeur de la liste puisque le registre ne va plus etre libre
+		this.listeValeurRegistre.remove(numeroRegistre);
+		this.mapGestionRegistre.put(valeur, numeroRegistre);
 		
-		Load l = new Load();
-		l.genererLoad(valeur, placeRegistre);
+		/*
+		* Load l = new Load();
+		* l.genererLoad(valeur, numeroRegistre);
+		*/
 	}
 	
-	public void supprimerEnRegistre(String numeroRegistre) {
-		this.mapGestionRegistre.put(numeroRegistre, null);
+	/**
+	 * supprime un registre des registres utilisés 
+	 * @param cle, entrée à supprimer dans la hashmap puisque le registre n'est plus utilisé
+	 */
+	public void supprimerUnRegistre(String cle) {
+		// puisqu'on supprime le registre des registres utilisés on le rajoute dans la liste des registres libres
+		this.listeValeurRegistre.add(this.mapGestionRegistre.get(cle));
+		this.mapGestionRegistre.remove(cle);
+
 	}
 	
-	public String recupererRegistre(String valeur) throws VariableInexistanteDansRegistre {
-		for (int i = 0; i < this.mapGestionRegistre.size(); i++) {
-			if(this.mapGestionRegistre.get(i) == valeur) {
-				return mapGestionRegistre.get(i);
-			}
-		}
-		throw new VariableInexistanteDansRegistre();
+	/**
+	 * recupere le numero du registre à partir d'une valeur donnée
+	 * @param  cle, cle dont on recherche le registre
+	 * @return le numero du registret
+	 * @throws VariableInexistanteDansRegistre
+	 */
+	public String recupererRegistre(String cle) {
+		return this.mapGestionRegistre.get(cle);
 	}
 }
