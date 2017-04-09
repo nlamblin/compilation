@@ -40,4 +40,13 @@ public class Assembleur {
 	public void supprimerEnRegistre(String numeroRegistre) {
 		this.mapGestionRegistre.put(numeroRegistre, null);
 	}
+	
+	public String recupererRegistre(String valeur) throws VariableInexistanteDansRegistre {
+		for (int i = 0; i < this.mapGestionRegistre.size(); i++) {
+			if(this.mapGestionRegistre.get(i) == valeur) {
+				return mapGestionRegistre.get(i);
+			}
+		}
+		throw new VariableInexistanteDansRegistre();
+	}
 }
