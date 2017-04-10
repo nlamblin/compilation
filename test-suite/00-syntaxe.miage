@@ -23,7 +23,6 @@ Traduction
 */
 
  VAR i;
- AFFECT n = 0;
  VAR j;
 
  FUNCTION INT f(a,b) {
