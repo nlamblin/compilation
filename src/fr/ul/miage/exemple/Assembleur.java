@@ -46,7 +46,7 @@ public class Assembleur {
 	public String chercherPlaceVide() throws PlusDePlaceEnRegistre {
 		// si la liste n'est pas vide alors on prend le registre libre
 		// qui est le premier dans la liste
-		if(this.pileValeurRegistre.size() == 0) {
+		if(this.pileValeurRegistre.empty()) {
 			throw new PlusDePlaceEnRegistre();
 		}
 		else {
