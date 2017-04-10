@@ -26,14 +26,16 @@ public class Assembleur {
 		this.mapGestionRegistre = new HashMap<>();
 		
 		// remplissage de la pile avec les intitulés des registres
-		for(int i = 0; i <= 26; i++) {
+		this.pileValeurRegistre.add("R31");
+		this.pileValeurRegistre.add("XP");
+		this.pileValeurRegistre.add("SP");
+		this.pileValeurRegistre.add("LP");
+		this.pileValeurRegistre.add("BP");
+		
+		for(int i = 26; i >= 0; i--) {
 			this.pileValeurRegistre.add("R"+i);
 		}
-		this.pileValeurRegistre.add("R31");
-		this.pileValeurRegistre.add("BP");
-		this.pileValeurRegistre.add("LP");
-		this.pileValeurRegistre.add("SP");
-		this.pileValeurRegistre.add("XP");
+
 	}
 	
 	/**
