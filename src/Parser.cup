@@ -67,14 +67,16 @@ programme	::= function programme
 			| function
 			{: 
 				//System.out.println(arbre.afficher());
-				//System.out.println(tds.toString());
-				System.out.println(arbre.parcourirTousLesFils(arbre.racine,tds));
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
+				System.out.println(tds.toString());
 			:}
 			| definition
 			{: 
 				//System.out.println(arbre.afficher());
-				//System.out.println(tds.toString());
-				System.out.println(arbre.parcourirTousLesFils(arbre.racine,tds));
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
+				System.out.println(tds.toString());
 			:}
 			;
 			

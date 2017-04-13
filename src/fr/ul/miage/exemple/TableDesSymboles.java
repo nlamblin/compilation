@@ -139,6 +139,17 @@ public class TableDesSymboles{
 		return res;
 	}
 	
+	
+	public String getType(String nom) throws ParseException{
+		String res = null;
+		if(this.estPresent(nom)){
+			res = this.table[this.indice][2];
+		}else{
+			throw new ParseException(nom +" n'as pas été défini");
+		}
+		return res;
+	}
+	
 	public int getId(String nom, String type) throws ParseException{
 		int i = 0;
 		if(estPresent(nom)){
@@ -166,7 +177,9 @@ public class TableDesSymboles{
 	}
 	
 	public String getNom(String id) throws ParseException{
-		
+		if(verificationId(id)){
+			return id;
+		}
 		int i =  Integer.parseInt(id);
 		
 		return this.table[i][1];
@@ -185,5 +198,10 @@ public class TableDesSymboles{
 		res += "\n" + "Compilation du code : ok.";
 		
 		return res;
+	}
+	
+	public boolean verificationId(String id){
+		return id.equals("AFFECT") || id.equals("FUNCTION") || id.equals("CALL") || id.equals("+")
+				|| id.equals("-") || id.equals("/") || id.equals("*");
 	}
 }
