@@ -22,8 +22,9 @@ public class Assembleur {
 	 * Constructeur
 	 */
 	public Assembleur() {
-		this.chaineAssembleur = "";
+		Assembleur.chaineAssembleur = "";
 		this.mapGestionRegistre = new HashMap<>();
+		this.pileValeurRegistre = new Stack<>();
 		
 		// remplissage de la pile avec les intitulés des registres
 		this.pileValeurRegistre.add("R31");

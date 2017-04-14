@@ -25,24 +25,34 @@ public class Arbre{
 	
 	
 	public void parcourirTousLesFils(Noeud n, TableDesSymboles tds) throws ParseException{
-
-		for(Noeud no : n.fils){
+		
+		for(Noeud no : n.fils) {
+			String[] tab = new String[2];
+			tab[0] = no.cle;
+			tab[1] = no.valeur;
+			this.liste_element.add(tab);
+			
+			switch (tab[0]) {
+			case "VAR" :
+				Var v = new Var();
+				// System.out.println(tds.getValeur(tds.getNom(tab[1])));
+				v.genererVar(tds.getValeur(tds.getNom(tab[1])));
+			case "FUNCTION" : 
+				System.out.println("identification d'une fonction");
+			case "AFFECT" : 
+				Affect a = new Affect();
+				// a.genererAffect( je sais pas comment recuperer la variable , je sais pas comment recuperer la valeur);
+				System.out.println("identification d'un affect");
+			default : 
+				break;
+			}
+			
 			if(no.fils.size() > 0){
-				String[] tab = new String[2];
-				tab[0] = no.cle;
-				tab[1] = no.valeur;
-				this.liste_element.add(tab);
 				parcourirTousLesFils(no,tds);
-			}else{
-				String[] tab = new String[2];
-				tab[0] = no.cle;
-				tab[1] = no.valeur;
-				this.liste_element.add(tab);
 			}
 		}
 		
 	}
-	
 	
 	public void afficherListeElement(TableDesSymboles tds) throws ParseException{
 		for(String[] s : this.liste_element){

@@ -13,6 +13,7 @@ import javax.script.ScriptException;
 import fr.ul.miage.exemple.TableDesSymboles;
 import fr.ul.miage.exemple.Arbre;
 import fr.ul.miage.exemple.Noeud;
+import fr.ul.miage.exemple.Assembleur;
 import java.util.ArrayList;
 import java.util.Collections;
 import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseException;
@@ -27,13 +28,13 @@ action code {:
 				//Liste ou l'on va ranger les noeuds correspondant aux instructions dans des fonctions
 				ArrayList<Noeud> fusion_noeud_instruction = new ArrayList<>();
 
-				//Attribut permettant de compter le nombre de paramètre d'une fonction lors de sa création
+				//Attribut permettant de compter le nombre de paramï¿½tre d'une fonction lors de sa crï¿½ation
 				public int nombre_de_parametre;
 
-				//Attribut de type temporel permettant de stocker momentannément le nom de l'entité à ajouter dans la TDS
+				//Attribut de type temporel permettant de stocker momentannï¿½ment le nom de l'entitï¿½ ï¿½ ajouter dans la TDS
 				public String variable_temporelle;
 
-				//Attribut permettant de définir quel entite nous recherchons dans la TDS
+				//Attribut permettant de dï¿½finir quel entite nous recherchons dans la TDS
 				//Prend comme valeur fonction, var ou null si on dois chercher un parametre non existant
 				public String type_de_recherche_tds;
 
@@ -68,15 +69,23 @@ programme	::= function programme
 			{: 
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
-				arbre.afficherListeElement(tds);
-				System.out.println(tds.toString());
+				// arbre.afficherListeElement(tds);
+				// System.out.println(tds.toString());
+
+				Assembleur a = new Assembleur();
+				System.out.println("\nCode assembleur :\n "); 
+				System.out.println(a.chaineAssembleur);
 			:}
 			| definition
 			{: 
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
-				arbre.afficherListeElement(tds);
-				System.out.println(tds.toString());
+				// arbre.afficherListeElement(tds);
+				// System.out.println(tds.toString());
+
+				Assembleur a = new Assembleur();
+				System.out.println("\nCode assembleur :\n "); 
+				System.out.println(a.chaineAssembleur);
 			:}
 			;
 			
@@ -295,7 +304,7 @@ entite 	::= NUM:num
 			{:
 				this.variable_temporelle = num;
 				if(this.type_de_recherche_tds.equals("parametre de nouvelle fonction")){
-					throw new ParseException(this.variable_temporelle + " est un paramètre incorrect de type NUM");
+					throw new ParseException(this.variable_temporelle + " est un paramï¿½tre incorrect de type NUM");
 				}	
 				RESULT = new Noeud("CONSTANTE",num); 
 			:}
@@ -325,7 +334,7 @@ entite 	::= NUM:num
 
 					}
 				}else{
-					throw new ParseException(var + " n'a pas été initialisé.");
+					throw new ParseException(var + " n'a pas ï¿½tï¿½ initialisï¿½.");
 				}
 			:}
 		|	CALL appel_function:noeud_call
