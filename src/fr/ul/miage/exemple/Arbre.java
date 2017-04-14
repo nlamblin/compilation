@@ -35,25 +35,25 @@ public class Arbre{
 			 */
 			tab[1] = no.valeur;
 			this.liste_element.add(tab);
-			
-			System.out.println(tab[0]);
-			
-			switch (tab[0]) {
-			case "VAR" :
-				Var v = new Var();
-				// System.out.println(tds.getValeur(tds.getNom(tab[1])));
-				v.genererVar(tds.getValeur(tds.getNom(tab[1])));
-			case "FUNCTION" : 
-				System.out.println("identification d'une fonction");
-			case "AFFECT" : 
-				System.out.println("identification d'un affect");
-				Affect a = new Affect();
-				// a.genererAffect( je sais pas comment recuperer la variable , je sais pas comment recuperer la valeur);
-			case "CONSTANTE" :
-				System.out.println(tab[1]);
-			default : 
-				break;
-			}
+//			
+//			System.out.println(tab[0]);
+//			
+//			switch (tab[0]) {
+//			case "VAR" :
+//				Var v = new Var();
+//				// System.out.println(tds.getValeur(tds.getNom(tab[1])));
+//				v.genererVar(tds.getValeur(tds.getNom(tab[1])));
+//			case "FUNCTION" : 
+//				System.out.println("identification d'une fonction");
+//			case "AFFECT" : 
+//				System.out.println("identification d'un affect");
+//				Affect a = new Affect();
+//				// a.genererAffect( je sais pas comment recuperer la variable , je sais pas comment recuperer la valeur);
+//			case "CONSTANTE" :
+//				System.out.println(tab[1]);
+//			default : 
+//				break;
+//			}
 			
 			if(no.fils.size() > 0){
 				parcourirTousLesFils(no,tds);
@@ -63,8 +63,27 @@ public class Arbre{
 	}
 	
 	public void afficherListeElement(TableDesSymboles tds) throws ParseException{
+		String nom = "";
+		String type = "";
+		String valeur = "";
+		String categorie = "";
 		for(String[] s : this.liste_element){
-			System.out.println(s[0]+ "   "  + s[1]);
+			if(s[1] != null){
+				if(s[0].equals("CONSTANTE")){
+					nom = s[0];
+					valeur = s[1];
+				}else{
+					nom = tds.getNom(s[1]);
+					type = tds.getType(nom);
+					valeur = tds.getValeur(nom);
+					categorie = tds.getCategorie(nom, null);
+				}
+				
+			}else{
+				nom = s[0];
+			}
+//			System.out.println(s[0] + "   " + s[1]);
+			System.out.println(nom + "  " + type + "   " + categorie + "  " + valeur);
 		}
 	}
 	

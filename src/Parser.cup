@@ -69,7 +69,7 @@ programme	::= function programme
 			{: 
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
-				// arbre.afficherListeElement(tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
@@ -81,7 +81,7 @@ programme	::= function programme
 			{: 
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
-				// arbre.afficherListeElement(tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
