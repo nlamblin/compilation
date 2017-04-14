@@ -63,11 +63,11 @@ public class Arbre{
 	}
 	
 	public void afficherListeElement(TableDesSymboles tds) throws ParseException{
-		String nom = "";
-		String type = "";
-		String valeur = "";
-		String categorie = "";
 		for(String[] s : this.liste_element){
+			String nom = "";
+			String type = "";
+			String valeur = "";
+			String categorie = "";
 			if(s[1] != null){
 				if(s[0].equals("CONSTANTE")){
 					nom = s[0];
