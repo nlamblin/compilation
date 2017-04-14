@@ -32,6 +32,8 @@ public class Arbre{
 			tab[1] = no.valeur;
 			this.liste_element.add(tab);
 			
+			System.out.println(tab[0]);
+			
 			switch (tab[0]) {
 			case "VAR" :
 				Var v = new Var();
@@ -40,9 +42,11 @@ public class Arbre{
 			case "FUNCTION" : 
 				System.out.println("identification d'une fonction");
 			case "AFFECT" : 
+				System.out.println("identification d'un affect");
 				Affect a = new Affect();
 				// a.genererAffect( je sais pas comment recuperer la variable , je sais pas comment recuperer la valeur);
-				System.out.println("identification d'un affect");
+			case "CONSTANTE" :
+				System.out.println(tab[1]);
 			default : 
 				break;
 			}
