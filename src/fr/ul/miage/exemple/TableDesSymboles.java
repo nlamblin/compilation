@@ -42,7 +42,7 @@ public class TableDesSymboles{
 	}
 	
 	/**
-	 * Fonction qui test si l'element est présent ou non
+	 * Fonction qui test si l'element est prï¿½sent ou non
 	 * @param nom
 	 * @return
 	 * @throws ParseException 
@@ -75,10 +75,10 @@ public class TableDesSymboles{
 	public void inserer(String nom, String type, String categorie) throws ParseException{
 		if(this.estPresent(nom)){
 			
-			//Variable globale et locale ne peuvent pas avoir le même nom
+			//Variable globale et locale ne peuvent pas avoir le mï¿½me nom
 			if((this.table[this.indice][3].equals("globale") || this.table[this.indice][3].equals("interne")
 					|| this.table[this.indice][3].equals("fonction")) && this.table[this.indice][3].equals(categorie)){
-				throw new ParseException("Double définition " + type + " : " + nom);
+				throw new ParseException("Double dï¿½finition " + type + " : " + nom);
 			}
 		}else if(!this.estPresent(nom)){
 			for(int i = 0; i < this.table.length; i++){
@@ -108,7 +108,7 @@ public class TableDesSymboles{
 		if(this.estPresent(nom)){
 			this.table[this.indice][5] = value;
 		}else{
-			throw new ParseException(nom +" n'as pas été défini");
+			throw new ParseException(nom +" n'as pas ï¿½tï¿½ dï¿½fini");
 		}
 	}
 	
@@ -116,7 +116,7 @@ public class TableDesSymboles{
 		if(this.estPresent(nom)){
 			this.table[this.indice][2] = value;
 		}else{
-			throw new ParseException(nom +" n'as pas été défini");
+			throw new ParseException(nom +" n'as pas ï¿½tï¿½ dï¿½fini");
 		}
 	}
 	
@@ -125,7 +125,7 @@ public class TableDesSymboles{
 		if(this.estPresent(nom)){
 			this.table[this.indice][4] = value;
 		}else{
-			throw new ParseException(nom +" n'as pas été défini");
+			throw new ParseException(nom +" n'as pas ï¿½tï¿½ dï¿½fini");
 		}
 	}
 	
@@ -134,7 +134,7 @@ public class TableDesSymboles{
 		if(this.estPresent(nom)){
 			res = this.table[this.indice][4];
 		}else{
-			throw new ParseException(nom +" n'as pas été défini");
+			throw new ParseException(nom +" n'as pas ï¿½tï¿½ dï¿½fini");
 		}
 		return res;
 	}
@@ -145,7 +145,7 @@ public class TableDesSymboles{
 		if(this.estPresent(nom)){
 			res = this.table[this.indice][2];
 		}else{
-			throw new ParseException(nom +" n'as pas été défini");
+			throw new ParseException(nom +" n'as pas ï¿½tï¿½ dï¿½fini");
 		}
 		return res;
 	}
@@ -156,7 +156,7 @@ public class TableDesSymboles{
 			i = this.indice;
 		}else{
 			if(type != null)
-				throw new ParseException(nom + " n'a pas été défini.");
+				throw new ParseException(nom + " n'a pas ï¿½tï¿½ dï¿½fini.");
 		}
 		
 		return i;
@@ -170,7 +170,7 @@ public class TableDesSymboles{
 			res = this.table[i][3];
 		}else{
 			if(type != null)
-				throw new ParseException(nom + " n'a pas été défini.");
+				throw new ParseException(nom + " n'a pas ï¿½tï¿½ dï¿½fini.");
 		}
 		
 		return res;
@@ -203,5 +203,19 @@ public class TableDesSymboles{
 	public boolean verificationId(String id){
 		return id.equals("AFFECT") || id.equals("FUNCTION") || id.equals("CALL") || id.equals("+")
 				|| id.equals("-") || id.equals("/") || id.equals("*");
+	}
+	
+	public void verificationFonctionMain() throws ParseException {
+		boolean trouve = false;
+		
+		for (int i = 0; i < this.table.length; i++) {
+			if (this.table[i][1].equals("main")) {
+				trouve = true;
+				break;
+			}
+		}
+		if(!trouve) {
+			throw new ParseException("Erreur ! Pas de fonction main");
+		}	
 	}
 }

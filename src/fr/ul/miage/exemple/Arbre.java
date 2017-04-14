@@ -29,6 +29,10 @@ public class Arbre{
 		for(Noeud no : n.fils) {
 			String[] tab = new String[2];
 			tab[0] = no.cle;
+			/*
+			 * Si la cle est CONSTANTE alors no.valeur correspond à la valeur 
+			 * alors que si ce n'est pas constante cela correspond à l'identifiant dans la table des symboles
+			 */
 			tab[1] = no.valeur;
 			this.liste_element.add(tab);
 			

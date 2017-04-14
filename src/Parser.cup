@@ -70,7 +70,8 @@ programme	::= function programme
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
 				// arbre.afficherListeElement(tds);
-				// System.out.println(tds.toString());
+				tds.verificationFonctionMain();
+				System.out.println(tds.toString());
 
 				Assembleur a = new Assembleur();
 				System.out.println("\nCode assembleur :\n "); 
@@ -81,7 +82,8 @@ programme	::= function programme
 				//System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds);
 				// arbre.afficherListeElement(tds);
-				// System.out.println(tds.toString());
+				tds.verificationFonctionMain();
+				System.out.println(tds.toString());
 
 				Assembleur a = new Assembleur();
 				System.out.println("\nCode assembleur :\n "); 
