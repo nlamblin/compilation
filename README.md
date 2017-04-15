@@ -34,4 +34,4 @@ RETURN obligatoire dans fonction ayant un type de retour.
 RETURN non accepté dans une fonction void.
 Si fonction avec type de retour, le RETURN doit être sur la dernière ligne de la fonction.
 
-Une fonction intitulé main doit être présente car c'est le point d'entré du programme.
+Une fonction intitulé main doit être présente car c'est le point d'entré du programme.cd 

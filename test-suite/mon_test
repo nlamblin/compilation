@@ -1,0 +1,5 @@
+VAR i;
+
+FUNCTION VOID main() {
+	AFFECT i = 10;
+}
