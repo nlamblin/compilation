@@ -1,0 +1,26 @@
+.include beta.uasm
+
+| int x;
+| int a = 100;
+| int b = 170;
+| x=a*2+(b-5)/3;
+| ---------------------------------
+
+BR(main)
+	x: LONG(0)
+	a: LONG(100)
+	b: LONG(170)
+
+main:	LD(a,R1)
+	LD(b,R2)
+	MULC(R1,2,R1)
+	SUBC(R2,5,R2)
+	DIVC(R2,3,R3)
+	ADD(R1,R3,R4)
+	ST(R4,x)
+|-----------------------------------
+	
+
+	
+	
+	

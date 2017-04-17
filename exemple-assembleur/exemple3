@@ -1,0 +1,37 @@
+.include beta.uasm
+
+|int x;
+|int a = 100;
+|int b = 170;
+|x=a*2+(b-5)/3;
+|if (a > b){
+|	x = 1000;
+|}else{
+|	x = 2000;
+|}
+| -----------------------
+
+BR(main)
+	x: LONG(0)
+	a: LONG(100)
+	b: LONG(170)
+
+main:	LD(a,R1)
+	LD(b,R2)
+	MULC(R1,2,R1)
+	SUBC(R2,5,R2)
+	DIVC(R2,3,R3)
+	ADD(R1,R3,R4)
+
+if:	LD(a,R0)
+	LD(b,R1)
+	CMPLT(R1,R0,R8)
+	BF(R8,else)
+then:
+	CMOVE(1000, R0)
+	ST(R0,x)
+	BR(endif)
+else:
+	CMOVE(2000, R1)
+	ST(R1,x)
+endif:	

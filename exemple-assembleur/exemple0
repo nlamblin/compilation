@@ -1,0 +1,11 @@
+.include beta.uasm
+|exemple 0
+|a=1;
+|b=2;
+|c=a+b;
+| -----------------
+	CMOVE(1,R0)
+	CMOVE(2,R1)
+	ADD(R0,R1,R2)
+	HALT()
+| -----------------
