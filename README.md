@@ -1,13 +1,13 @@
-METTRE CALL DEVANT CHAQUE APPEL DE FONCION
-ON NE PEUT PAS APPELER UNE FONCTION OU UNE VRIABLE SI ELLE N'A PAS ETE CRÉÉ AVANT -> FONCTION MAIN TOUT A LA FIN
+METTRE CALL DEVANT CHAQUE APPEL DE FONCTION. 
+ON NE PEUT PAS APPELER UNE FONCTION OU UNE VARIABLE SI ELLE N'A PAS ÉTÉ CRÉÉE AVANT -> FONCTION MAIN TOUT À LA FIN. 
 
 
 # Particularités du langage:
 
-### Déclaration variable:
-VAR x; 
+### Déclaration d'une variable:
+VAR x;
 
-### Affectation variable:
+### Affectation d'une variable:
 AFFECT x = 0;
 
 ### Fonction:
@@ -17,7 +17,7 @@ FUNCTION VOID main() { ... }
 IF ( x == 0) { ... }
 ELSE { ... }
 
-Pas de ELSEIF ni de ET ou OU dans les conditions
+Pas de ELSEIF ni de ET et OU dans les conditions.
 
 ### Iteration:
 WHILE ( x < 10) { ... }
