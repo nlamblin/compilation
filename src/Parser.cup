@@ -68,8 +68,8 @@ programme	::= function programme
 			| function
 			{: 
 				System.out.println(arbre.afficher());
-				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
-				arbre.afficherListeElement();
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
@@ -80,8 +80,8 @@ programme	::= function programme
 			| definition
 			{: 
 				System.out.println(arbre.afficher());
-				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
-				arbre.afficherListeElement();
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
