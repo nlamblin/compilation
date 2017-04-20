@@ -8,7 +8,7 @@ public class Assembleur {
 	/**
 	 * chaine permettant de stocker le code assembleur générer
 	 */
-	public static String chaineAssembleur;
+	public String chaineAssembleur;
 	/**
 	 * Hashhap permettant de stocker les variables et le registre leur correspondant
 	 */
@@ -22,7 +22,7 @@ public class Assembleur {
 	 * Constructeur
 	 */
 	public Assembleur() {
-		Assembleur.chaineAssembleur = "";
+		this.chaineAssembleur = ".include beta.asm \n";
 		this.mapGestionRegistre = new HashMap<>();
 		this.pileValeurRegistre = new Stack<>();
 		
@@ -91,5 +91,99 @@ public class Assembleur {
 	 */
 	public String recupererRegistre(String cle) {
 		return this.mapGestionRegistre.get(cle);
+	}
+	
+	
+	
+	/**************************************************************
+	 * 
+	 * 
+	 * CODE ASSEMBLEUR
+	 *
+	 *
+	 *************************************************************/
+	
+	public void genererIntitule(String intitule) {
+		this.chaineAssembleur += intitule+": \t";
+	}
+	
+	public void genererVar(String var) {
+		this.chaineAssembleur += var + ": LONG(0) \n";
+	}
+	
+	public void genererLoad(String variable, String numeroRegistre) {
+		this.chaineAssembleur += "LD("+variable+","+numeroRegistre+") \n";
+	}
+	
+	public void genererPop(String numeroRegistre){
+		this.chaineAssembleur += "POP("+numeroRegistre+") \n";
+	}
+	
+	public void genererCall(String intitule) {
+		this.chaineAssembleur += "CALL("+intitule+") \n";
+	}
+	
+	public void genererAffect(String numeroRegistre1, String numeroRegistre2) {
+		this.chaineAssembleur += "MOV("+numeroRegistre2+","+numeroRegistre1+") \n";
+	}
+	
+	public void genererAffectConstante(String numeroRegistre, int constante) {
+		this.chaineAssembleur += "CMOVE("+constante+","+numeroRegistre+") \n";
+	}
+	
+	public void genererAddition(String numeroRegistre1, String numeroRegistre2, String numeroRegistreSortie) {
+		this.chaineAssembleur += "ADD("+numeroRegistre1+","+numeroRegistre2+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererAdditionConstante(String numeroRegistre1, int constante, String numeroRegistreSortie) {
+		this.chaineAssembleur += "ADD("+numeroRegistre1+","+constante+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererSoustraction(String numeroRegistre1, String numeroRegistre2, String numeroResigtreSortie) {
+		this.chaineAssembleur += "SUB("+numeroRegistre1+","+numeroRegistre2+","+numeroResigtreSortie+") \n";
+	}
+	
+	public void genererSoustractionConstante(String numeroRegistre1, int constante, String numeroResigtreSortie) {
+		this.chaineAssembleur += "SUBC("+numeroRegistre1+","+constante+","+numeroResigtreSortie+") \n";
+	}
+	
+	public void genererMultiplication(String numeroRegistre1, String numeroRegistre2, String numeroRegistreSortie) {
+		this.chaineAssembleur += "MUL("+numeroRegistre1+","+numeroRegistre2+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererMultiplicationConstante(String numeroRegistre1, int constante, String numeroRegistreSortie) {
+		this.chaineAssembleur += "MUL("+numeroRegistre1+","+constante+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererDivision(String numeroRegistre1, String numeroRegistre2, String numeroRegistreSortie) {
+		this.chaineAssembleur += "DIV("+numeroRegistre1+","+numeroRegistre2+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererDivisionConstante(String numeroRegistre1, int constante, String numeroRegistreSortie) {
+		this.chaineAssembleur += "DIV("+numeroRegistre1+","+constante+","+numeroRegistreSortie+") \n";
+	}
+	
+	public void genererConditionEgale(String numeroRegsitre1, String numeroRegistre2, String numeroRegistre3) {
+		this.chaineAssembleur += "CMPEQ("+numeroRegsitre1+","+numeroRegistre2+","+numeroRegistre3+") \n";
+	}
+	
+	public void genererConditionInf(String numeroRegistre1, String numeroRegistre2, String numeroRegistre3) {
+		this.chaineAssembleur += "CMPLE("+numeroRegistre1+","+numeroRegistre2+","+numeroRegistre3+") \n";
+	}
+	
+	public void genererConditionInfEgale(String numeroRegistre1, String numeroRegistre2, String numeroRegistre3) {
+		this.chaineAssembleur += "CMPLT("+numeroRegistre1+","+numeroRegistre2+","+numeroRegistre3+") \n";
+	}
+	
+	public void genererBf(String intitule) {
+		this.chaineAssembleur += "BF("+intitule+") \n";
+	}
+	
+    public void genererBr(String numeroRegistre, String intitule) {
+        this.chaineAssembleur += "BR(" + numeroRegistre + "," + intitule + ") \n";
+    }
+    
+	public void genererHalt() {
+		this.chaineAssembleur += "Halt() \n";
 	}
 }

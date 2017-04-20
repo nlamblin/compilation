@@ -369,9 +369,9 @@ class CUP$ParserCup$actions {
               Object RESULT =null;
 		//@@CUPDBG3
  
-				//System.out.println(arbre.afficher());
-				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
-				arbre.afficherListeElement();
+				System.out.println(arbre.afficher());
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
@@ -389,9 +389,9 @@ class CUP$ParserCup$actions {
               Object RESULT =null;
 		//@@CUPDBG4
  
-				//System.out.println(arbre.afficher());
-				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
-				arbre.afficherListeElement();
+				System.out.println(arbre.afficher());
+				arbre.parcourirTousLesFils(arbre.racine,tds);
+				arbre.afficherListeElement(tds);
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
