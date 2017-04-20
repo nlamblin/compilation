@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Noeud {
 
-    public static int numeroNoeud = 0;
+    private static int numeroNoeud = 0;
     public String cle, valeur;
     public ArrayList<Noeud> fils;
 
@@ -12,15 +12,7 @@ public class Noeud {
         this.cle = c;
         this.valeur = v;
         this.fils = new ArrayList<>();
-        this.numeroNoeud++;
-    }
-
-    public void setCle(String c) {
-        this.cle = c;
-    }
-
-    public void setValeur(String v) {
-        this.valeur = v;
+        numeroNoeud++;
     }
 
     public String afficher(int niveau) {
