@@ -67,7 +67,7 @@ programme	::= function programme
 				:}
 			| function
 			{: 
-				//System.out.println(arbre.afficher());
+				System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
 				arbre.afficherListeElement();
 				tds.verificationFonctionMain();
@@ -79,7 +79,7 @@ programme	::= function programme
 			:}
 			| definition
 			{: 
-				//System.out.println(arbre.afficher());
+				System.out.println(arbre.afficher());
 				arbre.parcourirTousLesFils(arbre.racine,tds,0,"");
 				arbre.afficherListeElement();
 				tds.verificationFonctionMain();
