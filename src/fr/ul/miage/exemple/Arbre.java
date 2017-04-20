@@ -25,25 +25,20 @@ public class Arbre {
     }
 
     public void parcourirTousLesFils(Noeud n, TableDesSymboles tds, int i, String parent) throws ParseException {
-        String fils = "";
         int j = i;
         for (Noeud no : n.fils) {
             String[] tab = new String[2];
             if (no.cle.equals("FUNCTION")) {
-                parent = "" + i;
                 String nom = tds.getNom(no.valeur);
                 tab[0] = nom;
-                String valeur = tds.getValeur(nom);
-                tab[1] = valeur;
-                this.map.put(parent, tab);
+                tab[1] = tds.getValeur(nom);
+                this.map.put("" + i, tab);
             }
             switch_parcours(no, tab, j, parent, tds);
-            if (no.fils.size() > 0) {
-                for (Noeud noe : no.fils) {
-                    String[] tab2 = new String[2];
-                    j = j + 1;
-                    fils = parent + j;
-                    switch_parcours(noe, tab2, j, fils, tds);
+            if (!no.fils.isEmpty()) {
+                for (Noeud fils : no.fils) {
+                    j++;
+                    switch_parcours(fils, new String[2], j, parent + j, tds);
                 }
                 j = 0;
             } else {
@@ -55,9 +50,7 @@ public class Arbre {
     }
 
     public void switch_parcours(Noeud no, String[] tab, int i, String parent, TableDesSymboles tds) throws ParseException {
-        String nom = "";
-        String valeur = "";
-        String fils = "";
+        String fils;
         switch (no.cle) {
             case "AFFECT":
                 tab[0] = no.cle;
@@ -66,7 +59,6 @@ public class Arbre {
                 parcourirTousLesFils(no, tds, i, parent);
                 break;
             case "CALL":
-
                 break;
             case "CONSTANTE":
                 fils = parent + i;
@@ -76,9 +68,9 @@ public class Arbre {
                 break;
             case "VAR":
                 fils = parent + i;
-                nom = tds.getNom(no.valeur);
+                String nom = tds.getNom(no.valeur);
                 tab[0] = nom;
-                valeur = tds.getValeur(nom);
+                String valeur = tds.getValeur(nom);
                 tab[1] = valeur;
                 this.map.put(fils, tab);
                 break;
@@ -90,7 +82,6 @@ public class Arbre {
                 parcourirTousLesFils(no, tds, 1, fils);
                 break;
             case "-":
-
                 break;
             case "/":
                 fils = parent + i;
@@ -100,10 +91,8 @@ public class Arbre {
                 parcourirTousLesFils(no, tds, 1, fils);
                 break;
             case "*":
-
                 break;
             case "FUNC":
-
                 break;
         }
     }
@@ -140,7 +129,6 @@ public class Arbre {
     }
 
     public class KeyComparator<String> implements Comparator<String> {
-
         @Override
         public int compare(String sourceKey, String targetKey) {
             return ((java.lang.String) sourceKey).compareTo((java.lang.String) targetKey);

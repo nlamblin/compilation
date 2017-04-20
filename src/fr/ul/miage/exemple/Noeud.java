@@ -4,15 +4,16 @@ import java.util.ArrayList;
 
 public class Noeud {
 
-    private static int numeroNoeud = 0;
+    // TODO: se rappeler de l'interet...
+    // private static int numeroNoeud = 0;
     public String cle, valeur;
     public ArrayList<Noeud> fils;
 
-    public Noeud(String c, String v) {
-        this.cle = c;
-        this.valeur = v;
+    public Noeud(String cle, String valeur) {
+        this.cle = cle;
+        this.valeur = valeur;
         this.fils = new ArrayList<>();
-        numeroNoeud++;
+        // numeroNoeud++;
     }
 
     public String afficher(int niveau) {
