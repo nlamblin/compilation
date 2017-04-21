@@ -169,9 +169,6 @@ public class TableDesSymboles {
         if (estPresent(nom)) {
             i = this.indice;
             res = this.table[i][5];
-        } else {
-            if (type != null)
-                throw new ParseException(nom + " n'a pas �t� d�fini.");
         }
 
         return Integer.parseInt(res);
