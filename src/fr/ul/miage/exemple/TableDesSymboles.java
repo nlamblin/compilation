@@ -10,7 +10,7 @@ public class TableDesSymboles {
 //	this.table[i][3] = categorie  (globale/interne/fonction);
 //	this.table[i][4] = valeur
 //	this.table[i][5] = nbparametre
-    private String table[][];
+    public String table[][];
 
     //Definit la place de la variable dans le tableau
     public static int indice;

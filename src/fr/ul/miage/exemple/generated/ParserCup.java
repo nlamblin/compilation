@@ -376,8 +376,7 @@ class CUP$ParserCup$actions {
 				System.out.println(tds.toString());
 
 				Assembleur a = new Assembleur();
-				System.out.println("\nCode assembleur :\n "); 
-				System.out.println(a.chaineAssembleur);
+				System.out.println(a.genererProgramme(arbre.racine,tds));
 			
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("programme",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
@@ -396,8 +395,7 @@ class CUP$ParserCup$actions {
 				System.out.println(tds.toString());
 
 				Assembleur a = new Assembleur();
-				System.out.println("\nCode assembleur :\n "); 
-				System.out.println(a.chaineAssembleur);
+				System.out.println(a.genererProgramme(arbre.racine,tds));
 			
               CUP$ParserCup$result = parser.getSymbolFactory().newSymbol("programme",0, ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), ((java_cup.runtime.Symbol)CUP$ParserCup$stack.peek()), RESULT);
             }
