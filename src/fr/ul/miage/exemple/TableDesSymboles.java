@@ -162,6 +162,20 @@ public class TableDesSymboles {
 
         return i;
     }
+    
+    public int getParametre(String nom) throws ParseException {
+    	int i = 0;
+    	String res = "";
+        if (estPresent(nom)) {
+            i = this.indice;
+            res = this.table[i][5];
+        } else {
+            if (type != null)
+                throw new ParseException(nom + " n'a pas �t� d�fini.");
+        }
+
+        return Integer.parseInt(res);
+    }
 
     public String getCategorie(String nom, String type) throws ParseException {
         int i = 0;

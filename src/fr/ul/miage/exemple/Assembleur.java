@@ -70,8 +70,10 @@ public class Assembleur {
 		String res = "";
 		
 		if(noeud.fils.size() == 0) {
-			int b = (tds.table[tds.getId(tds.getNom(noeud.cle), "INT")][5] - 2) * 4;
+			// pas sur du tout de ça
+			int b = (tds.getParametre(tds.getNom(noeud.cle)) - 2) * 4;
 			
+			// trouver un moyen mais pas changer genererExpression !!!
 			res += genererExpression(noeud.fils)
 					+ "POP(R0)"
 					+ "PUTFRAME(R0, b)";
