@@ -24,6 +24,7 @@ public class Assembleur {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("assembleur.txt")));
     		writer.write(chaine);
     		System.out.println(chaine);
+    		writer.close();
     	}
     	catch(IOException e) {
     		e.printStackTrace();
