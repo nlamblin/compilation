@@ -4,6 +4,8 @@ import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseExceptio
 
 public class TableDesSymboles {
 
+    //Definit la place de la variable dans le tableau
+    public static int indice;
     //	this.table[i][0] = ID
 //	this.table[i][1] = nom;
 //	this.table[i][2] = type;
@@ -11,9 +13,6 @@ public class TableDesSymboles {
 //	this.table[i][4] = valeur
 //	this.table[i][5] = nbparametre
     public String table[][];
-
-    //Definit la place de la variable dans le tableau
-    public static int indice;
 
 
     public TableDesSymboles() {
@@ -162,10 +161,10 @@ public class TableDesSymboles {
 
         return i;
     }
-    
+
     public int getParametre(String nom) throws ParseException {
-    	int i = 0;
-    	String res = "";
+        int i = 0;
+        String res = "";
         if (estPresent(nom)) {
             i = this.indice;
             res = this.table[i][5];
