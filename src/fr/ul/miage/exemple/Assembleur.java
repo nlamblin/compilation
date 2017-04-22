@@ -57,11 +57,12 @@ public class Assembleur {
     }
 
     public String genererFonction(Noeud noeud) throws ParseException {
-        String res = "";
+        String res = tds.getNom(noeud.valeur) + "\n";
         for (Noeud n : noeud.fils) {
             res += genererInstructions(n);
         }
-
+        res += "fin_"+ tds.getNom(noeud.valeur) + "\n";
+        
         return res;
     }
 
@@ -70,7 +71,7 @@ public class Assembleur {
 
         if (noeud.fils.size() == 0) {
             // pas sur du tout de ça
-            int b = (tds.getParametre(tds.getNom(noeud.cle)) - 2) * 4;
+            int b = (tds.getParametre(tds.getNom(noeud.valeur)) - 2) * 4;
 
             // trouver un moyen mais pas changer genererExpression !!!
             res += genererExpression(noeud.fils.get(0))
