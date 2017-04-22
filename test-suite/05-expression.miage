@@ -1,5 +1,5 @@
 /*
- Une expression arithméthique
+ Une expression arithmï¿½thique
  
  int x;
  int a = 1;
@@ -14,10 +14,8 @@
 */
 
  VAR x;
- VAR a;
- AFFECT a = 1;
- VAR b;
- AFFECT b = 2;
+ VAR a = 1;
+ VAR b = 2;
 
  FUNCTION VOID main(){
 	AFFECT x=(a*2)+b-5/3;

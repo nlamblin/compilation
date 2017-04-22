@@ -10,8 +10,7 @@ void main(){
  }
 */
 
-VAR i;
-AFFECT i = 3;
+VAR i = 3;
 VAR j;
 FUNCTION VOID main(){
 	IF (i < 2){
