@@ -61,8 +61,8 @@ public class Assembleur {
         for (Noeud n : noeud.fils) {
             res += genererInstructions(n);
         }
-        res += "fin_"+ tds.getNom(noeud.valeur) + "\n";
-        
+        res += "fin_" + tds.getNom(noeud.valeur) + "\n";
+
         return res;
     }
 
@@ -107,10 +107,9 @@ public class Assembleur {
     }
 
     public String genererAffectation(Noeud noeud) throws ParseException {
-        String res = genererExpression(noeud.fils.get(0));
+        String res = genererExpression(noeud.fils.get(1));
         res += "POP(R0) \n"
-                + "ST(R0," + noeud.fils.get(1).valeur + ") \n";
-
+                + "ST(R0," + this.tds.getNom(noeud.fils.get(0).valeur) + ") \n";
         return res;
     }
 
@@ -119,11 +118,11 @@ public class Assembleur {
 
         switch (noeud.cle) {
             case "CONSTANTE":
-                res += "CMOVE(" + this.tds.getValeur(this.tds.getNom(noeud.valeur)) + ", R0) \n"
+                res += "CMOVE(" + noeud.valeur + ", R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "VAR":
-                res += "LD(" + this.tds.getValeur(this.tds.getNom(noeud.valeur)) + ", R0) \n"
+                res += "LD(" + this.tds.getNom(noeud.valeur) + ", R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "+":
