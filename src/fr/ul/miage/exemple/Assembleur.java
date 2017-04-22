@@ -66,7 +66,7 @@ public class Assembleur {
 		return res;
 	}
 	
-	/*public String genererReturn(Noeud noeud) {
+	public String genererReturn(Noeud noeud) throws ParseException {
 		String res = "";
 		
 		if(noeud.fils.size() == 0) {
@@ -74,14 +74,14 @@ public class Assembleur {
 			int b = (tds.getParametre(tds.getNom(noeud.cle)) - 2) * 4;
 			
 			// trouver un moyen mais pas changer genererExpression !!!
-			res += genererExpression(noeud.fils)
+			res += genererExpression(noeud.fils.get(0))
 					+ "POP(R0)"
-					+ "PUTFRAME(R0, b)";
+					+ "PUTFRAME(R0, "+b+")";
 		}
 		res += "";
 			
 		return res;
-	}*/
+	}
 	
 	public String genererInstructions(Noeud noeud) throws ParseException {
 		String res = "";
