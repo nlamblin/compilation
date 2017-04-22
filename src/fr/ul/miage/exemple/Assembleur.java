@@ -23,12 +23,13 @@ public class Assembleur {
     public String genererProgramme(Noeud racine, TableDesSymboles tds) throws ParseException {
         this.tds = tds;
 
-        String res = ".include beta.asm \n"
+        String res = ".include beta.uasm \n"
                 + "CMOVE(pile,SP) \n "
                 + "CALL(main) \n "
                 + "HALT() \n"
                 + genererData(tds) + "\n"
-                + genererCode(racine);
+                + genererCode(racine) + "\n"
+                + "pile:\n";
 
         return res;
     }
@@ -110,7 +111,7 @@ public class Assembleur {
         String res = genererExpression(noeud.fils.get(1));
         res += "POP(R0) \n"
                 + "ST(R0," + this.tds.getNom(noeud.fils.get(0).valeur) + ") \n";
-        return res;
+        return res + "\n";
     }
 
     public String genererExpression(Noeud noeud) throws ParseException {
@@ -159,7 +160,7 @@ public class Assembleur {
                 break;
         }
 
-        return res;
+        return res + "\n";
     }
 
     public String genererCondition(Noeud noeud) throws ParseException {
@@ -217,7 +218,7 @@ public class Assembleur {
             default:
                 break;
         }
-        return res;
+        return res + "\n";
     }
 
     public String genererIf(Noeud noeud) throws ParseException {
@@ -230,7 +231,7 @@ public class Assembleur {
                 + "else_" + this.nbIf + ": \t"
                 + genererBloc(noeud.fils.get(2))
                 + "fsi_" + this.nbIf + ": \n";
-        return res;
+        return res + "\n";
     }
 
     public String genererWhile(Noeud noeud) throws ParseException {
@@ -241,7 +242,7 @@ public class Assembleur {
                 + genererBloc(noeud.fils.get(1))
                 + "BF(R0, while_" + this.nbWhile + ") \n"
                 + "done_" + this.nbWhile;
-        return res;
+        return res + "\n";
     }
 
     public String genererBloc(Noeud noeud) throws ParseException {
@@ -251,6 +252,6 @@ public class Assembleur {
             res += genererInstructions(n);
         }
 
-        return res;
+        return res + "\n";
     }
 }
