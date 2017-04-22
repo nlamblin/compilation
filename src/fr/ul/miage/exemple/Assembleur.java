@@ -96,6 +96,9 @@ public class Assembleur {
             case "WHILE":
                 res += genererWhile(noeud);
                 break;
+            case "IF":
+            	res+= genererIf(noeud);
+            	break;
             default:
                 break;
         }
