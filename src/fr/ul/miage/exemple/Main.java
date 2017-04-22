@@ -47,7 +47,7 @@ public class Main {
 //		System.out.println("----------00-syntaxe----------");
 //		Thread.sleep(1000);
 
-        System.out.println("----------01-minimal----------");
+        /*System.out.println("----------01-minimal----------");
         file = new FileInputStream(new File("test-suite/01-minimal.miage"));
         parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
         try {
@@ -78,7 +78,7 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("----------03-expression----------");
-        Thread.sleep(1000);
+        Thread.sleep(1000);*/
 
 		System.out.println("----------04-expression----------");
 		file = new FileInputStream(new File("test-suite/04-expression.miage"));
@@ -91,7 +91,7 @@ public class Main {
 		System.out.println("----------04-expression----------");
 		Thread.sleep(1000);
 
-		System.out.println("----------05-expression----------");
+		/*.out.println("----------05-expression----------");
 		file = new FileInputStream(new File("test-suite/05-expression.miage"));
 		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
 		try {
@@ -111,7 +111,7 @@ public class Main {
 			e.printStackTrace();
 		}
 		System.out.println("----------06-local----------");
-		Thread.sleep(1000);
+		Thread.sleep(1000);*/
 		
 //		System.out.println("----------07-parametre----------");
 //		file = new FileInputStream(new File("test-suite/07-parametre.miage"));

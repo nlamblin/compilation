@@ -1,5 +1,7 @@
 package fr.ul.miage.exemple;
 
+import java.io.*;
+
 import com.sun.xml.internal.messaging.saaj.packaging.mime.internet.ParseException;
 
 public class Assembleur {
@@ -14,6 +16,18 @@ public class Assembleur {
     public Assembleur() {
         this.nbWhile = 0;
         this.nbIf = 0;
+    }
+    
+    
+    public void genererFichier(String chaine) {
+    	try {
+			BufferedWriter writer = new BufferedWriter(new FileWriter(new File("assembleur.txt")));
+    		writer.write(chaine);
+    		System.out.println(chaine);
+    	}
+    	catch(IOException e) {
+    		e.printStackTrace();
+    	}
     }
 
 	/*
