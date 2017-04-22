@@ -54,7 +54,7 @@ terminal Noeud EGAL,CALL;
 non terminal programme, function;
 non terminal condition;
 non terminal definition,declaration;
-non terminal String operation,nom_de_fonction_creation, nom_de_variable, nom_de_fonction_existante;
+non terminal String operation,nom_de_fonction_creation, nom_de_variable, nom_de_fonction_existante,nom_de_variable_globale;
 non terminal Noeud conditionnelle,operateur,suite_instruction, instruction;
 non terminal Noeud iteration,affectation,entite_pour_parametre, pas_de_parametre;
 non terminal Noeud entite,expression,return,entite_pour_return,call,appel_function,parametre;
@@ -183,6 +183,14 @@ nom_de_variable ::= VAR:nom
 					:}
 				;
 				
+nom_de_variable_globale ::= VAR:nom
+					{:
+						tds.inserer(nom,"VAR","globale"); 
+						this.type_de_recherche_tds = "VAR";
+						RESULT = nom;
+					:}
+;
+				
 nom_de_fonction_existante ::= VAR:nom
 							{:
 								this.type_de_recherche_tds = "Fonction existante";
@@ -227,7 +235,7 @@ definition ::= DEFVAR:type nom_de_variable:nom PV
 				{: 
 					tds.inserer(nom,type,"globale"); 
 				:}
-			| DEFVAR:type nom_de_variable:nom EGAL NUM:value PV
+			| DEFVAR:type nom_de_variable_globale:nom EGAL NUM:value PV
 				{:
  					tds.ajouterValeur(nom,value);
 				:}
