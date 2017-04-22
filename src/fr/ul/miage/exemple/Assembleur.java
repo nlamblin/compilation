@@ -43,7 +43,6 @@ public class Assembleur {
                 res += "\t" + table[i][1] + ": LONG(" + table[i][4] + ") \n";
             }
         }
-
         return res;
     }
 
@@ -107,9 +106,9 @@ public class Assembleur {
     }
 
     public String genererAffectation(Noeud noeud) throws ParseException {
-        String res = genererExpression(noeud.fils.get(1));
+        String res = genererExpression(noeud.fils.get(0));
         res += "POP(R0) \n"
-                + "ST(R0, " + this.tds.getValeur(this.tds.getNom(noeud.fils.get(0).valeur) + " \n");
+                + "ST(R0," + noeud.fils.get(1).valeur + ") \n";
 
         return res;
     }
@@ -119,11 +118,11 @@ public class Assembleur {
 
         switch (noeud.cle) {
             case "CONSTANTE":
-                res += "CMOVE(" + this.tds.getValeur(this.tds.getNom(noeud.fils.get(0).valeur)) + ", R0) \n"
+                res += "CMOVE(" + this.tds.getValeur(this.tds.getNom(noeud.valeur)) + ", R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "VAR":
-                res += "LD(" + this.tds.getValeur(this.tds.getNom(noeud.fils.get(0).valeur)) + ", R0) \n"
+                res += "LD(" + this.tds.getValeur(this.tds.getNom(noeud.valeur)) + ", R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "+":
