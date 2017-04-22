@@ -227,16 +227,9 @@ definition ::= DEFVAR:type nom_de_variable:nom PV
 				{: 
 					tds.inserer(nom,type,"globale"); 
 				:}
-			| AFFECT nom_de_variable:nom EGAL NUM:value PV	
-				{: tds.ajouterValeur(nom,value); 
-					Noeud eg = new Noeud("AFFECT", null);
-					this.type_de_recherche_tds = "VAR";
-					Noeud noeud_nom = new Noeud("VAR",""+tds.getId(nom,this.type_de_recherche_tds));
-					Noeud noeud_const = new Noeud("CONSTANTE",value);
-					eg.fils.add(noeud_nom);
-					eg.fils.add(noeud_const);
-					//GENERER ASSEMBLEUR ICI
-					a.genererAffectation(eg);
+			| DEFVAR:type nom_de_variable:nom EGAL NUM:value PV
+				{:
+ 					tds.ajouterValeur(nom,value);
 				:}
 			;
 instruction 	::= affectation:noeud_affectation
