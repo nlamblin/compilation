@@ -74,8 +74,8 @@ programme	::= function programme
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
-				Assembleur a = new Assembleur();
-				System.out.println(a.genererProgramme(arbre.racine,tds));
+				a.genererFichier(a.genererProgramme(arbre.racine,tds));
+
 			:}
 			| definition
 			{: 
@@ -85,8 +85,7 @@ programme	::= function programme
 				tds.verificationFonctionMain();
 				System.out.println(tds.toString());
 
-				Assembleur a = new Assembleur();
-				System.out.println(a.genererProgramme(arbre.racine,tds));
+				a.genererFichier(a.genererProgramme(arbre.racine,tds));
 			:}
 			;
 			
