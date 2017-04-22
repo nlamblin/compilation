@@ -90,9 +90,9 @@ public class Assembleur {
 		case "AFFECT" : 
 			res += genererAffectation(noeud);
 			break;
-		/*case "RETURN" :
+		case "RETURN" :
 			res += genererReturn(noeud);
-			break;*/
+			break;
 		case "WHILE" : 
 			res += genererWhile(noeud);
 			break;
