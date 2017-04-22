@@ -13,10 +13,8 @@ void main(){
 }
 */
 
-VAR i;
-AFFECT i = 1;
-VAR j;
-AFFECT j = 2;
+VAR i = 1;
+VAR j = 2;
 
 FUNCTION INT f(a){
 	RETURN 3;
