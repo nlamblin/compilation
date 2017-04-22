@@ -47,7 +47,7 @@ public class Main {
 //		System.out.println("----------00-syntaxe----------");
 //		Thread.sleep(1000);
 
-        System.out.println("----------01-minimal----------");
+        /*System.out.println("----------01-minimal----------");
         file = new FileInputStream(new File("test-suite/01-minimal.miage"));
         parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
         try {
@@ -66,7 +66,7 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("----------02-global----------");
+        System.out.println("----------02-global----------");*/
 //        Thread.sleep(1000);
 //
 //        System.out.println("----------03-expression----------");
