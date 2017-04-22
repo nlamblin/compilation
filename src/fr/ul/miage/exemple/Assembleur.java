@@ -57,11 +57,11 @@ public class Assembleur {
     }
 
     public String genererFonction(Noeud noeud) throws ParseException {
-        String res = tds.getNom(noeud.valeur) + "\n";
+        String res = "\n" + tds.getNom(noeud.valeur) + ":\n";
         for (Noeud n : noeud.fils) {
             res += genererInstructions(n);
         }
-        res += "fin_" + tds.getNom(noeud.valeur) + "\n";
+        res += "fin_" + tds.getNom(noeud.valeur) + ":\n";
 
         return res;
     }
@@ -69,7 +69,7 @@ public class Assembleur {
     public String genererReturn(Noeud noeud) throws ParseException {
         String res = "";
 
-        if (noeud.fils.size() == 0) {
+        if (noeud.fils.isEmpty()) {
             // pas sur du tout de ça
             int b = (tds.getParametre(tds.getNom(noeud.valeur)) - 2) * 4;
 
