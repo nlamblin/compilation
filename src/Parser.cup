@@ -44,6 +44,7 @@ action code {:
 				//Liste qui stocke les parametres d'une fonction cree
 				public ArrayList<String> liste_parametre = new ArrayList<>();
 
+				Assembleur a = new Assembleur();
 			:};
 terminal PV, FUNCTION, ACO, ACF, PO, PF;
 terminal PLUS, MOINS, DIV, MULT,COMP, INF, SUP, DIFF, AFFECT, SUP_EGAL, INF_EGAL;
@@ -235,6 +236,7 @@ definition ::= DEFVAR:type nom_de_variable:nom PV
 					eg.fils.add(noeud_nom);
 					eg.fils.add(noeud_const);
 					//GENERER ASSEMBLEUR ICI
+					a.genererAffectation(eg);
 				:}
 			;
 instruction 	::= affectation:noeud_affectation
