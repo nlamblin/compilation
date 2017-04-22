@@ -39,7 +39,7 @@ public class Assembleur {
         // parcours de la table des symboles
         for (int i = 0; i < table.length; i++) {
             // si la catégorie de l'élément courant est globale
-            if (table[i][3].equals("globale")) {
+            if (table[i][0] != null && table[i][3].equals("globale")) {
                 res += "\t" + table[i][1] + ": LONG(" + table[i][4] + ") \n";
             }
         }
@@ -97,8 +97,8 @@ public class Assembleur {
                 res += genererWhile(noeud);
                 break;
             case "IF":
-            	res+= genererIf(noeud);
-            	break;
+                res += genererIf(noeud);
+                break;
             default:
                 break;
         }
