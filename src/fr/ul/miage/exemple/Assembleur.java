@@ -123,7 +123,7 @@ public class Assembleur {
     }
 
     public String genererAffectation(Noeud noeud) throws ParseException {
-        String res = genererExpression(noeud.fils.get(1));
+    	String res = genererExpression(noeud.fils.get(1));
         res += "POP(R0) \n"
                 + "ST(R0," + this.tds.getNom(noeud.fils.get(0).valeur) + ") \n";
         return res + "\n";
@@ -196,7 +196,7 @@ public class Assembleur {
                         + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
-                        + "CMPLT(R1,R2,R0) \n"
+                        + "CMPLT(R2,R1,R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "<=":
@@ -212,7 +212,7 @@ public class Assembleur {
                         + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
-                        + "CMPLE(R1,R2,R0) \n"
+                        + "CMPLE(R2,R1,R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "=":
@@ -226,10 +226,10 @@ public class Assembleur {
             case "!=":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
                         + genererExpression(noeud.fils.get(2)) + " \n"
-                        + "POP(R0) \n"
-                        + "CMOVE(0, R1) \n"
-                        + "CMPEQ(R0,R1,R2) \n"
-                        + "PUSH(R2) \n";
+                        + "POP(R2) \n"
+                        + "POP(R1) \n"
+                        + "CMPEQ(R1,R2,R0) \n"
+                        + "PUSH(R0) \n";
                 break;
             default:
                 break;
@@ -239,8 +239,9 @@ public class Assembleur {
 
     public String genererIf(Noeud noeud) throws ParseException {
         this.nbIf++;
-        String res = genererCondition(noeud.fils.get(0)) + " \n";
-        res += "POP(R0) \n"
+        String res = "if_" + this.nbIf + ":"
+        		+ genererCondition(noeud.fils.get(0)) + " \n"
+        		+ "POP(R0) \n"
                 + "BF(R0, else_" + this.nbIf + ") \n"
                 + genererBloc(noeud.fils.get(1))
                 + "BR(fsi_" + this.nbIf + ") \n"
@@ -252,12 +253,13 @@ public class Assembleur {
 
     public String genererWhile(Noeud noeud) throws ParseException {
         this.nbWhile++;
-        String res = genererCondition(noeud.fils.get(0));
-        res += "POP(R0) \n"
+        String res = "while_" + this.nbWhile + ":"
+        		+ genererCondition(noeud.fils.get(0))
+        		+ "POP(R0) \n"
                 + "BF(R0, done_" + this.nbWhile + ") \n"
                 + genererBloc(noeud.fils.get(1))
                 + "BF(R0, while_" + this.nbWhile + ") \n"
-                + "done_" + this.nbWhile;
+                + "done_" + this.nbWhile + ":";
         return res + "\n";
     }
 
