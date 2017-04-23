@@ -7,7 +7,7 @@ VAR j;
 VAR k;
 
 FUNCTION VOID main() {
-	AFFECT k = 1;
-	AFFECT j = k;
-	AFFECT k = i;
+	AFFECT k = 10;
+	AFFECT j = 5;
+	AFFECT i = k;
 }

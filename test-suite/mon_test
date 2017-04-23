@@ -1,7 +1,20 @@
-VAR i;
+VAR i = 5;
 VAR j;
 
-FUNCTION VOID main () {
-	AFFECT i = 5;
-	AFFECT j = i;
+FUNCTION VOID main() {
+	VAR k;
+	AFFECT j = 3;
+	
+	IF(j < i) {
+		AFFECT k = 1 + i;
+	}
+	ELSE() {
+		AFFECT k = i - 1;
+	}
+	
+	VAR l;
+	AFFECT l = 0;
+	WHILE(l < k) {
+		AFFECT l = l + 1;
+	} 
 }

@@ -124,6 +124,7 @@ public class Assembleur {
 
     public String genererAffectation(Noeud noeud) throws ParseException {
     	String res = genererExpression(noeud.fils.get(1));
+    	System.out.println(this.tds.getNom(noeud.fils.get(0).valeur));
         res += "POP(R0) \n"
                 + "ST(R0," + this.tds.getNom(noeud.fils.get(0).valeur) + ") \n";
         return res + "\n";
