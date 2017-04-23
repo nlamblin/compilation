@@ -181,10 +181,11 @@ public class Assembleur {
     public String genererCondition(Noeud noeud) throws ParseException {
         String res = "";
 
-        switch (noeud.cle) {
+        System.out.println(noeud.fils.get(1).cle);
+        switch (noeud.fils.get(1).cle) {
             case "<":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
                         + "CMPLT(R1,R2,R0) \n"
@@ -192,15 +193,15 @@ public class Assembleur {
                 break;
             case ">":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
-                        + "CMPLT(R2,R1,R0) \n"
+                        + "CMPLT(R1,R2,R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "<=":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
                         + "CMPLE(R1,R2,R0) \n"
@@ -208,23 +209,23 @@ public class Assembleur {
                 break;
             case ">=":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
-                        + "CMPLE(R2,R1,R0) \n"
+                        + "CMPLE(R1,R2,R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "=":
                 res += genererExpression(noeud.fils.get(0)) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R2) \n"
                         + "POP(R1) \n"
                         + "CMPEQ(R1,R2,R0) \n"
                         + "PUSH(R0) \n";
                 break;
             case "!=":
-                res += genererExpression(noeud) + " \n"
-                        + genererExpression(noeud.fils.get(0)) + " \n"
+                res += genererExpression(noeud.fils.get(0)) + " \n"
+                        + genererExpression(noeud.fils.get(2)) + " \n"
                         + "POP(R0) \n"
                         + "CMOVE(0, R1) \n"
                         + "CMPEQ(R0,R1,R2) \n"

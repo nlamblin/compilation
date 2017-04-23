@@ -78,7 +78,7 @@ public class Main {
             e.printStackTrace();
         }
         System.out.println("----------03-expression----------");
-        Thread.sleep(1000);*/
+        Thread.sleep(1000);
 
 		System.out.println("----------04-expression----------");
 		file = new FileInputStream(new File("test-suite/04-expression.miage"));
@@ -146,15 +146,15 @@ public class Main {
 //		System.out.println("----------09-fonction----------");
 //		Thread.sleep(1000);
 //		
-//		System.out.println("----------10-conditionnelle----------");
-//		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
-//		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
-//		try {
-//			parser.parse();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		}
-//		System.out.println("----------10-conditionnelle----------");
+		System.out.println("----------10-conditionnelle----------");
+		file = new FileInputStream(new File("test-suite/10-conditionnelle.miage"));
+		parser = new ParserCup(new Yylex(new BufferedReader(new InputStreamReader(file))));
+		try {
+			parser.parse();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("----------10-conditionnelle----------");
 //		Thread.sleep(1000);
 //		
 //		System.out.println("----------11-iteration----------");
