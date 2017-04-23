@@ -8,7 +8,7 @@ FUNCTION VOID main() {
 	IF(j < i) {
 		AFFECT k = 1 + i;
 	}
-	ELSE() {
+	ELSE {
 		AFFECT k = i - 1;
 	}
 	
